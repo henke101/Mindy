@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-		String[] temp = { "Hem", "…vningar" };
+		String[] temp = { "Hem", "…vningar", "Om" };
 		// Set the adapter for the list view
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, temp));
 		// Set the list's click listener
