@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array 
+    name="section_names">
+    <item>Hem</item>
+    <item>Övningar</item>
+    <item>Inställningar</item>
+    <item>Om</item>
+    
+</string-array>
+</resources>

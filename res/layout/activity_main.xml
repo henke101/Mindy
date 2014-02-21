@@ -15,9 +15,9 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_centerHorizontal="true"
-	        android:layout_centerVertical="true"
+	        android:layout_centerVertical="true" 
 	        android:text="@string/hello_world"
-	        tools:context=".MainActivity" />
+	        tools:context=".MainActivity" /> 
 	        
     </RelativeLayout>
     <!-- The navigation drawer -->
@@ -26,8 +26,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        android:background="#111"/>
+        android:divider="#DDD"
+        android:dividerHeight="1dp"
+        android:background="#EEE"/>
 </android.support.v4.widget.DrawerLayout>
 

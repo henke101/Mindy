@@ -1,0 +1,9 @@
+<resources>
+    <!-- the theme applied to the application or activity -->
+    <style name="MindyTheme"
+           parent="@android:style/Theme.Holo.Light">
+
+    </style>
+
+    
+</resources>
