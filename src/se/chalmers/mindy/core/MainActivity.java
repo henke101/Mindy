@@ -1,7 +1,10 @@
 package se.chalmers.mindy.core;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.fragment.IndexFragment;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -36,7 +39,6 @@ public class MainActivity extends Activity {
 		mDrawerList.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				// TODO Auto-generated method stub
 
 				selectItem(position);
 			}
@@ -49,21 +51,24 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	/** Swaps fragments in the main content view */
+	/** Swaps fragments in the main content view 
+	 * 
+	 * 
+	 * 
+	 * OBS 
+	 * 
+	 * Skall göras dynamisk, nu hämtas alltid samma fragment
+	 * 
+	 * */
 	private void selectItem(int position) {
 		// Create a new fragment and specify the planet to show based on
 		// position
+		Fragment fragment = new IndexFragment();
 
-		/*
-		 * Fragment fragment = new PlanetFragment(); Bundle args = new Bundle();
-		 * args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-		 * fragment.setArguments(args);
-		 * 
-		 * // Insert the fragment by replacing any existing fragment
-		 * FragmentManager fragmentManager = getFragmentManager();
-		 * fragmentManager.beginTransaction() .replace(R.id.content_frame,
-		 * fragment) .commit();
-		 */
+		// Insert the fragment by replacing any existing fragment
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
 		// Highlight the selected item, update the title, and close the drawer
 		mDrawerList.setItemChecked(position, true);
 		setTitle(sectionNames[position]);
