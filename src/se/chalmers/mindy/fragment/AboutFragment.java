@@ -13,12 +13,12 @@ public class AboutFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_about, null);
 		TextView tViewAbout = (TextView) view.findViewById(R.id.about);
-		TextView tViewAboutVersion = (TextView) view.findViewById(R.id.about_version);
+		TextView tViewAboutVersion = (TextView) view
+				.findViewById(R.id.about_version);
 		TextView tViewAboutText = (TextView) view.findViewById(R.id.about_text);
-		TextView tViewAboutDevelopers = (TextView) view.findViewById(R.id.about_developers);
+		TextView tViewAboutDevelopers = (TextView) view
+				.findViewById(R.id.about_developers);
 		return view;
 	}
-
-
 
 }
