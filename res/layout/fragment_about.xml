@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+  	<TextView 
+  	 	android:id="@+id/about"
+  	 	android:layout_width="match_parent"
+  	 	android:layout_height="wrap_content"
+  	 	android:textSize="40sp"
+  	 	android:text="@string/about"
+  	 	   	
+  	    />
+   	<TextView 
+  	 	android:id="@+id/about_version"
+  	 	android:layout_width="match_parent"
+  	 	android:layout_height="wrap_content"
+  	 	android:textSize="20sp"
+  	 	android:text="@string/about_version_title"
+  	    />   
+   	<TextView 
+  	 	android:id="@+id/about_text"
+  	 	android:layout_width="match_parent"
+  	 	android:layout_height="wrap_content"
+  	 	android:textSize="15sp"
+  	 	android:text="@string/about_text"
+  	    />   
+  	 <TextView 
+  	 	android:id="@+id/about_developers"
+  	 	android:layout_width="match_parent"
+  	 	android:layout_height="wrap_content"
+  	 	android:textSize="10sp"
+  	 	android:text="@string/about_developers"
+  	    />   
+</LinearLayout>
