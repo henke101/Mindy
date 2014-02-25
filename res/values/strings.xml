@@ -3,6 +3,7 @@
     <string name="app_name">Mindy</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="title_checkbox_preference">Checkbox</string>
     <string name="title_activity_main">Mindy</string>
     <string name="about">Om Mindy</string>
     <string name="about_version_title">Version 1.0</string>
