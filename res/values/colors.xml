@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
+    <!--  Could be used as a background color -->
+      <color name="bg_color">#E6E3D8</color>
+    
     <!-- This is still here for now because
      there might be references to it -->
     <color name="dark_purple">#6E384B</color>
@@ -16,8 +19,8 @@
     <color name="medium_purple_2">#592D4D</color>
     <color name="light_purple_2">#734D69</color>
     <color name="dark_purple_2">#260D20</color>
-    <color name="light_grey_2">#260D20</color>
-    <color name="dark_grey_2">#260D20</color>
+    <color name="light_grey_2">#BFB2A3</color>
+    <color name="dark_grey_2">#A6978A</color>
     
       <!-- Color scheme 3, Theme2 -->
     <color name="dark_sand_3">#E4CCBF</color>
