@@ -3,6 +3,7 @@ package se.chalmers.mindy.core;
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
+import se.chalmers.mindy.fragment.PrefsFragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -23,6 +24,7 @@ public class MainActivity extends Activity {
 	private CharSequence mTitle;
 
 	private String[] sectionNames;
+	private PrefsFragment prefsFragment;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class MainActivity extends Activity {
 					int position, long id) {
 
 				selectItem(position);
+		prefsFragment =	new PrefsFragment();	
 			}
 		});
 	}
@@ -61,8 +64,7 @@ public class MainActivity extends Activity {
 	 * 
 	 * OBS
 	 * 
-	 * Skall göras dynamisk, nu hämtas alltid samma fragment L‰gg till de andra
-	 * sidorna!
+	 * Will be done dynamically, add the rest of the fragments
 	 * */
 	private void selectItem(int position) {
 		// Print out which position
@@ -97,16 +99,16 @@ public class MainActivity extends Activity {
 		/*
 		 * Need to implement a SettingsFragment
 		 */
-		// if(position==2){
-		// // Create a new fragment and specify the planet to show based on
-		// // position
-		// Fragment fragmentSettings = new SettingsFragment();
-		//
-		// // Insert the fragment by replacing any existing fragment
-		// FragmentManager fragmentManager = getFragmentManager();
-		// fragmentManager.beginTransaction().replace(R.id.content_frame,
-		// fragmentSettings).commit();
-		// }
+		 if(position==2){
+		 // Create a new fragment and specify the planet to show based on
+		 // position
+		 Fragment fragmentSettings = new PrefsFragment();
+		
+		 // Insert the fragment by replacing any existing fragment
+		 FragmentManager fragmentManager = getFragmentManager();
+		 fragmentManager.beginTransaction().replace(R.id.content_frame,
+		 fragmentSettings).commit();
+		 }
 
 		if (position == 3) {
 			// Create a new fragment and specify the planet to show based on
