@@ -14,10 +14,18 @@
   	 	android:text="@string/about"
   	 	   	
   	    />
+  	<ImageView
+        android:id="@+id/about_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"
+        android:contentDescription="@string/logo_description"
+        />
    	<TextView 
   	 	android:id="@+id/about_version"
   	 	android:layout_width="match_parent"
   	 	android:layout_height="wrap_content"
+  	 	android:gravity="center"
   	 	android:textSize="20sp"
   	 	android:text="@string/about_version_title"
   	    />   
@@ -25,6 +33,7 @@
   	 	android:id="@+id/about_text"
   	 	android:layout_width="match_parent"
   	 	android:layout_height="wrap_content"
+  	 	android:gravity="center"
   	 	android:textSize="15sp"
   	 	android:text="@string/about_text"
   	    />   
@@ -32,6 +41,7 @@
   	 	android:id="@+id/about_developers"
   	 	android:layout_width="match_parent"
   	 	android:layout_height="wrap_content"
+  	 	android:gravity="center"
   	 	android:textSize="12sp"
   	 	android:text="@string/about_developers"
   	    />   
