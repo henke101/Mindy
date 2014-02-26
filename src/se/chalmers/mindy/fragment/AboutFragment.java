@@ -2,6 +2,7 @@ package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,13 @@ public class AboutFragment extends Fragment {
 		TextView tViewAboutText = (TextView) view.findViewById(R.id.about_text);
 		TextView tViewAboutDevelopers = (TextView) view
 				.findViewById(R.id.about_developers);
+		
+		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
+		Typeface robotoCondensedLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
+		tViewAbout.setTypeface(robotoLight);
+		tViewAboutVersion.setTypeface(robotoCondensedLight);
+		tViewAboutText.setTypeface(robotoCondensedLight);
+		tViewAboutDevelopers.setTypeface(robotoCondensedLight);
 		return view;
 	}
 

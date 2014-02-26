@@ -5,6 +5,7 @@
     android:background="@color/bg_color"
     android:orientation="vertical" >
 
+    <!-- Empty view to create spacing between the elements -->
     <View
         android:layout_width="match_parent"
         android:layout_height="40dp" />
@@ -16,11 +17,13 @@
         android:gravity="center"
         android:text="@string/about"
         android:textSize="40sp"
-    	android:textColor="@color/dark_purple_3" />
-
+    	android:textColor="@color/dark_purple_3"
+    	/>
+    
+    <!-- Empty view to create spacing between the elements -->
     <View
         android:layout_width="fill_parent"
-        android:layout_height="40dp" />
+        android:layout_height="20dp" />
 
     <ImageView
         android:id="@+id/about_image"
@@ -43,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingBottom="20dp"
+        android:paddingBottom="30dp"
         android:paddingTop="20dp"
         android:paddingRight="20dp"
  		android:paddingLeft="20dp" 
