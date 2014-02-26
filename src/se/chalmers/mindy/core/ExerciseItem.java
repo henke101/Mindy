@@ -22,9 +22,6 @@ public class ExerciseItem implements Comparable {
 		}catch(Exception e){
 			return -2;
 		}
-
-		if(this.getName().equals(((ExerciseItem) another).getName()) && this.getType().equals(((ExerciseItem) another).getType()))
-			return 0;
 		
 		if(this.getType() == "Mindfulness" && ((ExerciseItem) another).getType() == "Positiv Psykologi" || this.getType() == "Mindfulness" && ((ExerciseItem) another).getType() == "Studieteknik" || this.getType() == "Positiv Psykologi" && ((ExerciseItem) another).getType() == "Studieteknik")
 			return 1;
