@@ -7,9 +7,9 @@ public class ExerciseItem implements Comparable {
 	private String name, type;
 	private Color typeColor;
 	
-	public ExerciseItem(String name, String type, Color typeColor){
+	public ExerciseItem(String name, String description, Color typeColor){
 		setName(name);
-		setType(type);
+		setType(description);
 		setTypeColor(typeColor);
 	}
 	

@@ -35,8 +35,10 @@ public class ExerciseAdapter extends ArrayAdapter<ExerciseItem>{
 			holder = new ExerciseItemHolder();
 
 			holder.exercise = (TextView) row.findViewById(R.id.exercise_label);
-
+			holder.exercise.setText(data[position].getName());
+			
 			holder.description = (TextView) row.findViewById(R.id.description_label);
+			holder.description.setText(data[position].getName());
 
 		}
 		

@@ -2,6 +2,7 @@ package se.chalmers.mindy.core;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
+import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import android.app.Activity;
 import android.app.Fragment;
@@ -78,21 +79,17 @@ public class MainActivity extends Activity {
 			fragmentManager.beginTransaction()
 			.replace(R.id.content_frame, fragmentIndex).commit();
 		}
-		/*
-		 * Need to implement a ExcerciseFragment
-		 */
-		//
-		// if(position==1){
-		// // Create a new fragment and specify the planet to show based on
-		// // position
-		// Fragment fragmentExercise = new ExerciseFragment();
-		//
-		// // Insert the fragment by replacing any existing fragment
-		// FragmentManager fragmentManager = getFragmentManager();
-		// fragmentManager.beginTransaction().replace(R.id.content_frame,
-		// fragmentExercise).commit();
-		//
-		// }
+		
+		if(position==1){
+		// Create a new fragment and specify the planet to show based on
+		// position
+		Fragment fragmentExercise = new ExerciseFragment();
+		
+		// Insert the fragment by replacing any existing fragment
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame,
+		fragmentExercise).commit();
+		}
 
 		/*
 		 * Need to implement a SettingsFragment
