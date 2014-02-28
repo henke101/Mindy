@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
      
-     <CheckBoxPreference 
-         android:key="checkbox_preference"
-         android:title="@string/title_checkbox_preference"
+     <PreferenceCategory android:title="General" >
+     <SwitchPreference
+         android:title="Notifications"
+          />
+     <SwitchPreference 
+         android:title="Sound"
          />
-
+     </PreferenceCategory>
+     
 </PreferenceScreen>
