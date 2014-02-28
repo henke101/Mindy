@@ -2,35 +2,67 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_color"
     android:orientation="vertical" >
+
+    <!-- Empty view to create spacing between the elements -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/about"
+        android:textSize="40sp"
+    	android:textColor="@color/dark_purple_3"
+    	/>
     
-  	<TextView 
-  	 	android:id="@+id/about"
-  	 	android:layout_width="match_parent"
-  	 	android:layout_height="wrap_content"
-  	 	android:textSize="40sp"
-  	 	android:text="@string/about"
-  	 	   	
-  	    />
-   	<TextView 
-  	 	android:id="@+id/about_version"
-  	 	android:layout_width="match_parent"
-  	 	android:layout_height="wrap_content"
-  	 	android:textSize="20sp"
-  	 	android:text="@string/about_version_title"
-  	    />   
-   	<TextView 
-  	 	android:id="@+id/about_text"
-  	 	android:layout_width="match_parent"
-  	 	android:layout_height="wrap_content"
-  	 	android:textSize="15sp"
-  	 	android:text="@string/about_text"
-  	    />   
-  	 <TextView 
-  	 	android:id="@+id/about_developers"
-  	 	android:layout_width="match_parent"
-  	 	android:layout_height="wrap_content"
-  	 	android:textSize="10sp"
-  	 	android:text="@string/about_developers"
-  	    />   
+    <!-- Empty view to create spacing between the elements -->
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="20dp" />
+
+    <ImageView
+        android:id="@+id/about_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/logo_description"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/about_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/about_version_title"
+        android:textSize="12sp"
+        android:textColor="@color/dark_purple_3" />
+
+    <TextView
+        android:id="@+id/about_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="30dp"
+        android:paddingTop="20dp"
+        android:paddingRight="20dp"
+ 		android:paddingLeft="20dp" 
+        android:text="@string/about_text"
+        android:textSize="15sp"
+        android:textColor="@color/dark_purple_3" />
+
+    <TextView
+        android:id="@+id/about_developers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/about_developers"
+        android:textSize="12sp"
+        android:textColor="@color/dark_purple_3"
+ 		android:paddingRight="50dp"
+ 		android:paddingLeft="50dp" />
+
 </LinearLayout>
