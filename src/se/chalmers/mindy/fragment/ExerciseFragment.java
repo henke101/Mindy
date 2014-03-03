@@ -8,6 +8,8 @@ import se.chalmers.mindy.core.ExerciseAdapter;
 import se.chalmers.mindy.core.ExerciseItem;
 import se.chalmers.mindy.core.MainActivity;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -16,9 +18,11 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class ExerciseFragment extends ListFragment{
 
@@ -49,6 +53,18 @@ public class ExerciseFragment extends ListFragment{
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
 
 		listView.addHeaderView(headerView);
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+				Fragment fragmentSleepingPill = new SleepingPillFragment();
+				// Insert the fragment by replacing any existing fragment
+				FragmentManager fragmentManager = getFragmentManager();
+				fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
+			}
+		});
 		
 		/** Setting the list adapter for the ListFragment */
 		ExerciseAdapter adapter = new ExerciseAdapter(mActivity.getLayoutInflater().getContext(), R.layout.card_item, exItemList);
