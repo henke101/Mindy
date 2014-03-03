@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -51,7 +50,6 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
 				selectItem(position);
 				prefsFragment = new PrefsFragment();
 			}
@@ -66,8 +64,7 @@ public class MainActivity extends Activity {
 			public void onDrawerClosed(View view) {
 				super.onDrawerClosed(view);
 				getActionBar().setTitle(mTitle);
-				invalidateOptionsMenu(); // creates call to
-											// onPrepareOptionsMenu()
+				invalidateOptionsMenu();
 			}
 
 			/** Called when a drawer has settled in a completely open state. */
@@ -75,8 +72,7 @@ public class MainActivity extends Activity {
 			public void onDrawerOpened(View drawerView) {
 				super.onDrawerOpened(drawerView);
 				getActionBar().setTitle(mDrawerTitle);
-				invalidateOptionsMenu(); // creates call to
-											// onPrepareOptionsMenu()
+				invalidateOptionsMenu();
 			}
 		};
 
@@ -86,7 +82,6 @@ public class MainActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 
-		Typeface robotoLight = Typeface.createFromAsset(getAssets(), "fonts/roboto_light.ttf");
 	}
 
 	@Override
@@ -122,7 +117,6 @@ public class MainActivity extends Activity {
 
 	/**
 	 * Swaps fragments in the main content view
-	 * 
 	 * 
 	 * OBS
 	 * 

@@ -2,6 +2,7 @@ package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
+import se.chalmers.mindy.util.Tools;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,6 +37,10 @@ public class IndexFragment extends ListFragment {
 		ListView listView = getListView();
 
 		View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
+
+		ImageView imageView = (ImageView) headerView.findViewById(R.id.header_background);
+		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.fluff, imageView);
+
 		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
 		titleView.setText(R.string.app_name);
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
