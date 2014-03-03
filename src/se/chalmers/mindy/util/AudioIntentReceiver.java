@@ -10,8 +10,9 @@ public class AudioIntentReceiver extends android.content.BroadcastReceiver {
       if (intent.getAction().equals(
                     android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
     	  
-          // signal your service to stop playback
-          // (via an Intent, for instance)
+         // Send an intent to MainActivity
+    	 // MainActivity can interact with SleepingPillFragment since MainActivity contains SleepingPillFragment
+    	 // Get SleepingPillFragment to stop playing music(by running its onStop method, for instance)
       }
    }
 
