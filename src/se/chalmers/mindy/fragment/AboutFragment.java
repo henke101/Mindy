@@ -22,6 +22,7 @@ public class AboutFragment extends Fragment {
 		
 		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
 		Typeface robotoCondensedLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
+		
 		tViewAbout.setTypeface(robotoLight);
 		tViewAboutVersion.setTypeface(robotoCondensedLight);
 		tViewAboutText.setTypeface(robotoCondensedLight);

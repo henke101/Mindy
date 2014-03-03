@@ -7,19 +7,18 @@
         android:minSdkVersion="15"
         android:targetSdkVersion="15" />
 
-    
     <supports-screens
-    	android:smallScreens="true"
-    	android:normalScreens="true"
-    	android:largeScreens="true"
-    	android:anyDensity="true"
-		android:resizeable="true"/>
-    
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" />
+
     <application
-        android:icon="@drawable/ic_test_launcher"
+        android:allowBackup="false"
+        android:icon="@drawable/ic_test2_launcher"
         android:label="@string/app_name"
-        android:theme="@style/MindyTheme"
-        android:allowBackup="false" >
+        android:theme="@style/MindyTheme" >
         <activity
             android:name="se.chalmers.mindy.core.MainActivity"
             android:label="@string/title_activity_main" >
@@ -29,6 +28,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".util.AudioIntentReceiver" >
+            <intent-filter>
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
