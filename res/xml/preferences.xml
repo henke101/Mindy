@@ -2,13 +2,12 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
      
-     <PreferenceCategory android:title="General" >
+     <PreferenceCategory android:title="Allmänt" >
      <SwitchPreference
-         android:title="Notifications"
+         android:key="pref_notes"
+         android:title="@string/swtchpref_notification"
+         android:defaultValue="true"
           />
-     <SwitchPreference 
-         android:title="Sound"
-         />
      </PreferenceCategory>
      
 </PreferenceScreen>
