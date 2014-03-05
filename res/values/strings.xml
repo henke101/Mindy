@@ -5,7 +5,7 @@
     <string name="drawer_close">Stäng</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_checkbox_preference">Checkbox</string>
+    <string name="swtchpref_notification">Notiser</string>
     <string name="title_activity_main">Mindy</string>
     <string name="about">Mindy</string>
     <string name="about_version_title">Version 1.0</string>
