@@ -4,33 +4,50 @@ import se.chalmers.mindy.R;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.PowerManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
-public class SleepingPillFragment extends Fragment {
-	MediaPlayer mediaPlayer;
+public class SleepingPillFragment extends Fragment implements Runnable, OnClickListener {
+	private MediaPlayer mediaPlayer;
+	private View view;
+	private IntentFilter mediaFilter;
+	private ProgressBar audioProgressBar;
+	private TextView status;
+	private Button startAudio;
+	private Button stop;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		
-		View view = inflater.inflate(R.layout.fragment_sleepingpill, null);
+		view = inflater.inflate(R.layout.fragment_sleepingpill, null);
 
-		mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sample_soundfile);
+        status = (TextView) view.findViewById(R.id.status_audio);
+        audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
+        startAudio = (Button) view.findViewById(R.id.start_audio);
+        stop = (Button) view.findViewById(R.id.stop_audio);
+
+        startAudio.setOnClickListener(this);
+        stop.setOnClickListener(this);  
+
+		
 		//mediaPlayer.setWakeMode(getActivity(), PowerManager.PARTIAL_WAKE_LOCK);
 		
-		IntentFilter mediaFilter = new IntentFilter(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+		mediaFilter = new IntentFilter(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY);
 		mediaFilter.setPriority(1000);
 		getActivity().getApplicationContext().registerReceiver(audioIntentReceiver, mediaFilter);
 		
-
-		mediaPlayer.start();
+		audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
+		
 
 		return view;
 	}
@@ -67,12 +84,49 @@ public class SleepingPillFragment extends Fragment {
 		                    android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
 		    
 		    	  onPause();
-		    	 // Send an intent to MainActivity
-		    	 // MainActivity can interact with SleepingPillFragment since MainActivity contains SleepingPillFragment
-		    	 // Get SleepingPillFragment to stop playing music(by running its onStop method, for instance)
-		    	 //or..... get the sleepingpillfragment and run onPause()
 		      }
 		   }
 	};
-}
+
+	@Override
+	public void run() {
+		int currentPosition= 0;
+        int total = mediaPlayer.getDuration();
+        while (mediaPlayer!=null && currentPosition<total) {
+            try {
+                Thread.sleep(1000);
+                currentPosition= mediaPlayer.getCurrentPosition();
+            } catch (InterruptedException e) {
+                return;
+            } catch (Exception e) {
+                return;
+            }            
+            audioProgressBar.setProgress(currentPosition);
+        }
+	}
+
+	@Override
+	public void onClick(View v) {
+		 if (v.equals(startAudio)) {
+	            if (mediaPlayer != null && mediaPlayer.isPlaying()) return;
+	            mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sample_soundfile);
+	            mediaPlayer.start();               
+	            status.setText(R.string.audio_playing);         
+	            audioProgressBar.setVisibility(ProgressBar.VISIBLE);
+	            audioProgressBar.setProgress(0);
+	            audioProgressBar.setMax(mediaPlayer.getDuration());
+	            new Thread(this).start();
+	        }
+
+	        if (v.equals(stop) && mediaPlayer!=null) {
+	            mediaPlayer.stop();
+	            mediaPlayer = null;            
+	            status.setText(R.string.audio_stopped);
+	            audioProgressBar.setVisibility(ProgressBar.GONE);
+	        }
+	    }
+		
+	}
+	
+
 
