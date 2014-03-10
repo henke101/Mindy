@@ -13,8 +13,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsoluteLayout;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class SleepingPillFragment extends Fragment implements Runnable, OnClickListener {
@@ -22,6 +26,7 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	private View view;
 	private IntentFilter mediaFilter;
 	private ProgressBar audioProgressBar;
+	private SeekBar seekBar;
 	private TextView status;
 	private Button startAudio;
 	private Button stop;
@@ -33,6 +38,9 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 
         status = (TextView) view.findViewById(R.id.status_audio);
         audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
+        seekBar = (SeekBar) view.findViewById(R.id.seek_bar);
+        
+        
         startAudio = (Button) view.findViewById(R.id.start_audio);
         stop = (Button) view.findViewById(R.id.stop_audio);
 
@@ -46,7 +54,6 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		mediaFilter.setPriority(1000);
 		getActivity().getApplicationContext().registerReceiver(audioIntentReceiver, mediaFilter);
 		
-		audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
 		
 
 		return view;
@@ -91,8 +98,8 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	@Override
 	public void run() {
 		int currentPosition= 0;
-        int total = mediaPlayer.getDuration();
-        while (mediaPlayer!=null && currentPosition<total) {
+        int duration = mediaPlayer.getDuration();
+        while (mediaPlayer!=null && currentPosition<duration) {
             try {
                 Thread.sleep(1000);
                 currentPosition= mediaPlayer.getCurrentPosition();
@@ -102,7 +109,25 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
                 return;
             }            
             audioProgressBar.setProgress(currentPosition);
+            
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                	//moveAudioControlButton();
+               }
+           });
+            
+          
         }
+	}
+
+	private void moveAudioControlButton() {
+		
+                int currentPosition= mediaPlayer.getCurrentPosition();
+                LinearLayout.LayoutParams coords = new LinearLayout.LayoutParams(50, 50);
+                startAudio.setLayoutParams(coords);
+                System.out.println(currentPosition);
+    	
 	}
 
 	@Override
@@ -112,17 +137,16 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	            mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sample_soundfile);
 	            mediaPlayer.start();               
 	            status.setText(R.string.audio_playing);         
-	            audioProgressBar.setVisibility(ProgressBar.VISIBLE);
 	            audioProgressBar.setProgress(0);
 	            audioProgressBar.setMax(mediaPlayer.getDuration());
 	            new Thread(this).start();
+	            
 	        }
 
 	        if (v.equals(stop) && mediaPlayer!=null) {
 	            mediaPlayer.stop();
 	            mediaPlayer = null;            
 	            status.setText(R.string.audio_stopped);
-	            audioProgressBar.setVisibility(ProgressBar.GONE);
 	        }
 	    }
 		

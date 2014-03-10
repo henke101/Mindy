@@ -8,18 +8,33 @@
     <ProgressBar
         android:id="@+id/audio_progress_bar"
         style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="77dp"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp" />
 
-    <Button
-        android:id="@+id/start_audio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <SeekBar
+        android:id="@+id/seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:max="100" >
+    </SeekBar>
 
     <Button
         android:id="@+id/stop_audio"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginTop="30dp"
+        android:text="@string/audio_stopped" />
+
+    <Button
+        android:id="@+id/start_audio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/audio_playing" />
 
     <TextView
         android:id="@+id/status_audio"
