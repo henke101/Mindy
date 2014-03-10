@@ -3,25 +3,31 @@
 
 <!--  <item android:drawable="@drawable/progress_circular_background"/> -->
 <item>
+    <rotate
+            android:fromDegrees="90"
+            android:toDegrees="90"
+            android:pivotX="50%"
+            android:pivotY="50%" >
     <shape
         android:innerRadiusRatio="3.4"
         android:shape="ring"
-        android:thicknessRatio="20.0" >
+        android:thicknessRatio="30.0" >
         <gradient
             android:endColor="@color/light_purple_3"
             android:startColor="#0000"
             android:type="sweep"
             android:useLevel="true" />
     </shape>
+    </rotate>
 </item>
 <item>
     <rotate
         android:id="@+id/rotating_play_button"
         android:drawable="@drawable/progress_particle"
-        android:fromDegrees="0"
+        android:fromDegrees="90"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:toDegrees="360" />
+        android:toDegrees="450" />
 </item>
 
 </layer-list>
