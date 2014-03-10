@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,7 +27,6 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	private View view;
 	private IntentFilter mediaFilter;
 	private ProgressBar audioProgressBar;
-	private SeekBar seekBar;
 	private TextView status;
 	private Button startAudio;
 	private Button stop;
@@ -36,12 +36,14 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.fragment_sleepingpill, null);
 
-        status = (TextView) view.findViewById(R.id.status_audio);
+		Drawable circProgressBar = getResources().getDrawable(R.drawable.circular_progress_bar);
+       
+		status = (TextView) view.findViewById(R.id.status_audio);
         audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
-        seekBar = (SeekBar) view.findViewById(R.id.seek_bar);
-        
-        
-        startAudio = (Button) view.findViewById(R.id.start_audio);
+     
+        audioProgressBar.setClickable(true);
+        //startAudio = (Button) circProgressBar.findViewById(R.id.rotating_play_button);
+       startAudio = (Button) view.findViewById(R.id.start_audio);
         stop = (Button) view.findViewById(R.id.stop_audio);
 
         startAudio.setOnClickListener(this);
