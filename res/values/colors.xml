@@ -3,6 +3,9 @@
     
     <!--  Could be used as a background color -->
       <color name="bg_color">#E6E3D8</color>
+      
+      <!-- Just white -->
+     <color name="white">#FFFFFF</color>
     
     <!-- This is still here for now because
      there might be references to it -->
