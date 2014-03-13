@@ -1,33 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-<!--  <item android:drawable="@drawable/progress_circular_background"/> -->
-<item>
-    <rotate
-            android:fromDegrees="90"
-            android:toDegrees="90"
+    <item>
+        <rotate
+            android:drawable="@drawable/progress_circular_background"
+            android:fromDegrees="0"
             android:pivotX="50%"
-            android:pivotY="50%" >
-    <shape
-        android:innerRadiusRatio="3.4"
-        android:shape="ring"
-        android:thicknessRatio="30.0" >
-        <gradient
-            android:endColor="@color/light_purple_3"
-            android:startColor="#0000"
-            android:type="sweep"
-            android:useLevel="true" />
-    </shape>
-    </rotate>
-</item>
-<item>
-    <rotate
-        android:id="@+id/rotating_play_button"
-        android:drawable="@drawable/progress_particle"
-        android:fromDegrees="90"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:toDegrees="450" />
-</item>
+            android:pivotY="50%"
+            android:toDegrees="0" >
+        </rotate>
+    </item>
+    <item>
+        <rotate
+            android:fromDegrees="90"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="90" >
+            <shape
+                android:innerRadiusRatio="2.17"
+                android:shape="ring"
+                android:thicknessRatio="100.0" >
+                <gradient
+                    android:endColor="@color/light_sand_3"
+                    android:startColor="@color/dark_purple_3"
+                    android:type="sweep"
+                    android:useLevel="true" />
+            </shape>
+        </rotate>
+    </item>
+    <item>
+        <rotate
+            android:id="@+id/rotating_play_button"
+            android:drawable="@drawable/progress_particle"
+            android:fromDegrees="90"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="450" />
+    </item>
 
 </layer-list>

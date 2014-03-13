@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
     android:orientation="vertical" >
 
+    <!--TODO: Try extracting the progressbar and button to a layer-list
+     and rotate the button in there-->
+     
     <ProgressBar
         android:id="@+id/audio_progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
         android:layout_gravity="center_horizontal"
         android:indeterminate="false"
         android:progressDrawable="@drawable/circular_progress_bar" />
@@ -17,7 +22,7 @@
         android:id="@+id/stop_audio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="left"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:text="@string/audio_stopped" />
 
@@ -25,6 +30,7 @@
         android:id="@+id/start_audio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:text="@string/audio_playing" />
 
     <TextView

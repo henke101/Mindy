@@ -36,31 +36,32 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.fragment_sleepingpill, null);
 
-		Drawable circProgressBar = getResources().getDrawable(R.drawable.circular_progress_bar);
-       
+		//View circProgressBar = view.findViewById(R.drawable.circular_progress_bar);
+		//startAudio = (Button) circProgressBar.findViewById(R.id.rotating_play_button);
+
 		status = (TextView) view.findViewById(R.id.status_audio);
-        audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
-     
-        audioProgressBar.setClickable(true);
-        //startAudio = (Button) circProgressBar.findViewById(R.id.rotating_play_button);
-       startAudio = (Button) view.findViewById(R.id.start_audio);
-        stop = (Button) view.findViewById(R.id.stop_audio);
+		audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
+		audioProgressBar.setClickable(true);
 
-        startAudio.setOnClickListener(this);
-        stop.setOnClickListener(this);  
+		startAudio = (Button) view.findViewById(R.id.start_audio);
+		startAudio.setText("Spela");
+		stop = (Button) view.findViewById(R.id.stop_audio);
 
-		
+		startAudio.setOnClickListener(this);
+		stop.setOnClickListener(this);  
+
+
 		//mediaPlayer.setWakeMode(getActivity(), PowerManager.PARTIAL_WAKE_LOCK);
-		
+
 		mediaFilter = new IntentFilter(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY);
 		mediaFilter.setPriority(1000);
 		getActivity().getApplicationContext().registerReceiver(audioIntentReceiver, mediaFilter);
-		
-		
+
+
 
 		return view;
 	}
-	
+
 	@Override
 	public void onPause(){
 		super.onPause();
