@@ -87,73 +87,84 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		}
 		getActivity().getApplicationContext().unregisterReceiver(audioIntentReceiver);
 	}
-	
+
 	private final BroadcastReceiver audioIntentReceiver = new BroadcastReceiver(){
 		public void onReceive(Context ctx, Intent intent) {
-		      if (intent.getAction().equals(
-		                    android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
-		    
-		    	  onPause();
-		      }
-		   }
+			if (intent.getAction().equals(
+					android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
+
+				onPause();
+			}
+		}
 	};
 
 	@Override
 	public void run() {
 		int currentPosition= 0;
-        int duration = mediaPlayer.getDuration();
-        while (mediaPlayer!=null && currentPosition<duration) {
-            try {
-                Thread.sleep(1000);
-                currentPosition= mediaPlayer.getCurrentPosition();
-            } catch (InterruptedException e) {
-                return;
-            } catch (Exception e) {
-                return;
-            }            
-            audioProgressBar.setProgress(currentPosition);
-            
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                	//moveAudioControlButton();
-               }
-           });
-            
-          
-        }
+		int duration = mediaPlayer.getDuration();
+		while (mediaPlayer!=null && currentPosition<duration-999) {
+			try {
+				Thread.sleep(1000);
+				currentPosition= mediaPlayer.getCurrentPosition();
+			} catch (InterruptedException e) {
+				return;
+			} catch (Exception e) {
+				return;
+			}            
+			audioProgressBar.setProgress(currentPosition);
+		}
+		
+		audioProgressBar.setProgress(duration);
+		getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				mediaPlayer = null;            
+				status.setText(R.string.audio_stopped);
+				startAudio.setText("Spela");
+			}
+		});
+
 	}
 
 	private void moveAudioControlButton() {
-		
-                int currentPosition= mediaPlayer.getCurrentPosition();
-                LinearLayout.LayoutParams coords = new LinearLayout.LayoutParams(50, 50);
-                startAudio.setLayoutParams(coords);
-                System.out.println(currentPosition);
-    	
+
+		int currentPosition= mediaPlayer.getCurrentPosition();
+		LinearLayout.LayoutParams coords = new LinearLayout.LayoutParams(50, 50);
+		startAudio.setLayoutParams(coords);
+		System.out.println(currentPosition);
+
 	}
 
 	@Override
 	public void onClick(View v) {
-		 if (v.equals(startAudio)) {
-	            if (mediaPlayer != null && mediaPlayer.isPlaying()) return;
-	            mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sample_soundfile);
-	            mediaPlayer.start();               
-	            status.setText(R.string.audio_playing);         
-	            audioProgressBar.setProgress(0);
-	            audioProgressBar.setMax(mediaPlayer.getDuration());
-	            new Thread(this).start();
-	            
-	        }
 
-	        if (v.equals(stop) && mediaPlayer!=null) {
-	            mediaPlayer.stop();
-	            mediaPlayer = null;            
-	            status.setText(R.string.audio_stopped);
-	        }
-	    }
-		
+		if (v.equals(startAudio)) {
+			if (mediaPlayer != null && mediaPlayer.isPlaying()){
+				mediaPlayer.stop();
+				mediaPlayer = null;            
+				status.setText(R.string.audio_stopped);
+				startAudio.setText("Spela");
+			}
+			else if (mediaPlayer == null){
+				mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sample_soundfile);
+				mediaPlayer.start();               
+				status.setText(R.string.audio_playing);         
+				audioProgressBar.setProgress(0);
+				audioProgressBar.setMax(mediaPlayer.getDuration());
+				new Thread(this).start();
+				startAudio.setText("Stoppa");
+			}
+		}
+
+		if (v.equals(stop) && mediaPlayer!=null) {
+			mediaPlayer.stop();
+			mediaPlayer = null;            
+			status.setText(R.string.audio_stopped);
+
+		}
 	}
-	
+
+}
+
 
 
