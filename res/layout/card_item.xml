@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
     		android:padding="3dip"	
-            android:text="Exercise"
             android:textSize="20sp"/>
         </LinearLayout>
         
@@ -35,7 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
     		android:padding="3dip"	
-            android:text="Description"
             android:textSize="13sp"/>
         </LinearLayout>
 
