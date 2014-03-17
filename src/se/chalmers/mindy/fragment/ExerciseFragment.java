@@ -67,10 +67,11 @@ public class ExerciseFragment extends ListFragment{
 				}
 				
 				if(position ==3){
-					ListFragment posFragment = new ThreePosFragment();
+					ListFragment fragmentThreePos = new ThreePosFragment();
 					// Insert the fragment by replacing any existing fragment
 					FragmentManager fragmentManager = getFragmentManager();
-					fragmentManager.beginTransaction().replace(R.id.content_frame, posFragment).commit();
+					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentThreePos).commit();
+					System.out.println("Pos Pressed");
 				}
 			}
 		});

@@ -23,10 +23,10 @@ public class ExerciseItem implements Comparable {
 			return -2;
 		}
 		
-		if(this.getType() == "Mindfulness" && ((ExerciseItem) another).getType() == "Positiv Psykologi" || this.getType() == "Mindfulness" && ((ExerciseItem) another).getType() == "Studieteknik" || this.getType() == "Positiv Psykologi" && ((ExerciseItem) another).getType() == "Studieteknik")
+		if(this.getType().equals("Mindfulness") && ((ExerciseItem) another).getType().equals("Positiv Psykologi") || this.getType().equals("Mindfulness") && ((ExerciseItem) another).getType().equals("Studieteknik") || this.getType().equals("Positiv Psykologi") && ((ExerciseItem) another).getType().equals("Studieteknik"))
 			return 1;
 		
-		if(this.getType() == "Positiv Psykologi" && ((ExerciseItem) another).getType() == "Mindfulness" || this.getType() == "Studieteknik" && ((ExerciseItem) another).getType() == "Mindfulness" || this.getType() == "Studieteknik" && ((ExerciseItem) another).getType() == "Positiv Psykologi")
+		if(this.getType().equals("Positiv Psykologi") && ((ExerciseItem) another).getType().equals("Mindfulness") || this.getType().equals("Studieteknik") && ((ExerciseItem) another).getType().equals("Mindfulness") || this.getType().equals("Studieteknik") && ((ExerciseItem) another).getType().equals("Postiv Psykologi"))
 			return -1;
 		
 		return 0;
