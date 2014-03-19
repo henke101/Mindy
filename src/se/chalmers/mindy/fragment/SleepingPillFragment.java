@@ -117,28 +117,16 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 			}            
 			audioProgressBar.setProgress(currentPosition);
 		}
-		
 		audioProgressBar.setProgress(duration);
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				mediaPlayer = null;            
-				status.setText(R.string.audio_stopped);
 				startAudio.setText("Spela");
 			}
 		});
-
 	}
-
-	private void moveAudioControlButton() {
-
-		int currentPosition= mediaPlayer.getCurrentPosition();
-		LinearLayout.LayoutParams coords = new LinearLayout.LayoutParams(50, 50);
-		startAudio.setLayoutParams(coords);
-		System.out.println(currentPosition);
-
-	}
-
+	
 	@Override
 	public void onClick(View v) {
 
