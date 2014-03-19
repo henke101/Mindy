@@ -52,7 +52,6 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		audioProgressBar.setClickable(true);
 
 		startAudio = (Button) view.findViewById(R.id.start_audio);
-		startAudio.setText("Spela");
 
 		startAudio.setOnClickListener(this);
 
@@ -121,8 +120,8 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				mediaPlayer = null;            
-				startAudio.setText("Spela");
+				mediaPlayer = null;  
+				startAudio.setBackgroundResource(R.drawable.play_button);
 			}
 		});
 	}
@@ -133,8 +132,8 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		if (v.equals(startAudio)) {
 			if (mediaPlayer != null && mediaPlayer.isPlaying()){
 				mediaPlayer.stop();
-				mediaPlayer = null;            
-				startAudio.setText("Spela");
+				mediaPlayer = null;  
+				startAudio.setBackgroundResource(R.drawable.play_button);
 			}
 			else if (mediaPlayer == null){
 				mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sample_soundfile);
@@ -142,7 +141,7 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 				audioProgressBar.setProgress(0);
 				audioProgressBar.setMax(mediaPlayer.getDuration());
 				new Thread(this).start();
-				startAudio.setText("Stoppa");
+				startAudio.setBackgroundResource(R.drawable.pause_button);
 			}
 		}
 	}
