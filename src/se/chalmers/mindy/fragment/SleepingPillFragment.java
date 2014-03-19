@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -27,9 +28,9 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	private View view;
 	private IntentFilter mediaFilter;
 	private ProgressBar audioProgressBar;
-	private TextView status;
+	private TextView info;
+	private TextView title;
 	private Button startAudio;
-	private Button stop;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -39,17 +40,21 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		//View circProgressBar = view.findViewById(R.drawable.circular_progress_bar);
 		//startAudio = (Button) circProgressBar.findViewById(R.id.rotating_play_button);
 
-		status = (TextView) view.findViewById(R.id.status_audio);
+		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
+		
+		info = (TextView) view.findViewById(R.id.info_audio);
+		title = (TextView) view.findViewById(R.id.title_audio);
+		
+		info.setTypeface(robotoLight);
+		title.setTypeface(robotoLight);
+		
 		audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
 		audioProgressBar.setClickable(true);
 
 		startAudio = (Button) view.findViewById(R.id.start_audio);
 		startAudio.setText("Spela");
-		stop = (Button) view.findViewById(R.id.stop_audio);
 
 		startAudio.setOnClickListener(this);
-		stop.setOnClickListener(this);  
-
 
 		//mediaPlayer.setWakeMode(getActivity(), PowerManager.PARTIAL_WAKE_LOCK);
 
@@ -92,7 +97,6 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		public void onReceive(Context ctx, Intent intent) {
 			if (intent.getAction().equals(
 					android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY)) {
-
 				onPause();
 			}
 		}
@@ -142,28 +146,18 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 			if (mediaPlayer != null && mediaPlayer.isPlaying()){
 				mediaPlayer.stop();
 				mediaPlayer = null;            
-				status.setText(R.string.audio_stopped);
 				startAudio.setText("Spela");
 			}
 			else if (mediaPlayer == null){
 				mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sample_soundfile);
-				mediaPlayer.start();               
-				status.setText(R.string.audio_playing);         
+				mediaPlayer.start();                       
 				audioProgressBar.setProgress(0);
 				audioProgressBar.setMax(mediaPlayer.getDuration());
 				new Thread(this).start();
 				startAudio.setText("Stoppa");
 			}
 		}
-
-		if (v.equals(stop) && mediaPlayer!=null) {
-			mediaPlayer.stop();
-			mediaPlayer = null;            
-			status.setText(R.string.audio_stopped);
-
-		}
 	}
-
 }
 
 
