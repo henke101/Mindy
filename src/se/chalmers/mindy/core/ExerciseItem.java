@@ -4,13 +4,13 @@ import android.graphics.Color;
 
 public class ExerciseItem implements Comparable {
 	
-	private String name, type;
+	private String name, description;
 	private Color typeColor;
 	
 	public ExerciseItem(String name, String description, Color typeColor){
-		setName(name);
-		setType(description);
-		setTypeColor(typeColor);
+		this.name = name;
+		this.description= description;
+		this.typeColor = typeColor;
 	}
 	
 	public int compareTo(Object another) {
@@ -23,10 +23,10 @@ public class ExerciseItem implements Comparable {
 			return -2;
 		}
 		
-		if(this.getType().equals("Mindfulness") && ((ExerciseItem) another).getType().equals("Positiv Psykologi") || this.getType().equals("Mindfulness") && ((ExerciseItem) another).getType().equals("Studieteknik") || this.getType().equals("Positiv Psykologi") && ((ExerciseItem) another).getType().equals("Studieteknik"))
+		if(this.getDescription().equals("Mindfulness") && ((ExerciseItem) another).getDescription().equals("Positiv Psykologi") || this.getDescription().equals("Mindfulness") && ((ExerciseItem) another).getDescription().equals("Studieteknik") || this.getDescription().equals("Positiv Psykologi") && ((ExerciseItem) another).getDescription().equals("Studieteknik"))
 			return 1;
 		
-		if(this.getType().equals("Positiv Psykologi") && ((ExerciseItem) another).getType().equals("Mindfulness") || this.getType().equals("Studieteknik") && ((ExerciseItem) another).getType().equals("Mindfulness") || this.getType().equals("Studieteknik") && ((ExerciseItem) another).getType().equals("Postiv Psykologi"))
+		if(this.getDescription().equals("Positiv Psykologi") && ((ExerciseItem) another).getDescription().equals("Mindfulness") || this.getDescription().equals("Studieteknik") && ((ExerciseItem) another).getDescription().equals("Mindfulness") || this.getDescription().equals("Studieteknik") && ((ExerciseItem) another).getDescription().equals("Postiv Psykologi"))
 			return -1;
 		
 		return 0;
@@ -36,8 +36,8 @@ public class ExerciseItem implements Comparable {
 		return name;
 	}
 	
-	public String getType(){
-		return type;
+	public String getDescription(){
+		return description;
 	}
 	
 	public Color getTypeColor(){
@@ -48,8 +48,8 @@ public class ExerciseItem implements Comparable {
 		this.name = name;
 	}
 	
-	public void setType(String type){
-		this.type = type;
+	public void setDescription(String description){
+		this.description = description;
 	}
 	
 	public void setTypeColor(Color typeColor){

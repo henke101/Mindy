@@ -31,7 +31,7 @@ public class ExerciseFragment extends ListFragment{
 	Editor editor;
 
 	ExerciseItem[] exItemList = {new ExerciseItem("Somnpiller","forklarande text",new Color()), new ExerciseItem("då","då", new Color()), new ExerciseItem("PosNamn","PosDesc",new Color())};	
-
+	
 	@Override
 	public void onAttach(final Activity activity) {
 		super.onAttach(activity);

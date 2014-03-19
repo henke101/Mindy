@@ -48,10 +48,9 @@ public class ThreePosFragment extends ListFragment{
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
 		
 		listView.addHeaderView(headerView);
-		listView.setAdapter(new ArrayAdapter<String>(mActivity, android.R.layout.simple_list_item_1));
 		//expanded = (TextView) headerView.findViewById(R.id.expanded);
 		//expanded.setVisibility(View.VISIBLE);
-		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.card_item, threePosItemList);
+		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
 		setListAdapter(adapter);
 		System.out.println("onactivitycreated works");
 

@@ -3,6 +3,7 @@ package se.chalmers.mindy.core;
 import se.chalmers.mindy.R;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +34,16 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem>{
 
 			holder = new ThreePosItemHolder();
 
-			holder.exercise = (TextView) row.findViewById(R.id.exercise_label);
-			holder.exercise.setText(data[position].getDate());
+			holder.positiveOne = (TextView) row.findViewById(R.id.positive_one_label);
+			holder.positiveOne.setText(data[position].getPositiveOne());
+			Log.d("flfl", data[position].getPositiveOne());
 			
-			holder.description = (TextView) row.findViewById(R.id.description_label);
-			holder.description.setText(data[position].getDate());
-
+			holder.positiveTwo = (TextView) row.findViewById(R.id.positive_two_label);
+			holder.positiveTwo.setText(data[position].getPositiveTwo());
+			
+			holder.positiveThree = (TextView) row.findViewById(R.id.positive_three_label);
+			holder.positiveThree.setText(data[position].getPositiveThree());
+			
 		}
 		
 		holder = (ThreePosItemHolder) row.getTag();
@@ -48,7 +53,8 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem>{
 	
 	static class ThreePosItemHolder {
 		
-		TextView exercise, description;
+		TextView positiveOne, positiveTwo, positiveThree
+		;
 	}
 }
 

@@ -4,8 +4,10 @@ public class ThreePosItem implements Comparable {
 
 	private String date, positiveOne, positiveTwo, positiveThree;
 
-	public ThreePosItem(String postitiveOne, String positiveTwo, String positiveThree ){
-
+	public ThreePosItem(String positiveOne, String positiveTwo, String positiveThree ){
+		this.positiveOne = positiveOne;
+		this.positiveTwo = positiveTwo;
+		this.positiveThree = positiveThree;
 	}
 
 	@Override
