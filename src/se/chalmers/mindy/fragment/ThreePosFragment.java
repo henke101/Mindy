@@ -17,9 +17,11 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class ThreePosFragment extends ListFragment{
 
@@ -28,7 +30,11 @@ public class ThreePosFragment extends ListFragment{
 	Editor editor;
 	TextView expanded;
 	
-	ThreePosItem[] threePosItemList = {new ThreePosItem("En Bra Sak", "En Annan Bra Sak", "Och Ytterliggare En Bra Sak")};
+	ThreePosItem[] threePosItemList = {new ThreePosItem("Lägg Till","",""), new ThreePosItem("En Bra Sak", "En Annan Bra Sak", "Och Ytterliggare En Bra Sak")};
+	
+	public ThreePosFragment(){
+	
+	}
 	
 	public void onAttach(final Activity activity){
 		super.onAttach(activity);
@@ -46,10 +52,22 @@ public class ThreePosFragment extends ListFragment{
 		TextView titleView = (TextView) headerView.findViewById(R.id.pos_title);
 		titleView.setText(R.string.app_name);
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
-		
+
 		listView.addHeaderView(headerView);
 		//expanded = (TextView) headerView.findViewById(R.id.expanded);
 		//expanded.setVisibility(View.VISIBLE);
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				
+				if(position ==1){
+					
+				}
+			}
+		});
+		
+		
 		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
 		setListAdapter(adapter);
 		System.out.println("onactivitycreated works");
