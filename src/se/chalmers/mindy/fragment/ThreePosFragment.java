@@ -6,6 +6,7 @@ import se.chalmers.mindy.core.ExerciseItem;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.core.ThreePosAdapter;
 import se.chalmers.mindy.core.ThreePosItem;
+import se.chalmers.mindy.util.Expander;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ListFragment;
@@ -54,15 +55,14 @@ public class ThreePosFragment extends ListFragment{
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
 
 		listView.addHeaderView(headerView);
-		//expanded = (TextView) headerView.findViewById(R.id.expanded);
-		//expanded.setVisibility(View.VISIBLE);
-		
 		listView.setOnItemClickListener(new OnItemClickListener() {
+			
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				
 				if(position ==1){
-					
+					View expanding = view.findViewById(R.id.addExpanded); 
+			        Expander expander = new Expander(expanding,500);
 				}
 			}
 		});
