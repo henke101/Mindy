@@ -2,24 +2,29 @@ package se.chalmers.mindy.core;
 
 import java.util.List;
 
-import android.view.View.OnClickListener;
+import android.content.Context;
+import android.view.View;
 
 public abstract class IndexItem {
 
-	private String name, description;
+	private Context context;
+	private String title, description;
 
-	public IndexItem(String name, String description, List<OnClickListener> buttonListeners) {
+	public IndexItem(Context context, String name, String description) {
 		super();
-		this.name = name;
+
+		this.context = context;
+
+		title = name;
 		this.description = description;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getDescription() {
@@ -30,10 +35,14 @@ public abstract class IndexItem {
 		this.description = description;
 	}
 
+	public Context getContext() {
+		return context;
+	}
+
 	/**
 	 * Method used to get the button listeners 
 	 * @return
 	 */
-	public abstract List<OnClickListener> getButtonListeners();
+	public abstract List<View> getSubviews();
 
 }
