@@ -15,7 +15,7 @@
     <string name="about_developers">Utvecklad av:\n S. Andersson, H. Andersson, P. Eriksson, R. Hallberg, M. Thyren och V. Åkerskog.</string>
 	<string name="logo_description">Mindy Logo</string>
     
-    <string name="index_play">Spela</string>
+    <string name="index_play">Spela</string> 
     <string name="index_pause">Paus</string>
     <string name="index_stop">Stopp</string>
     <string name="sleeping_pill">Sömnpiller</string>
