@@ -4,10 +4,10 @@
     <item>
         <rotate
             android:drawable="@drawable/progress_circular_background"
-            android:fromDegrees="0"
+            android:fromDegrees="-3"
             android:pivotX="50%"
             android:pivotY="50%"
-            android:toDegrees="0" >
+            android:toDegrees="-3" >
         </rotate>
     </item>
     <item>
@@ -17,11 +17,11 @@
             android:pivotY="50%"
             android:toDegrees="90" >
             <shape
-                android:innerRadiusRatio="2.17"
+                android:innerRadiusRatio="2.225"
                 android:shape="ring"
-                android:thicknessRatio="100.0" >
+                android:thicknessRatio="70.0" >
                 <gradient
-                    android:endColor="@color/light_sand_3"
+                    android:endColor="@color/dark_purple_3"
                     android:startColor="@color/dark_purple_3"
                     android:type="sweep"
                     android:useLevel="true" />
