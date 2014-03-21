@@ -1,7 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<MediaController xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical" >
 
-</MediaController>
+    <RelativeLayout
+        android:id="@+id/progress_bar_layout"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="33dp" >
+
+        <ProgressBar
+            android:id="@+id/audio_progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circular_progress_bar" />
+
+        <Button
+            android:id="@+id/start_audio"
+            android:layout_width="60dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:background="@drawable/play_button"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/info_audio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_audio"
+        android:gravity="center"
+        android:padding="20dp"
+        android:text="@string/lorem_ipsum"
+        android:textColor="@color/dark_purple_3" />
+
+    <TextView
+        android:id="@+id/title_audio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progress_bar_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:gravity="center"
+        android:paddingLeft="35dp"
+        android:paddingRight="35dp"
+        android:text="@string/sleeping_pill"
+        android:textColor="@color/dark_purple_3"
+        android:textSize="25sp" />
+
+</RelativeLayout>
