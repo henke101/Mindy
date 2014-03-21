@@ -2,22 +2,49 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    >
+    
+    
+    
     <ImageView 
         android:id="@+id/header_background"
         android:layout_width="match_parent"
-        android:layout_height="200dip"
+        android:layout_height="170dip"
         android:scaleType="centerCrop"
         android:layout_centerInParent="true"/>
 	
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/gradient_actionbar"
+        android:layout_alignParentTop="true"/>
+    
    	<TextView 
    	    android:id="@+id/header_title"
-   	    android:layout_width="wrap_content"
-   	    android:layout_height="wrap_content"
+   	    android:layout_width="match_parent"
+   	    android:layout_height="100dip"
+   	    android:gravity="center_horizontal|bottom"
+   		android:layout_centerHorizontal="true"
    	    android:layout_alignParentBottom="true"
-   	    android:layout_alignParentLeft="true"
+        android:shadowColor="@color/text_shadow_color"
+        android:shadowDx="1.0"
+        android:shadowDy="2.0"
+        android:shadowRadius="8.0"
    	    android:textSize="50sp"
-   	    android:padding="10dip"
+   	    android:paddingBottom="12dip"
    	    android:textColor="@android:color/white"
+   	    android:background="@drawable/gradient"
 		/>
+   	
+   	<!-- Divider -->
+	<View 
+	    android:id="@+id/divider"
+	    android:layout_below="@+id/header_title"
+   	    android:layout_alignParentBottom="true"
+		android:layout_width="match_parent"
+		android:layout_height="2dip"
+		android:layout_margin="0dip"
+		android:padding="0dip"
+		android:background="@android:drawable/divider_horizontal_dark"/>
 </RelativeLayout>
