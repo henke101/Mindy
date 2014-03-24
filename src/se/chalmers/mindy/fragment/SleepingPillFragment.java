@@ -30,7 +30,7 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	private ProgressBar audioProgressBar;
 	private TextView info;
 	private TextView title;
-	private Button startAudio;
+	private Button playPauseButton;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -41,19 +41,19 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		//startAudio = (Button) circProgressBar.findViewById(R.id.rotating_play_button);
 
 		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
-		
+
 		info = (TextView) view.findViewById(R.id.info_audio);
 		title = (TextView) view.findViewById(R.id.title_audio);
-		
+
 		info.setTypeface(robotoLight);
 		title.setTypeface(robotoLight);
-		
+
 		audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
 		audioProgressBar.setClickable(true);
 
-		startAudio = (Button) view.findViewById(R.id.start_audio);
+		playPauseButton = (Button) view.findViewById(R.id.play_pause_button);
 
-		startAudio.setOnClickListener(this);
+		playPauseButton.setOnClickListener(this);
 
 		//mediaPlayer.setWakeMode(getActivity(), PowerManager.PARTIAL_WAKE_LOCK);
 
@@ -70,8 +70,7 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	public void onPause(){
 		super.onPause();
 		if (mediaPlayer != null){
-			mediaPlayer.release();		
-			mediaPlayer = null;
+			mediaPlayer.pause();
 		}
 	}
 	@Override
@@ -121,27 +120,29 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 			@Override
 			public void run() {
 				mediaPlayer = null;  
-				startAudio.setBackgroundResource(R.drawable.play_button);
+				playPauseButton.setBackgroundResource(R.drawable.play_button);
 			}
 		});
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 
-		if (v.equals(startAudio)) {
+		if (v.equals(playPauseButton)) {
 			if (mediaPlayer != null && mediaPlayer.isPlaying()){
-				mediaPlayer.stop();
-				mediaPlayer = null;  
-				startAudio.setBackgroundResource(R.drawable.play_button);
+				mediaPlayer.pause();
+				playPauseButton.setBackgroundResource(R.drawable.play_button);
 			}
-			else if (mediaPlayer == null){
-				mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sample_soundfile);
-				mediaPlayer.start();                       
-				audioProgressBar.setProgress(0);
-				audioProgressBar.setMax(mediaPlayer.getDuration());
-				new Thread(this).start();
-				startAudio.setBackgroundResource(R.drawable.pause_button);
+			else{ 
+
+				if (mediaPlayer == null){
+					mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sample_soundfile);                
+					audioProgressBar.setProgress(0);
+					audioProgressBar.setMax(mediaPlayer.getDuration());
+					new Thread(this).start();
+				}
+				playPauseButton.setBackgroundResource(R.drawable.pause_button);
+				mediaPlayer.start();
 			}
 		}
 	}
