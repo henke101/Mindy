@@ -25,7 +25,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:onClick="onRadioButtonClicked"
             android:text="@string/eval_question_1_answer_1"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -33,7 +32,6 @@
             android:id="@+id/answers_1_option_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
             android:text="@string/eval_question_1_answer_2"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RadioGroup>
@@ -65,7 +63,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:onClick="onRadioButtonClicked"
             android:text="@string/eval_question_2_answer_1"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -73,7 +70,6 @@
             android:id="@+id/answers_2_option_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
             android:text="@string/eval_question_2_answer_2"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RadioGroup>

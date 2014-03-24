@@ -4,13 +4,16 @@ import se.chalmers.mindy.R;
 import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-public class EvaluationFragment extends Fragment{
+public class EvaluationFragment extends Fragment implements OnClickListener{
 
 	private TextView tViewQuestionOne;
 	private TextView tViewQuestionTwo;
@@ -27,7 +30,21 @@ public class EvaluationFragment extends Fragment{
 		tViewQuestionTwo = (TextView) view.findViewById(R.id.eval_question_2);
 		answersOne = (RadioGroup) view.findViewById(R.id.eval_answers_1);
 		answersTwo = (RadioGroup) view.findViewById(R.id.eval_answers_2);
-
+		
+		answersOne.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+		    @Override
+		    public void onCheckedChanged(RadioGroup group, int checkedId) {
+		        Log.v(getTag(), "Listener reached");
+		    }
+		});
+		answersTwo.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+		    @Override
+		    public void onCheckedChanged(RadioGroup group, int checkedId) {
+		        switch(checkedId){
+		            // Your code    
+		        }   
+		    }
+		});
 		
 		robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
 		robotoCondensedLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
@@ -37,4 +54,11 @@ public class EvaluationFragment extends Fragment{
 		
 		return view;
 	}
+
+	@Override
+	public void onClick(View v) {
+	
+		
+	}
+	
 }
