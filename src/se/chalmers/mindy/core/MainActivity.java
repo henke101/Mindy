@@ -6,8 +6,10 @@ import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -159,7 +161,6 @@ public class MainActivity extends Activity {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
 		}
-
 		if (position == 3) {
 			// Create a new fragment and specify the planet to show based on
 			// position
@@ -167,6 +168,10 @@ public class MainActivity extends Activity {
 			// Insert the fragment by replacing any existing fragment
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).commit();
+		}
+		if (position == 4) {
+			//Studiedagboken
+			
 		}
 		// Highlight the selected item, update the title, and close the drawer
 		mDrawerList.setItemChecked(position, true);
