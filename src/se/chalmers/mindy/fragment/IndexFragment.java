@@ -1,11 +1,14 @@
 package se.chalmers.mindy.fragment;
 
+import java.util.ArrayList;
+
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.IndexAdapter;
-import se.chalmers.mindy.core.IndexItem;
 import se.chalmers.mindy.core.MainActivity;
-import se.chalmers.mindy.core.SoundIndexItem;
+import se.chalmers.mindy.pojo.IndexItem;
+import se.chalmers.mindy.pojo.SoundIndexItem;
 import se.chalmers.mindy.util.Tools;
+import se.chalmers.mindy.view.CardAnimationAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
@@ -19,17 +22,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class IndexFragment extends Fragment implements OnScrollListener {
+public class IndexFragment extends Fragment implements OnScrollListener, OnItemClickListener, OnItemLongClickListener {
 	MainActivity mActivity;
 	SharedPreferences sharedPrefs;
 	Editor editor;
 
 	private ListView mListView;
 	public View mListHeader;
+	private ArrayList<IndexItem> dummyItems;
 
 	@Override
 	public void onAttach(final Activity activity) {
@@ -51,6 +58,7 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 		mListView.setDividerHeight(0);
 		mListView.setBackgroundColor(Color.rgb(226, 226, 226));
 		mListView.setHeaderDividersEnabled(true);
+		mListView.setOnItemClickListener(this);
 
 		final View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
 
@@ -65,16 +73,40 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 		mListView.addHeaderView(headerView);
 
 		// Dummy items
-		IndexItem[] items = {
-				new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile),
-				new SoundIndexItem(mActivity, "Kroppsscanning",
-						"Kroppscanning kan vara väldigt behagligt och därför somnar många av övningen. Och många beskriver hur de sover djupare, även efter många års sömnproblem.",
-						R.raw.sample_soundfile),
-				new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile),
-				new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile) };
-		IndexAdapter adapter = new IndexAdapter(mActivity, items);
+		dummyItems = new ArrayList<IndexItem>();
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Kroppsscanning",
+				"Kroppscanning kan vara väldigt behagligt och därför somnar många av övningen. Och många beskriver hur de sover djupare, även efter många års sömnproblem.", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+				R.raw.sample_soundfile));
 
-		mListView.setAdapter(adapter);
+		IndexAdapter adapter = new IndexAdapter(mActivity, dummyItems);
+		CardAnimationAdapter animationAdapter = new CardAnimationAdapter(adapter);
+
+		// Assign the list view and adapter to each other
+		animationAdapter.setAbsListView(mListView);
+		mListView.setAdapter(animationAdapter);
 
 		return root;
 
@@ -96,6 +128,39 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
 		// Do nothing
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int id, long pos) {
+		dummyItems.remove((int) pos);
+
+		IndexAdapter adapter = (IndexAdapter) mListView.getAdapter();
+		adapter.remove((int) pos);
+		adapter.notifyDataSetChanged();
+
+		CardAnimationAdapter animationAdapter = new CardAnimationAdapter(adapter);
+
+		// Assign the list view and adapter to each other
+		animationAdapter.setAbsListView(mListView);
+		mListView.setAdapter(animationAdapter);
+
+	}
+
+	@Override
+	public boolean onItemLongClick(AdapterView<?> parent, View view, int id, long pos) {
+		dummyItems.remove((int) pos);
+
+		IndexAdapter adapter = (IndexAdapter) mListView.getAdapter();
+		adapter.remove((int) pos);
+		adapter.notifyDataSetChanged();
+
+		CardAnimationAdapter animationAdapter = new CardAnimationAdapter(adapter);
+
+		// Assign the list view and adapter to each other
+		animationAdapter.setAbsListView(mListView);
+		mListView.setAdapter(animationAdapter);
+
+		return true;
 	}
 
 }

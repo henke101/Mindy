@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.pojo.IndexItem;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class IndexAdapter extends ArrayAdapter<IndexItem> {
+public class IndexAdapter extends com.nhaarman.listviewanimations.ArrayAdapter<IndexItem> {
 
 	Context context;
 	IndexItem data[] = null;
@@ -23,18 +23,13 @@ public class IndexAdapter extends ArrayAdapter<IndexItem> {
 	Typeface robotoLight;
 
 	public IndexAdapter(final Context context, final ArrayList<IndexItem> data) {
-		this(context, data.toArray(new IndexItem[data.size()]));
-	}
-
-	public IndexAdapter(final Context context, final IndexItem[] data) {
-		// This will only work with the index_card_item XML, so having the
-		// resID as dynamic merely adds complexity
-		super(context, R.layout.index_card_item, data);
+		super(data);
 		this.context = context;
-		this.data = data;
+		this.data = data.toArray(new IndexItem[data.size()]);
 
 		robotoThin = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_thin.ttf");
 		robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_light.ttf");
+		// this(context, data.toArray(new IndexItem[data.size()]));
 	}
 
 	@Override
