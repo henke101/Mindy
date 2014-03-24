@@ -21,6 +21,13 @@
     <string name="sleeping_pill">Sömnpiller</string>
     <string name="play_button">Tryck här</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident.</string>
+    
+    <string name="eval_question_1_text">Hur mår du?</string>
+    <string name="eval_question_2_text">Sover du mycket?</string>
+    <string name="eval_question_1_answer_1">Bra!</string>
+    <string name="eval_question_1_answer_2">Dåligt :(</string>
+    <string name="eval_question_2_answer_1">Ja</string>
+    <string name="eval_question_2_answer_2">Nej</string>
 
 
 </resources>
