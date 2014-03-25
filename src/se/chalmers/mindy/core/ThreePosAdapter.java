@@ -36,7 +36,7 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem>{
 
 			holder.positiveOne = (TextView) row.findViewById(R.id.positive_one_label);
 			holder.positiveOne.setText(data[position].getPositiveOne());
-			Log.d("flfl", data[position].getPositiveOne());
+			Log.d("getPositiveOne:", data[position].getPositiveOne());
 			
 			holder.positiveTwo = (TextView) row.findViewById(R.id.positive_two_label);
 			holder.positiveTwo.setText(data[position].getPositiveTwo());

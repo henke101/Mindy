@@ -4,12 +4,13 @@ import android.app.ActionBar.LayoutParams;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
+import android.widget.LinearLayout;
 
 
 public class Expander extends Animation {
 
     private View animation;
-    private LayoutParams parameters;
+    private LinearLayout.LayoutParams parameters;
     private int startMargin, lastMargin;
     private boolean visible;
     private boolean ended;
@@ -18,7 +19,7 @@ public class Expander extends Animation {
 
         setDuration(animationDuration);
         animation = view;
-        parameters = (LayoutParams) view.getLayoutParams();
+        parameters = (LinearLayout.LayoutParams) view.getLayoutParams();
         visible = (view.getVisibility() == View.VISIBLE);
         startMargin = parameters.bottomMargin;
         lastMargin = (startMargin == 0 ? (0- view.getHeight()) : 0);

@@ -12,7 +12,7 @@
         android:padding="20dip" />
 
     <LinearLayout
-        android:id="@+id/addExpanded"
+        android:id="@+id/add_expanded"
         android:layout_width="fill_parent"
         android:layout_height="50dip"
         android:layout_marginBottom="-50dip"
