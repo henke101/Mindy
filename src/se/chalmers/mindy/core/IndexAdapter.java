@@ -5,6 +5,7 @@ import java.util.List;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.pojo.IndexItem;
+import se.chalmers.mindy.util.SwipeTouchListener;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -13,11 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
-public class IndexAdapter extends ArrayAdapter<IndexItem> {
+public class IndexAdapter extends MindyListAdapter {
 
 	private Context context;
 	private ArrayList<IndexItem> data = null;
@@ -77,6 +78,8 @@ public class IndexAdapter extends ArrayAdapter<IndexItem> {
 		}
 		lastPosition = position;
 
+		row.setOnTouchListener(new SwipeTouchListener(context, (ListView) parent));
+
 		return row;
 	}
 
@@ -86,8 +89,12 @@ public class IndexAdapter extends ArrayAdapter<IndexItem> {
 	}
 
 	public IndexItem remove(int position) {
+		IndexItem item = data.get(position);
 
-		return data.remove(position);
+		data.remove(position);
+		notifyDataSetChanged();
+
+		return item;
 
 	}
 
