@@ -7,7 +7,7 @@ import android.view.animation.Transformation;
 import android.widget.LinearLayout;
 
 
-public class Expander extends Animation {
+public class ExpanderAnimation extends Animation {
 
     private View animation;
     private LinearLayout.LayoutParams parameters;
@@ -15,7 +15,7 @@ public class Expander extends Animation {
     private boolean visible;
     private boolean ended;
 	
-    public Expander(View view, int animationDuration) {
+    public ExpanderAnimation(View view, int animationDuration) {
 
         setDuration(animationDuration);
         animation = view;

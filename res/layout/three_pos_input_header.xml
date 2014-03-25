@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:orientation="vertical"
+    	>
+    	
+    <Button 
+        android:id="@+id/add_threepos_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lägg till ny"
+        android:background="@android:drawable/list_selector_background"/>
+
+	<LinearLayout 
+	        android:id="@+id/input_container"
+	        android:layout_width="fill_parent"
+	        android:layout_height="130dip"
+	        android:layout_marginBottom="-100dip"
+	        android:orientation="vertical"
+	        android:visibility="gone" >
+
+
+		    <EditText
+		    	android:id="@+id/positive_one_input"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:text="hej"
+		    	android:inputType="text">
+		    	<requestFocus />
+		     </EditText>
+		     <EditText
+		    	android:id="@+id/positive_two_input"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:text="hej"
+		    	android:inputType="text">
+		    	<requestFocus />
+		     </EditText>
+		     <EditText
+		    	android:id="@+id/positive_three_input"
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content"
+		    	android:text="hej"
+		    	android:inputType="text">
+		    	<requestFocus />
+		     </EditText> 
+	</LinearLayout>
+</LinearLayout>

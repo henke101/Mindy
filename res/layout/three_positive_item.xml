@@ -11,7 +11,8 @@
     android:paddingBottom="10dip"
     android:paddingLeft="10dip"
     android:paddingRight="10dip"
-    android:paddingTop="10dip" >
+    android:paddingTop="10dip" 
+   	>
 
 
         <TextView
@@ -39,24 +40,4 @@
             android:textSize="13sp" />
 
 
-    <LinearLayout
-        android:id="@+id/input_container"
-        android:layout_width="fill_parent"
-        android:layout_height="100dip"
-        android:layout_marginBottom="-100dip"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-
-    <EditText
-    	android:id="@+id/positive_one_input"
-    	android:layout_width="fill_parent"
-    	android:layout_height="100dip"
-    	android:text="hej"
-    	android:inputType="text"
-    	android:lines="5"
-    	android:visibility="gone" >
-    	<requestFocus />
-     </EditText>
-        </LinearLayout>
 </LinearLayout>
