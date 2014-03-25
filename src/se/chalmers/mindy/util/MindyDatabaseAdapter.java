@@ -10,9 +10,9 @@ public class MindyDatabaseAdapter {
 
 	// Database properties
 	private static final String DATABASE_NAME = "mindy_db";
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 1;
 
-	private static final String TAG = "MindyDbAdapter";
+	private static final String TAG = "MindyDatabaseAdapter";
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
 	private final Context mCtx;
