@@ -11,57 +11,84 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class IndexAdapter extends com.nhaarman.listviewanimations.ArrayAdapter<IndexItem> {
+public class IndexAdapter extends ArrayAdapter<IndexItem> {
 
-	Context context;
-	IndexItem data[] = null;
+	private Context context;
+	private ArrayList<IndexItem> data = null;
+	private LayoutInflater mLayoutInflater;
 
-	Typeface robotoThin;
-	Typeface robotoLight;
+	private Typeface robotoThin;
+	private Typeface robotoLight;
+	private int lastPosition;
 
 	public IndexAdapter(final Context context, final ArrayList<IndexItem> data) {
-		super(data);
+		// This will only work with the index_card_item XML, so having the
+		// resID as dynamic merely adds complexity
+		super(context, R.layout.index_card_item, data);
 		this.context = context;
-		this.data = data.toArray(new IndexItem[data.size()]);
+		this.data = data;
 
 		robotoThin = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_thin.ttf");
 		robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_light.ttf");
-		// this(context, data.toArray(new IndexItem[data.size()]));
+
+		mLayoutInflater = ((Activity) context).getLayoutInflater();
 	}
 
 	@Override
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		LinearLayout row = (LinearLayout) convertView;
-		IndexItemHolder holder = null;
+
+		IndexItem item = data.get(position);
 
 		if (row == null) {
-			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-
 			// This will only work with the index_card_item XML, so having the
 			// resID as dynamic merely adds complexity
-			row = (LinearLayout) inflater.inflate(R.layout.index_card_item, parent, false);
+			row = (LinearLayout) mLayoutInflater.inflate(R.layout.index_card_item, parent, false);
 
-			holder = new IndexItemHolder();
-
-			holder.title = (TextView) row.findViewById(R.id.item_title);
-			holder.title.setText(data[position].getTitle());
-			holder.title.setTypeface(robotoThin);
-
-			holder.description = (TextView) row.findViewById(R.id.item_description);
-			holder.description.setText(data[position].getDescription());
-			holder.description.setTypeface(robotoLight);
-
-			List<View> subviews = data[position].getSubviews();
-			LinearLayout ll = (LinearLayout) row.findViewById(R.id.list_item_contents);
-			for (View subview : subviews) {
-				ll.addView(subview);
-			}
 		}
 
+		IndexItemHolder holder = new IndexItemHolder();
+		holder.title = (TextView) row.findViewById(R.id.item_title);
+		holder.title.setText(item.getTitle());
+		holder.title.setTypeface(robotoThin);
+
+		holder.description = (TextView) row.findViewById(R.id.item_description);
+		holder.description.setText(item.getDescription());
+		holder.description.setTypeface(robotoLight);
+
+		List<View> subviews = item.getSubviews();
+		LinearLayout ll = (LinearLayout) row.findViewById(R.id.list_item_contents);
+
+		// Clear the view
+		ll.removeAllViews();
+		for (View subview : subviews) {
+			ll.addView(subview);
+		}
+
+		if (position >= lastPosition) {
+			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.up_from_bottom);
+			row.startAnimation(animation);
+		}
+		lastPosition = position;
+
 		return row;
+	}
+
+	@Override
+	public boolean hasStableIds() {
+		return true;
+	}
+
+	public IndexItem remove(int position) {
+
+		return data.remove(position);
+
 	}
 
 	static class IndexItemHolder {

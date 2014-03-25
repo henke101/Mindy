@@ -55,6 +55,7 @@ public class SoundIndexItem extends IndexItem {
 		playButton.setTextColor(holoPurpleBright);
 		playButton.setTypeface(robotoLightCondensed);
 		playButton.setLayoutParams(param);
+		playButton.setFocusable(false);
 
 		playButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -62,6 +63,7 @@ public class SoundIndexItem extends IndexItem {
 				mediaPlayer.start();
 				playButton.setVisibility(View.GONE);
 				pauseButton.setVisibility(View.VISIBLE);
+				stopButton.setVisibility(View.VISIBLE);
 			}
 		});
 
@@ -72,6 +74,7 @@ public class SoundIndexItem extends IndexItem {
 		pauseButton.setTextColor(holoPurpleBright);
 		pauseButton.setTypeface(robotoLightCondensed);
 		pauseButton.setLayoutParams(param);
+		pauseButton.setFocusable(false);
 		pauseButton.setVisibility(View.GONE);
 
 		pauseButton.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +95,8 @@ public class SoundIndexItem extends IndexItem {
 		stopButton.setTextColor(holoPurpleBright);
 		stopButton.setTypeface(robotoLightCondensed);
 		stopButton.setLayoutParams(param);
+		stopButton.setFocusable(false);
+		stopButton.setVisibility(View.GONE);
 
 		stopButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -100,6 +105,7 @@ public class SoundIndexItem extends IndexItem {
 				mediaPlayer.prepareAsync();
 
 				pauseButton.setVisibility(View.GONE);
+				stopButton.setVisibility(View.GONE);
 				playButton.setVisibility(View.VISIBLE);
 
 			}

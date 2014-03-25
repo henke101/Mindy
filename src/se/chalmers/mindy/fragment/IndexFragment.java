@@ -8,7 +8,6 @@ import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.pojo.IndexItem;
 import se.chalmers.mindy.pojo.SoundIndexItem;
 import se.chalmers.mindy.util.Tools;
-import se.chalmers.mindy.view.CardAnimationAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
@@ -17,6 +16,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +25,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -59,6 +60,7 @@ public class IndexFragment extends Fragment implements OnScrollListener, OnItemC
 		mListView.setBackgroundColor(Color.rgb(226, 226, 226));
 		mListView.setHeaderDividersEnabled(true);
 		mListView.setOnItemClickListener(this);
+		mListView.setOnItemLongClickListener(this);
 
 		final View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
 
@@ -74,39 +76,36 @@ public class IndexFragment extends Fragment implements OnScrollListener, OnItemC
 
 		// Dummy items
 		dummyItems = new ArrayList<IndexItem>();
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "1 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Kroppsscanning",
+		dummyItems.add(new SoundIndexItem(mActivity, "2 Kroppsscanning",
 				"Kroppscanning kan vara väldigt behagligt och därför somnar många av övningen. Och många beskriver hur de sover djupare, även efter många års sömnproblem.", R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "3 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "4 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "5 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "6 Urban Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "7 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "8 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "9 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "10 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "11 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "12 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexItem(mActivity, "Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
+		dummyItems.add(new SoundIndexItem(mActivity, "13 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
 				R.raw.sample_soundfile));
 
 		IndexAdapter adapter = new IndexAdapter(mActivity, dummyItems);
-		CardAnimationAdapter animationAdapter = new CardAnimationAdapter(adapter);
 
-		// Assign the list view and adapter to each other
-		animationAdapter.setAbsListView(mListView);
-		mListView.setAdapter(animationAdapter);
+		mListView.setAdapter(adapter);
 
 		return root;
 
@@ -132,35 +131,17 @@ public class IndexFragment extends Fragment implements OnScrollListener, OnItemC
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int id, long pos) {
-		dummyItems.remove((int) pos);
+		Log.d("id: " + id, "pos: " + pos);
+		IndexAdapter adapter = (IndexAdapter) ((HeaderViewListAdapter) parent.getAdapter()).getWrappedAdapter();
 
-		IndexAdapter adapter = (IndexAdapter) mListView.getAdapter();
 		adapter.remove((int) pos);
 		adapter.notifyDataSetChanged();
-
-		CardAnimationAdapter animationAdapter = new CardAnimationAdapter(adapter);
-
-		// Assign the list view and adapter to each other
-		animationAdapter.setAbsListView(mListView);
-		mListView.setAdapter(animationAdapter);
 
 	}
 
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view, int id, long pos) {
-		dummyItems.remove((int) pos);
-
-		IndexAdapter adapter = (IndexAdapter) mListView.getAdapter();
-		adapter.remove((int) pos);
-		adapter.notifyDataSetChanged();
-
-		CardAnimationAdapter animationAdapter = new CardAnimationAdapter(adapter);
-
-		// Assign the list view and adapter to each other
-		animationAdapter.setAbsListView(mListView);
-		mListView.setAdapter(animationAdapter);
 
 		return true;
 	}
-
 }
