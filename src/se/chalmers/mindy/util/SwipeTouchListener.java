@@ -8,7 +8,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewTreeObserver;
@@ -26,12 +28,15 @@ public class SwipeTouchListener implements View.OnTouchListener {
 	private Context mContext;
 	private boolean mSwiping;
 	private ListView mListView;
+	private VelocityTracker mVelocityTracker;
 
 	HashMap<Long, Integer> mItemIdTopMap = new HashMap<Long, Integer>();
 	private AbsListAdapter<AbsListItem> mAdapter;
 
-	private static final int SWIPE_DURATION = 250;
+	private static final int SWIPE_DURATION = 500;
 	private static final int MOVE_DURATION = 150;
+	private static final int MIN_VELOCITY = 400;
+	private static final float MAX_VELOCITY = 1500;
 
 	public SwipeTouchListener(Context context, ListView listView) {
 		mContext = context;
@@ -55,6 +60,14 @@ public class SwipeTouchListener implements View.OnTouchListener {
 				// Multi-item swipes not handled
 				return false;
 			}
+
+			if (mVelocityTracker == null) {
+				mVelocityTracker = VelocityTracker.obtain();
+			} else {
+				mVelocityTracker.clear();
+			}
+			mVelocityTracker.addMovement(event);
+
 			mItemPressed = true;
 			mDownX = event.getX();
 			break;
@@ -62,8 +75,14 @@ public class SwipeTouchListener implements View.OnTouchListener {
 			v.setAlpha(1);
 			v.setTranslationX(0);
 			mItemPressed = false;
+			mVelocityTracker.recycle();
 			break;
 		case MotionEvent.ACTION_MOVE: {
+
+			mVelocityTracker.addMovement(event);
+			mVelocityTracker.computeCurrentVelocity(1000);
+			Log.d("X Vel", "" + mVelocityTracker.getXVelocity());
+
 			float x = event.getX() + v.getTranslationX();
 			float deltaX = x - mDownX;
 			float deltaXAbs = Math.abs(deltaX);
@@ -71,7 +90,6 @@ public class SwipeTouchListener implements View.OnTouchListener {
 				if (deltaXAbs > mSwipeSlop) {
 					mSwiping = true;
 					mListView.requestDisallowInterceptTouchEvent(true);
-					// mBackgroundContainer.showBackground(v.getTop(), v.getHeight());
 				}
 			}
 			if (mSwiping) {
@@ -90,7 +108,8 @@ public class SwipeTouchListener implements View.OnTouchListener {
 				float endX;
 				float endAlpha;
 				final boolean remove;
-				if (deltaXAbs > v.getWidth() / 4) {
+
+				if (deltaXAbs > v.getWidth() / 2 || (int) Math.abs(mVelocityTracker.getXVelocity()) > MIN_VELOCITY) {
 					// Greater than a quarter of the width - animate it out
 					fractionCovered = deltaXAbs / v.getWidth();
 					endX = deltaX < 0 ? -v.getWidth() : v.getWidth();
@@ -103,12 +122,14 @@ public class SwipeTouchListener implements View.OnTouchListener {
 					endAlpha = 1;
 					remove = false;
 				}
+
 				// Animate position and alpha of swiped item
-				// NOTE: This is a simplified version of swipe behavior, for the
-				// purposes of this demo about animation. A real version should use
-				// velocity (via the VelocityTracker class) to send the item off or
-				// back at an appropriate speed.
-				long duration = (int) ((1 - fractionCovered) * SWIPE_DURATION);
+				// Depends upon the velocity of the swipe only if the velocity is between MINIMUM_VELOCITY and MAX_VELOCITY,
+				// else fixed values in order to avoid too slow or too fast animation
+				float currentXVelocityAbs = Math.abs(mVelocityTracker.getXVelocity());
+				long duration = (long) (currentXVelocityAbs > MIN_VELOCITY ? 100000 / Math.min(currentXVelocityAbs, MAX_VELOCITY) : (1 - fractionCovered) * SWIPE_DURATION);
+
+				// Disable the list view so that the user cannot interrupt the animation through other interactions
 				mListView.setEnabled(false);
 
 				if (Tools.isRuntimePastIceCreamSandwich()) {
@@ -122,7 +143,6 @@ public class SwipeTouchListener implements View.OnTouchListener {
 							if (remove) {
 								animateRemoval(mListView, v);
 							} else {
-								// mBackgroundContainer.hideBackground();
 								mSwiping = false;
 								mListView.setEnabled(true);
 							}
@@ -131,6 +151,7 @@ public class SwipeTouchListener implements View.OnTouchListener {
 
 				} else {
 
+					// For Ice Cream Sandwich we have to specify the end action with a listener
 					v.animate().setListener(new AnimatorListenerAdapter() {
 
 						@Override
@@ -200,6 +221,19 @@ public class SwipeTouchListener implements View.OnTouchListener {
 						if (startTop != top) {
 							int delta = startTop - top;
 							child.setTranslationY(delta);
+
+							// For Ice Cream Sandwich we have to specify the end action with a listener
+							if (!Tools.isRuntimePastIceCreamSandwich()) {
+								child.animate().setListener(new AnimatorListenerAdapter() {
+
+									@Override
+									public void onAnimationEnd(Animator animation) {
+										mSwiping = false;
+										mListView.setEnabled(true);
+									}
+								});
+							}
+
 							child.animate().setDuration(MOVE_DURATION).translationY(0);
 
 							if (firstAnimation) {
