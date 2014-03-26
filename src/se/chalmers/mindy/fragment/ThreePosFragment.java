@@ -1,5 +1,7 @@
 package se.chalmers.mindy.fragment;
 
+import java.util.ArrayList;
+
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.core.ThreePosAdapter;
@@ -15,12 +17,17 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 
 public class ThreePosFragment extends ListFragment {
 
@@ -28,8 +35,12 @@ public class ThreePosFragment extends ListFragment {
 	SharedPreferences sharedPrefs;
 	Editor editor;
 	TextView expanded;
-
-	ThreePosItem[] threePosItemList = { new ThreePosItem("En jäkligt bra sak", "Jodå, jag lovar", "Just precis!"), new ThreePosItem("En Bra Sak", "En Annan Bra Sak", "Och Ytterliggare En Bra Sak") };
+	String stringInputOne;
+	String stringInputTwo;
+	String stringInputThree;
+	
+	ArrayList<ThreePosItem> threePosItemList = new ArrayList<ThreePosItem>();
+//	ThreePosItem[] threePosItemList = { new ThreePosItem("En jäkligt bra sak", "Jodå, jag lovar", "Just precis!"), new ThreePosItem("En Bra Sak", "En Annan Bra Sak", "Och Ytterliggare En Bra Sak") };
 
 	public ThreePosFragment() {
 
@@ -62,6 +73,65 @@ public class ThreePosFragment extends ListFragment {
 		View addItemHeader = inflater.inflate(R.layout.three_pos_input_header, null);
 		Button addButton = (Button) addItemHeader.findViewById(R.id.add_threepos_button);
 		final LinearLayout inputContainer = (LinearLayout) addItemHeader.findViewById(R.id.input_container);
+		final EditText inputOne = (EditText) addItemHeader.findViewById(R.id.positive_one_input);
+		final EditText inputTwo = (EditText) addItemHeader.findViewById(R.id.positive_two_input);
+		final EditText inputThree = (EditText) addItemHeader.findViewById(R.id.positive_three_input);
+		/**
+		 * Skriver ut logcat men n‰staknappen fungerar ej
+		 */
+		inputOne.setOnEditorActionListener(new OnEditorActionListener(){
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+							
+				boolean handled = false;
+		        if (actionId == EditorInfo.IME_ACTION_NEXT) {
+		        	stringInputOne = inputOne.getText().toString();
+		        	Log.d("String ", "Skriver ut fˆrsta: " + stringInputOne);
+		        	inputOne.clearFocus();
+		        	inputTwo.requestFocus();
+		        	handled = true;
+		        }
+		        return handled;
+			}
+		});
+
+		inputTwo.setOnEditorActionListener(new OnEditorActionListener(){
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				boolean handled = false;
+		        if (actionId == EditorInfo.IME_ACTION_NEXT) {
+		        	stringInputTwo = inputTwo.getText().toString();
+		        	Log.d("String ", "skriver ut andra: " + stringInputTwo);
+		        	inputTwo.clearFocus();
+		        	inputThree.requestFocus();
+		        	handled = true;
+		        }
+		        return handled;
+			}
+		});
+		
+
+		inputThree.setOnEditorActionListener(new OnEditorActionListener(){
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				boolean handled = false;
+		        if (actionId == EditorInfo.IME_ACTION_DONE) {
+		        	stringInputThree = inputThree.getText().toString();
+		        	Log.d("String ", "skriver ut tredje: " + stringInputThree);
+		        	inputThree.clearFocus();
+		        	handled = true;
+		        }
+		        /**
+				 * L‰gger till ett nytt kort utav de tre inmatade orden
+				 * Men var ska vi placera den? Just nu kommer inte tredje ordet med i det nya kortet pga nuvarande placering
+				 */
+				threePosItemList.add(new ThreePosItem(stringInputOne, stringInputTwo, stringInputThree));
+
+		        return handled;
+		       			}
+		});
+
+		
 
 		addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -82,19 +152,9 @@ public class ThreePosFragment extends ListFragment {
 
 			}
 		});
-		//
-		// EditText editText = (EditText) view.findViewById(R.id.positive_one_input);
-		// editText.setOnEditorActionListener(new OnEditorActionListener() {
-		// @Override
-		// public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		// boolean handled = false;
-		// if (actionId == EditorInfo.IME_ACTION_SEND) {
-		// sendMessage();
-		// handled = true;
-		// }
-		// return handled;
-		// }
-		// });
+
+		View inputView = inflater.inflate(R.layout.fragment_threepositive, null);
+
 
 		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
 		setListAdapter(adapter);

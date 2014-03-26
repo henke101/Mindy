@@ -1,5 +1,7 @@
 package se.chalmers.mindy.core;
 
+import java.util.ArrayList;
+
 import se.chalmers.mindy.R;
 import android.app.Activity;
 import android.content.Context;
@@ -16,9 +18,9 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 	int mCurrentlyFocusedId;
 	private int mLastFocusedPosition;
 
-	ThreePosItem[] data = null;
+	ArrayList<ThreePosItem> data = null;
 
-	public ThreePosAdapter(final Context context, final int layoutResourceId, final ThreePosItem[] data) {
+	public ThreePosAdapter(final Context context, final int layoutResourceId, final ArrayList<ThreePosItem> data) {
 		super(context, layoutResourceId, data);
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
@@ -40,9 +42,9 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 		holder.positiveTwo = (TextView) row.findViewById(R.id.positive_two_label);
 		holder.positiveThree = (TextView) row.findViewById(R.id.positive_three_label);
 
-		holder.positiveOne.setText(data[position].getPositiveOne());
-		holder.positiveTwo.setText(data[position].getPositiveTwo());
-		holder.positiveThree.setText(data[position].getPositiveThree());
+		holder.positiveOne.setText(data.get(position).getPositiveOne()); 
+		holder.positiveTwo.setText(data.get(position).getPositiveTwo()); 
+		holder.positiveThree.setText(data.get(position).getPositiveThree());
 
 		return row;
 	}
