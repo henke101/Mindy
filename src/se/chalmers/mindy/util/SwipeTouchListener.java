@@ -2,7 +2,8 @@ package se.chalmers.mindy.util;
 
 import java.util.HashMap;
 
-import se.chalmers.mindy.core.MindyListAdapter;
+import se.chalmers.mindy.core.AbsListAdapter;
+import se.chalmers.mindy.pojo.AbsListItem;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
@@ -27,7 +28,7 @@ public class SwipeTouchListener implements View.OnTouchListener {
 	private ListView mListView;
 
 	HashMap<Long, Integer> mItemIdTopMap = new HashMap<Long, Integer>();
-	private MindyListAdapter mAdapter;
+	private AbsListAdapter<AbsListItem> mAdapter;
 
 	private static final int SWIPE_DURATION = 250;
 	private static final int MOVE_DURATION = 150;
@@ -35,10 +36,10 @@ public class SwipeTouchListener implements View.OnTouchListener {
 	public SwipeTouchListener(Context context, ListView listView) {
 		mContext = context;
 		mListView = listView;
-		if (listView.getAdapter().getClass() == HeaderViewListAdapter.class) {
-			mAdapter = (MindyListAdapter) ((HeaderViewListAdapter) listView.getAdapter()).getWrappedAdapter();
+		if (listView.getAdapter() instanceof HeaderViewListAdapter) {
+			mAdapter = (AbsListAdapter<AbsListItem>) ((HeaderViewListAdapter) listView.getAdapter()).getWrappedAdapter();
 		} else {
-			mAdapter = (MindyListAdapter) listView.getAdapter();
+			mAdapter = (AbsListAdapter<AbsListItem>) listView.getAdapter();
 		}
 	}
 
@@ -177,8 +178,9 @@ public class SwipeTouchListener implements View.OnTouchListener {
 			}
 		}
 		// Delete the item from the adapter
-		int position = mListView.getPositionForView(viewToRemove);
-		mAdapter.remove(mAdapter.getItem(position));
+		// -1 is because the position index includes the list header
+		int position = mListView.getPositionForView(viewToRemove) - 1;
+		mAdapter.remove(position);
 
 		final ViewTreeObserver observer = listview.getViewTreeObserver();
 		observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -241,5 +243,4 @@ public class SwipeTouchListener implements View.OnTouchListener {
 			}
 		});
 	}
-
 }

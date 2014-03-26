@@ -1,18 +1,14 @@
 package se.chalmers.mindy.pojo;
 
-import java.util.List;
-
 import android.content.Context;
-import android.view.View;
 
-public abstract class IndexItem {
+public abstract class AbsListItem {
 
-	private Context context;
-	private String title, description;
+	protected Context context;
+	protected String title, description;
 
-	public IndexItem(Context context, String name, String description) {
+	public AbsListItem(Context context, String name, String description) {
 		super();
-
 		this.context = context;
 
 		title = name;
@@ -38,11 +34,4 @@ public abstract class IndexItem {
 	public Context getContext() {
 		return context;
 	}
-
-	/**
-	 * Method used to get the button listeners 
-	 * @return
-	 */
-	public abstract List<View> getSubviews();
-
 }

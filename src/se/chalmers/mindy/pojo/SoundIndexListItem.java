@@ -13,18 +13,18 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class SoundIndexItem extends IndexItem {
+public class SoundIndexListItem extends IndexListItem {
 
 	private int audioContentResId;
 	private MediaPlayer mediaPlayer;
 
-	public SoundIndexItem(Context context, String name, String description) {
+	public SoundIndexListItem(Context context, String name, String description) {
 		super(context, name, description);
 
 		audioContentResId = 0;
 	}
 
-	public SoundIndexItem(Context context, String name, String description, int audioContentResId) {
+	public SoundIndexListItem(Context context, String name, String description, int audioContentResId) {
 		super(context, name, description);
 
 		this.audioContentResId = audioContentResId;
