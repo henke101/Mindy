@@ -1,18 +1,22 @@
-package se.chalmers.mindy.core;
-
-import java.util.List;
+package se.chalmers.mindy.pojo;
 
 import android.content.Context;
-import android.view.View;
 
-public abstract class IndexItem {
+/**
+ * 
+ * Abstract parent class for list items. In order to use the SwipeTouchListener, the list adapter used must be an AbsListAdapter subclass with
+ * AbsListItem items in it.  
+ * 
+ * @author Viktor Åkerskog
+ *
+ */
+public abstract class AbsListItem {
 
-	private Context context;
-	private String title, description;
+	protected Context context;
+	protected String title, description;
 
-	public IndexItem(Context context, String name, String description) {
+	public AbsListItem(Context context, String name, String description) {
 		super();
-
 		this.context = context;
 
 		title = name;
@@ -38,11 +42,4 @@ public abstract class IndexItem {
 	public Context getContext() {
 		return context;
 	}
-
-	/**
-	 * Method used to get the button listeners 
-	 * @return
-	 */
-	public abstract List<View> getSubviews();
-
 }

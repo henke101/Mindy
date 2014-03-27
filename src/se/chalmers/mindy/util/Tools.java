@@ -15,6 +15,10 @@ import android.widget.ImageView;
 
 public class Tools {
 
+	public static boolean isRuntimePastIceCreamSandwich() {
+		return android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1;
+	}
+
 	public static Bitmap renderBlur(Context context, Bitmap originalBitmap) {
 
 		Bitmap outBitmap = originalBitmap.copy(originalBitmap.getConfig(), true);

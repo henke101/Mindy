@@ -4,67 +4,86 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.pojo.IndexListItem;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
-public class IndexAdapter extends ArrayAdapter<IndexItem> {
+/**
+ * 
+ * 
+ * 
+ * @author Viktor Åkerskog
+ *
+ */
+public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 
-	Context context;
-	IndexItem data[] = null;
+	private LayoutInflater mLayoutInflater;
 
-	Typeface robotoThin;
-	Typeface robotoLight;
+	private Typeface robotoThin;
+	private Typeface robotoLight;
+	private int lastPosition;
 
-	public IndexAdapter(final Context context, final ArrayList<IndexItem> data) {
-		this(context, data.toArray(new IndexItem[data.size()]));
-	}
-
-	public IndexAdapter(final Context context, final IndexItem[] data) {
+	public IndexAdapter(final Context context, final ArrayList<IndexListItem> data) {
 		// This will only work with the index_card_item XML, so having the
 		// resID as dynamic merely adds complexity
 		super(context, R.layout.index_card_item, data);
-		this.context = context;
-		this.data = data;
 
 		robotoThin = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_thin.ttf");
 		robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_light.ttf");
+
+		mLayoutInflater = ((Activity) context).getLayoutInflater();
 	}
 
 	@Override
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		LinearLayout row = (LinearLayout) convertView;
-		IndexItemHolder holder = null;
+
+		IndexListItem item = data.get(position);
 
 		if (row == null) {
-			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-
 			// This will only work with the index_card_item XML, so having the
 			// resID as dynamic merely adds complexity
-			row = (LinearLayout) inflater.inflate(R.layout.index_card_item, parent, false);
+			row = (LinearLayout) mLayoutInflater.inflate(R.layout.index_card_item, parent, false);
 
-			holder = new IndexItemHolder();
-
-			holder.title = (TextView) row.findViewById(R.id.item_title);
-			holder.title.setText(data[position].getTitle());
-			holder.title.setTypeface(robotoThin);
-
-			holder.description = (TextView) row.findViewById(R.id.item_description);
-			holder.description.setText(data[position].getDescription());
-			holder.description.setTypeface(robotoLight);
-
-			List<View> subviews = data[position].getSubviews();
-			LinearLayout ll = (LinearLayout) row.findViewById(R.id.list_item_contents);
-			for (View subview : subviews) {
-				ll.addView(subview);
-			}
 		}
+
+		// Initialize views
+		IndexItemHolder holder = new IndexItemHolder();
+		holder.title = (TextView) row.findViewById(R.id.item_title);
+		holder.title.setText(item.getTitle());
+		holder.title.setTypeface(robotoThin);
+
+		holder.description = (TextView) row.findViewById(R.id.item_description);
+		holder.description.setText(item.getDescription());
+		holder.description.setTypeface(robotoLight);
+
+		List<View> subviews = item.getSubviews();
+		LinearLayout ll = (LinearLayout) row.findViewById(R.id.list_item_contents);
+
+		// Clear the view
+		ll.removeAllViews();
+		for (View subview : subviews) {
+			ll.addView(subview);
+		}
+
+		// If this view came from outside the screen, animate its entry
+		if (position > lastPosition) {
+			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.up_from_bottom);
+			row.startAnimation(animation);
+		}
+		lastPosition = position;
+
+		// Set touch listener to detect swipes
+		row.setOnTouchListener(getSwipeListenerInstance(context, (ListView) parent));
 
 		return row;
 	}
