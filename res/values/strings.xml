@@ -38,5 +38,6 @@
     <string name="eval_question_4_answer_2">Dåligt självförtroende</string>
     <string name="eval_question_4_answer_3">Osäkerhet i grupparbete</string>
     <string name="eval_question_4_answer_4">Tror inte på min förmåga</string>
+    <string name="eval_done">Fortsätt</string>
 
 </resources>

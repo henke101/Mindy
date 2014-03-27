@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
@@ -31,7 +31,6 @@
             android:id="@+id/eval_answers_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal" >
 
@@ -248,7 +247,7 @@
             android:text="@string/eval_question_4_text"
             android:textSize="15sp" />
 
-       <RelativeLayout
+        <RelativeLayout
             android:id="@+id/eval_answers_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -267,17 +266,13 @@
                 android:id="@+id/answers_4_option_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-               />
+                android:layout_centerHorizontal="true" />
 
             <CheckBox
                 android:id="@+id/answers_4_option_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                />
-
-          
+                android:layout_alignParentRight="true" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -318,6 +313,11 @@
             android:layout_marginTop="15dp"
             android:background="#B8B894" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/eval_done" />
     </LinearLayout>
 
 </ScrollView>
