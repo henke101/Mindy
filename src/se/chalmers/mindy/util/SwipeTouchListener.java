@@ -8,7 +8,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -61,17 +60,22 @@ public class SwipeTouchListener implements View.OnTouchListener {
 				return false;
 			}
 
+			// Get the velocity tracker, in order to track swipes made by the user
 			if (mVelocityTracker == null) {
 				mVelocityTracker = VelocityTracker.obtain();
 			} else {
 				mVelocityTracker.clear();
 			}
+			// Add this movement event to tracker
 			mVelocityTracker.addMovement(event);
 
 			mItemPressed = true;
+
+			// Get the X position for the view when it was pressed
 			mDownX = event.getX();
 			break;
 		case MotionEvent.ACTION_CANCEL:
+			// Swipe was cancelled, restore everything and recycle the velocity tracker
 			v.setAlpha(1);
 			v.setTranslationX(0);
 			mItemPressed = false;
@@ -81,20 +85,26 @@ public class SwipeTouchListener implements View.OnTouchListener {
 			break;
 		case MotionEvent.ACTION_MOVE: {
 
+			// Add this movement event to tracker
 			mVelocityTracker.addMovement(event);
+			// Compute the current X (horizontal) velocity. Any calls to getXVelocity() or getYVelocity() will give the values computed here
 			mVelocityTracker.computeCurrentVelocity(1000);
-			Log.d("X Vel", "" + mVelocityTracker.getXVelocity());
 
+			// Get current X position
 			float x = event.getX() + v.getTranslationX();
+
+			// Get (absolute) X difference
 			float deltaX = x - mDownX;
 			float deltaXAbs = Math.abs(deltaX);
 			if (!mSwiping) {
 				if (deltaXAbs > mSwipeSlop) {
+					// Request the listview to avoid interfering with this view
 					mSwiping = true;
 					mListView.requestDisallowInterceptTouchEvent(true);
 				}
 			}
 			if (mSwiping) {
+				// Move the view and set the opacity to reflect the swipe
 				v.setTranslationX(x - mDownX);
 				v.setAlpha(1 - deltaXAbs / v.getWidth());
 			}
@@ -112,7 +122,8 @@ public class SwipeTouchListener implements View.OnTouchListener {
 				final boolean remove;
 
 				if (deltaXAbs > v.getWidth() / 2 || (int) Math.abs(mVelocityTracker.getXVelocity()) > MIN_VELOCITY) {
-					// Greater than a quarter of the width - animate it out
+					// Greater than half the width - animate it out
+					// Will also animate out if the swipe velocity was high enough - regardless of swipe distance
 					fractionCovered = deltaXAbs / v.getWidth();
 					endX = deltaX < 0 ? -v.getWidth() : v.getWidth();
 					endAlpha = 0;
@@ -192,17 +203,21 @@ public class SwipeTouchListener implements View.OnTouchListener {
 	 */
 	private void animateRemoval(final ListView listview, View viewToRemove) {
 		int firstVisiblePosition = listview.getFirstVisiblePosition();
+
 		for (int i = 0; i < listview.getChildCount(); ++i) {
 			View child = listview.getChildAt(i);
 			if (child != viewToRemove) {
 				int position = firstVisiblePosition + i;
 				long itemId = mAdapter.getItemId(position);
+				// Cache the current top position of this view in the map, before removing the view we want gone
 				mItemIdTopMap.put(itemId, child.getTop());
 			}
 		}
 		// Delete the item from the adapter
 		// -1 is because the position index includes the list header
 		int position = mListView.getPositionForView(viewToRemove) - 1;
+
+		// remove() method calls notifyDataSetChanged() by itself, no need to do it here
 		mAdapter.remove(position);
 
 		final ViewTreeObserver observer = listview.getViewTreeObserver();
@@ -210,15 +225,27 @@ public class SwipeTouchListener implements View.OnTouchListener {
 			@SuppressLint("NewApi")
 			@Override
 			public boolean onPreDraw() {
+				// We no longer want to catch onPreDraw events
 				observer.removeOnPreDrawListener(this);
+
 				boolean firstAnimation = true;
 				int firstVisiblePosition = listview.getFirstVisiblePosition();
+
 				for (int i = 0; i < listview.getChildCount(); ++i) {
+					// Get the current view
 					final View child = listview.getChildAt(i);
+
+					// Get the view's position in the adapter
 					int position = firstVisiblePosition + i;
+
+					// Get the ID of this view from the list adapter
 					long itemId = mAdapter.getItemId(position);
+
+					// Get the starting top position from the position map
 					Integer startTop = mItemIdTopMap.get(itemId);
 					int top = child.getTop();
+
+					// View was visible before, just needs to be moved
 					if (startTop != null) {
 						if (startTop != top) {
 							int delta = startTop - top;
@@ -243,7 +270,6 @@ public class SwipeTouchListener implements View.OnTouchListener {
 									child.animate().withEndAction(new Runnable() {
 										@Override
 										public void run() {
-											// mBackgroundContainer.hideBackground();
 											mSwiping = false;
 											mListView.setEnabled(true);
 										}
@@ -253,9 +279,8 @@ public class SwipeTouchListener implements View.OnTouchListener {
 							}
 						}
 					} else {
-						// Animate new views along with the others. The catch is that they did not
-						// exist in the start state, so we must calculate their starting position
-						// based on neighboring views.
+						// Animate new views along with the others. They did not exist in the start state,
+						// so we must calculate their starting position based on neighboring views.
 						int childHeight = child.getHeight() + listview.getDividerHeight();
 						startTop = top + (i > 0 ? childHeight : -childHeight);
 						int delta = startTop - top;
