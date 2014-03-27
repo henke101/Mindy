@@ -25,6 +25,7 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 	private Typeface robotoThin;
 	private Typeface robotoLight;
 	private int lastPosition;
+	private SwipeTouchListener mSwipeListener;
 
 	public IndexAdapter(final Context context, final ArrayList<IndexListItem> data) {
 		// This will only work with the index_card_item XML, so having the
@@ -68,13 +69,13 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 			ll.addView(subview);
 		}
 
-		if (position >= lastPosition) {
+		if (position > lastPosition) {
 			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.up_from_bottom);
 			row.startAnimation(animation);
 		}
 		lastPosition = position;
 
-		row.setOnTouchListener(new SwipeTouchListener(context, (ListView) parent));
+		row.setOnTouchListener(getSwipeListenerInstance(context, (ListView) parent));
 
 		return row;
 	}

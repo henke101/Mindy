@@ -2,13 +2,16 @@ package se.chalmers.mindy.core;
 
 import java.util.ArrayList;
 
+import se.chalmers.mindy.util.SwipeTouchListener;
 import android.content.Context;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public abstract class AbsListAdapter<E> extends ArrayAdapter<E> {
 
 	protected final Context context;
 	protected final ArrayList<E> data;
+	private SwipeTouchListener mSwipeListener;
 
 	public AbsListAdapter(Context context, int resource, ArrayList<E> data) {
 		super(context, resource, data);
@@ -47,6 +50,14 @@ public abstract class AbsListAdapter<E> extends ArrayAdapter<E> {
 
 	public ArrayList<E> getData() {
 		return data;
+	}
+
+	public SwipeTouchListener getSwipeListenerInstance(Context context, ListView listView) {
+		if (mSwipeListener == null) {
+			mSwipeListener = new SwipeTouchListener(context, listView);
+		}
+
+		return mSwipeListener;
 	}
 
 	@Override

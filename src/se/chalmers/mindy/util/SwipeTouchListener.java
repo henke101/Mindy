@@ -34,7 +34,7 @@ public class SwipeTouchListener implements View.OnTouchListener {
 	private AbsListAdapter<AbsListItem> mAdapter;
 
 	private static final int SWIPE_DURATION = 500;
-	private static final int MOVE_DURATION = 150;
+	private static final int MOVE_DURATION = 300;
 	private static final int MIN_VELOCITY = 400;
 	private static final float MAX_VELOCITY = 1500;
 
@@ -75,7 +75,9 @@ public class SwipeTouchListener implements View.OnTouchListener {
 			v.setAlpha(1);
 			v.setTranslationX(0);
 			mItemPressed = false;
-			mVelocityTracker.recycle();
+			if (mSwiping) {
+				mVelocityTracker.recycle();
+			}
 			break;
 		case MotionEvent.ACTION_MOVE: {
 
