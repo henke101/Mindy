@@ -60,10 +60,9 @@ public class ExerciseFragment extends ListFragment{
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				Fragment fragmentSleepingPill = new SleepingPillFragment();
-				Fragment fragmentEvaluation = new EvaluationFragment();
 				// Insert the fragment by replacing any existing fragment
 				FragmentManager fragmentManager = getFragmentManager();
-				fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
+				fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
 			}
 		});
 		

@@ -2,12 +2,14 @@ package se.chalmers.mindy.core;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
+import se.chalmers.mindy.fragment.EvaluationFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -101,7 +103,19 @@ public class MainActivity extends Activity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-
+		
+		SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+		
+		if(!sharedPref.contains("started")){
+		Fragment fragmentEvaluation = new EvaluationFragment();
+		// Insert the fragment by replacing any existing fragment
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
+		
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt("started", 1);
+		editor.commit();
+		}
 	}
 
 	@Override
