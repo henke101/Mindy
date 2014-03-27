@@ -314,10 +314,12 @@
             android:background="#B8B894" />
 
         <Button
+            android:id="@+id/eval_submit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/eval_done" />
+            android:text="@string/eval_submit"
+            android:layout_margin="15dp" />
     </LinearLayout>
 
 </ScrollView>
