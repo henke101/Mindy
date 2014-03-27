@@ -2,6 +2,14 @@ package se.chalmers.mindy.pojo;
 
 import android.content.Context;
 
+/**
+ * 
+ * Abstract parent class for list items. In order to use the SwipeTouchListener, the list adapter used must be an AbsListAdapter subclass with
+ * AbsListItem items in it.  
+ * 
+ * @author Viktor Åkerskog
+ *
+ */
 public abstract class AbsListItem {
 
 	protected Context context;

@@ -5,7 +5,6 @@ import java.util.List;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.pojo.IndexListItem;
-import se.chalmers.mindy.util.SwipeTouchListener;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -18,6 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ * 
+ * 
+ * 
+ * @author Viktor Åkerskog
+ *
+ */
 public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 
 	private LayoutInflater mLayoutInflater;
@@ -25,7 +31,6 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 	private Typeface robotoThin;
 	private Typeface robotoLight;
 	private int lastPosition;
-	private SwipeTouchListener mSwipeListener;
 
 	public IndexAdapter(final Context context, final ArrayList<IndexListItem> data) {
 		// This will only work with the index_card_item XML, so having the
@@ -51,6 +56,7 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 
 		}
 
+		// Initialize views
 		IndexItemHolder holder = new IndexItemHolder();
 		holder.title = (TextView) row.findViewById(R.id.item_title);
 		holder.title.setText(item.getTitle());
@@ -69,12 +75,14 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 			ll.addView(subview);
 		}
 
+		// If this view came from outside the screen, animate its entry
 		if (position > lastPosition) {
 			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.up_from_bottom);
 			row.startAnimation(animation);
 		}
 		lastPosition = position;
 
+		// Set touch listener to detect swipes
 		row.setOnTouchListener(getSwipeListenerInstance(context, (ListView) parent));
 
 		return row;

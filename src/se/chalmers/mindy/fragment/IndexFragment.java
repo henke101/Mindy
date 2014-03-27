@@ -16,21 +16,16 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.HeaderViewListAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class IndexFragment extends Fragment implements OnScrollListener, OnItemClickListener, OnItemLongClickListener {
+public class IndexFragment extends Fragment implements OnScrollListener {
 	MainActivity mActivity;
 	SharedPreferences sharedPrefs;
 	Editor editor;
@@ -59,8 +54,6 @@ public class IndexFragment extends Fragment implements OnScrollListener, OnItemC
 		mListView.setDividerHeight(0);
 		mListView.setBackgroundColor(Color.rgb(226, 226, 226));
 		mListView.setHeaderDividersEnabled(true);
-		mListView.setOnItemClickListener(this);
-		mListView.setOnItemLongClickListener(this);
 
 		final View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
 
@@ -120,7 +113,7 @@ public class IndexFragment extends Fragment implements OnScrollListener, OnItemC
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		if (visibleItemCount > firstVisibleItem) {
-			mActivity.setNavigationBarBackgroundTransparency(view, mListHeader.getHeight(), firstVisibleItem);
+			mActivity.setNavigationBarBackgroundTransparency(view, mListHeader.getHeight());
 		}
 	}
 
@@ -129,19 +122,4 @@ public class IndexFragment extends Fragment implements OnScrollListener, OnItemC
 		// Do nothing
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int id, long pos) {
-		Log.d("id: " + id, "pos: " + pos);
-		IndexAdapter adapter = (IndexAdapter) ((HeaderViewListAdapter) parent.getAdapter()).getWrappedAdapter();
-
-		adapter.remove((int) pos);
-		adapter.notifyDataSetChanged();
-
-	}
-
-	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view, int id, long pos) {
-
-		return true;
-	}
 }

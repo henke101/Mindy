@@ -13,6 +13,12 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+/**
+ * Class used for audio views in index page. Takes a resource id for the sound file and plays this sound file when the user presses Play
+ * 
+ * @author Viktor Åkerskog
+ *
+ */
 public class SoundIndexListItem extends IndexListItem {
 
 	private int audioContentResId;

@@ -17,7 +17,11 @@ import android.widget.HeaderViewListAdapter;
 import android.widget.ListView;
 
 /**
- * Handle touch events to fade/move dragged items as they are swiped out
+ * Class responsible for handling touch events to fade/move dragged items as they are swiped out.
+ * AbsListAdapter class has a convenience method for getting an instance of this class.
+ * 
+ * @author Viktor Åkerskog
+ *
  */
 public class SwipeTouchListener implements View.OnTouchListener {
 

@@ -21,12 +21,14 @@ public abstract class AbsListAdapter<E> extends ArrayAdapter<E> {
 	}
 
 	public E remove(int position) {
+		// Remove the item at position from data list
 		E item = data.get(position);
 		data.remove(position);
+
+		// Redraw list
 		notifyDataSetChanged();
 
 		return item;
-
 	}
 
 	@Override
