@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 		
 		SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
 		
-		if(true/*!sharedPref.contains("started")*/){
+		if(!sharedPref.contains("started")){
 		Fragment fragmentEvaluation = new EvaluationFragment();
 		// Insert the fragment by replacing any existing fragment
 		FragmentManager fragmentManager = getFragmentManager();
