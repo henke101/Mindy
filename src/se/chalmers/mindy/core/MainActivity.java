@@ -205,13 +205,20 @@ public class MainActivity extends Activity {
 		getActionBar().setTitle(mTitle);
 	}
 
-	public void setNavigationBarBackgroundTransparency(AbsListView view, int listHeaderHeight, int firstVisibleItem) {
+	/**
+	 * Sets the transparency of the action bar depending on the scroll position of a list view. Used by fragments.
+	 * 
+	 * @param listView the list to depend transparency upon
+	 * @param listHeaderHeight the height of the header in the list
+	 */
+	public void setNavigationBarBackgroundTransparency(AbsListView listView, int listHeaderHeight) {
 
 		// Get the first visible child
-		View child = view.getChildAt(firstVisibleItem);
+		int firstVisiblePosition = listView.getFirstVisiblePosition();
+		View child = listView.getChildAt(firstVisiblePosition);
 
 		final int headerHeight = listHeaderHeight - getActionBar().getHeight();
-		final float ratio = (float) Math.min(Math.max(Math.abs(child.getTop()) + child.getHeight() * firstVisibleItem, 0), headerHeight) / headerHeight;
+		final float ratio = (float) Math.min(Math.max(Math.abs(child.getTop()) + child.getHeight() * firstVisiblePosition, 0), headerHeight) / headerHeight;
 		final int newAlpha = (int) (ratio * 255);
 		mActionBarBackgroundDrawable.setAlpha(newAlpha);
 

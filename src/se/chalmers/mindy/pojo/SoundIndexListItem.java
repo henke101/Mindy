@@ -1,4 +1,4 @@
-package se.chalmers.mindy.core;
+package se.chalmers.mindy.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +13,24 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class SoundIndexItem extends IndexItem {
+/**
+ * Class used for audio views in index page. Takes a resource id for the sound file and plays this sound file when the user presses Play
+ * 
+ * @author Viktor Åkerskog
+ *
+ */
+public class SoundIndexListItem extends IndexListItem {
 
 	private int audioContentResId;
 	private MediaPlayer mediaPlayer;
 
-	public SoundIndexItem(Context context, String name, String description) {
+	public SoundIndexListItem(Context context, String name, String description) {
 		super(context, name, description);
 
 		audioContentResId = 0;
 	}
 
-	public SoundIndexItem(Context context, String name, String description, int audioContentResId) {
+	public SoundIndexListItem(Context context, String name, String description, int audioContentResId) {
 		super(context, name, description);
 
 		this.audioContentResId = audioContentResId;
@@ -55,6 +61,7 @@ public class SoundIndexItem extends IndexItem {
 		playButton.setTextColor(holoPurpleBright);
 		playButton.setTypeface(robotoLightCondensed);
 		playButton.setLayoutParams(param);
+		playButton.setFocusable(false);
 
 		playButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -62,6 +69,7 @@ public class SoundIndexItem extends IndexItem {
 				mediaPlayer.start();
 				playButton.setVisibility(View.GONE);
 				pauseButton.setVisibility(View.VISIBLE);
+				stopButton.setVisibility(View.VISIBLE);
 			}
 		});
 
@@ -72,6 +80,7 @@ public class SoundIndexItem extends IndexItem {
 		pauseButton.setTextColor(holoPurpleBright);
 		pauseButton.setTypeface(robotoLightCondensed);
 		pauseButton.setLayoutParams(param);
+		pauseButton.setFocusable(false);
 		pauseButton.setVisibility(View.GONE);
 
 		pauseButton.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +101,8 @@ public class SoundIndexItem extends IndexItem {
 		stopButton.setTextColor(holoPurpleBright);
 		stopButton.setTypeface(robotoLightCondensed);
 		stopButton.setLayoutParams(param);
+		stopButton.setFocusable(false);
+		stopButton.setVisibility(View.GONE);
 
 		stopButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -100,6 +111,7 @@ public class SoundIndexItem extends IndexItem {
 				mediaPlayer.prepareAsync();
 
 				pauseButton.setVisibility(View.GONE);
+				stopButton.setVisibility(View.GONE);
 				playButton.setVisibility(View.VISIBLE);
 
 			}
