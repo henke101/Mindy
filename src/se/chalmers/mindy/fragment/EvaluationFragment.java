@@ -2,6 +2,7 @@ package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.util.EvaluationResult;
+import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import se.chalmers.mindy.util.NameValuePair;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -111,6 +112,7 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 		resultsThree.setOnCheckedChangeListener(this);
 		resultsFour.setOnCheckedChangeListener(this);
 		submitButton.setEnabled(false);
+		submitButton.setOnClickListener(this);
 
 		robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
 		robotoCondensedLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
@@ -139,12 +141,24 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 
 	@Override
 	public void onClick(View v) {
+		Log.v(getTag(), "Reached listener");
 		int clicked =v.getId();
 		switch(clicked){
 		case R.id.eval_submit_button:
-			result.putResult(nvpStudyResults);
-			result.putResult(nvpStudyTechnique);
-			result.putResult(nvpStudyBalance);
+			Log.v(getTag(), "Reached id");
+			//I posted the results in these categories for now, this might be redone later
+			//Some results might be both mindfulness and study technique for example
+			if (nvpTechniqueImpact != null){
+				result.putMindulnessResult(nvpTechniqueImpact);
+			}
+			result.putMindulnessResult(nvpStudyResults);
+			result.putStudyTechniqueResult(nvpStudyTechnique);
+			result.putStudyTechniqueResult(nvpStudyBalance);
+
+			MindyDatabaseAdapter mda = new MindyDatabaseAdapter(getActivity());
+			mda.open();
+			mda.insertNewTestResults(result);
+			mda.close();
 
 			Fragment indexFragment = new IndexFragment();
 			// Insert the fragment by replacing any existing fragment
