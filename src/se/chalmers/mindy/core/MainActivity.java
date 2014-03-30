@@ -2,6 +2,7 @@ package se.chalmers.mindy.core;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
+import se.chalmers.mindy.fragment.DiaryListFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
@@ -9,6 +10,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ListFragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -137,16 +139,16 @@ public class MainActivity extends Activity {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentIndex).commit();
 		}
-		
+
 		if(position==1){
-		// Create a new fragment and specify the planet to show based on
-		// position
-		Fragment fragmentExercise = new ExerciseFragment();
-		
-		// Insert the fragment by replacing any existing fragment
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame,
-		fragmentExercise).commit();
+			// Create a new fragment and specify the planet to show based on
+			// position
+			Fragment fragmentExercise = new ExerciseFragment();
+
+			// Insert the fragment by replacing any existing fragment
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.content_frame,
+					fragmentExercise).commit();
 		}
 
 		/*
@@ -171,7 +173,12 @@ public class MainActivity extends Activity {
 		}
 		if (position == 4) {
 			//Studiedagboken
-			
+			// Create a new fragment and specify the planet to show based on
+			// position
+			ListFragment fragmentDiary = new DiaryListFragment();
+			// Insert the fragment by replacing any existing fragment
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).commit();
 		}
 		// Highlight the selected item, update the title, and close the drawer
 		mDrawerList.setItemChecked(position, true);
