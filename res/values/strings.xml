@@ -12,6 +12,13 @@
     <string name="about_text">Mindy är din hjälpreda oavsett om du är stressad över studierna eller behöver hjälp att strukturera upp studierna. Med hjälp av Mindfulness, Positiv psykologi och Studieteknik kommer denna skräddarsydda app hitta lämpliga övningar åt dig.</string>
     <string name="about_developers">Utvecklad av:\n S. Andersson, H. Andersson, P. Eriksson, R. Hallberg, M. Thyren och V. Åkerskog.</string>
     <string name="logo_description">Mindy Logo</string>
-
+    <string name="title_note">Mindy</string>
+    <string name="body_note">Body</string>
+    <string name="confirm_note">Bekräfta</string>
+    <string name="menu_delete">Delete Note</string>
+    <string name="menu_insert">Add Note</string>
+    <string name="title">Title</string>
+    <string name="body">Body</string>
+    <string name="confirm">Confirm</string>
 
 </resources>
