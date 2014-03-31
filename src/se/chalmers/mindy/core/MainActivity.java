@@ -5,10 +5,14 @@ import se.chalmers.mindy.fragment.AboutFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
+import se.chalmers.mindy.util.MindyDatabaseAdapter;
+import se.chalmers.mindy.util.TempThreePos;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -20,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -43,11 +48,30 @@ public class MainActivity extends Activity {
 
 		getActionBar().setBackgroundDrawable(mActionBarBackgroundDrawable);
 
+		// TODO TEMPYTEMP
+		MindyDatabaseAdapter dbAdapter = new MindyDatabaseAdapter(this);
+		dbAdapter.open();
+
+		dbAdapter.deleteAllPositives();
+		dbAdapter.insertNewThreePositive(new TempThreePos("Ferp", "Derp", "Nerp"));
+		dbAdapter.insertNewThreePositive(new TempThreePos("Merp", "Derp", "Nerp"));
+		// TODO /TEMPYTEMP
+
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
 		// Get the section name array for Navigation Drawer
 		sectionNames = getResources().getStringArray(R.array.section_names);
+
+		final int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+		final TextView title = (TextView) getWindow().findViewById(actionBarTitle);
+
+		if (title != null) {
+			Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/roboto_light.ttf");
+			title.setTypeface(typeface);
+			title.setTextSize(22.0f);
+			title.setPadding(5, 1, 0, 0);
+		}
 
 		// Set the adapter for the list view
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, sectionNames));

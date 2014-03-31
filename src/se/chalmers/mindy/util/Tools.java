@@ -1,6 +1,10 @@
 package se.chalmers.mindy.util;
 
 import java.lang.ref.WeakReference;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -11,9 +15,34 @@ import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
 import android.support.v8.renderscript.RenderScript;
 import android.support.v8.renderscript.ScriptIntrinsicBlur;
+import android.util.Log;
 import android.widget.ImageView;
 
 public class Tools {
+	public static String getCurrentDateTime() {
+		return getStringFromDate(new Date());
+	}
+
+	public static String getStringFromDate(Date date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+		return dateFormat.format(date);
+	}
+
+	public static Date getDateFromString(String dateString) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+		Date date;
+
+		try {
+			date = dateFormat.parse(dateString);
+		} catch (ParseException e) {
+			Log.e("Tools.getDateFromString() error: Cannot parse string ", e.getLocalizedMessage());
+			date = new Date();
+		}
+
+		return date;
+	}
 
 	public static boolean isRuntimePastIceCreamSandwich() {
 		return android.os.Build.VERSION.SDK_INT > android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1;
