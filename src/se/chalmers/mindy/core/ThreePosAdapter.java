@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import se.chalmers.mindy.R;
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,8 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 		holder.positiveOne.setText(data.get(position).getPositiveOne()); 
 		holder.positiveTwo.setText(data.get(position).getPositiveTwo()); 
 		holder.positiveThree.setText(data.get(position).getPositiveThree());
-
+		Log.d("Positive three ", "skriver ut : " + data.get(position).getPositiveThree());
+    	
 		return row;
 	}
 

@@ -10,6 +10,7 @@ import se.chalmers.mindy.util.CollapseAnimation;
 import se.chalmers.mindy.util.ExpanderAnimation;
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.view.KeyEvent;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 
 public class ThreePosFragment extends ListFragment {
 
@@ -39,9 +42,9 @@ public class ThreePosFragment extends ListFragment {
 	String stringInputOne;
 	String stringInputTwo;
 	String stringInputThree;
-	
+
 	ArrayList<ThreePosItem> threePosItemList = new ArrayList<ThreePosItem>();
-//	ThreePosItem[] threePosItemList = { new ThreePosItem("En jäkligt bra sak", "Jodå, jag lovar", "Just precis!"), new ThreePosItem("En Bra Sak", "En Annan Bra Sak", "Och Ytterliggare En Bra Sak") };
+	//	ThreePosItem[] threePosItemList = { new ThreePosItem("En jäkligt bra sak", "Jodå, jag lovar", "Just precis!"), new ThreePosItem("En Bra Sak", "En Annan Bra Sak", "Och Ytterliggare En Bra Sak") };
 
 	public ThreePosFragment() {
 
@@ -77,63 +80,31 @@ public class ThreePosFragment extends ListFragment {
 		final EditText inputOne = (EditText) addItemHeader.findViewById(R.id.positive_one_input);
 		final EditText inputTwo = (EditText) addItemHeader.findViewById(R.id.positive_two_input);
 		final EditText inputThree = (EditText) addItemHeader.findViewById(R.id.positive_three_input);
-		/**
-		 * Skriver ut logcat men n‰staknappen fungerar ej
-		 */
-		inputOne.setOnEditorActionListener(new OnEditorActionListener(){
-			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-							
-				boolean handled = false;
-		        if (actionId == EditorInfo.IME_ACTION_NEXT) {
-		        	stringInputOne = inputOne.getText().toString();
-		        	Log.d("String ", "Skriver ut fˆrsta: " + stringInputOne);
-		        	inputOne.clearFocus();
-		        	inputTwo.requestFocus();
-		        	handled = true;
-		        }
-		        return handled;
-			}
-		});
-
-		inputTwo.setOnEditorActionListener(new OnEditorActionListener(){
-			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				boolean handled = false;
-		        if (actionId == EditorInfo.IME_ACTION_NEXT) {
-		        	stringInputTwo = inputTwo.getText().toString();
-		        	Log.d("String ", "skriver ut andra: " + stringInputTwo);
-		        	inputTwo.clearFocus();
-		        	inputThree.requestFocus();
-		        	handled = true;
-		        }
-		        return handled;
-			}
-		});
-		
-
-		inputThree.setOnEditorActionListener(new OnEditorActionListener(){
-			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				boolean handled = false;
-		        if (actionId == EditorInfo.IME_ACTION_DONE) {
-		        	stringInputThree = inputThree.getText().toString();
-		        	Log.d("String ", "skriver ut tredje: " + stringInputThree);
-		        	inputThree.clearFocus();
-		        	handled = true;
-		        }
-		        /**
-				 * L‰gger till ett nytt kort utav de tre inmatade orden
-				 * Men var ska vi placera den? Just nu kommer inte tredje ordet med i det nya kortet pga nuvarande placering
-				 */
-				threePosItemList.add(0, new ThreePosItem(stringInputOne, stringInputTwo, stringInputThree));
-				CollapseAnimation collapseAnim = new CollapseAnimation(inputContainer, 500);
-				inputContainer.startAnimation(collapseAnim);
-		        return handled;
-			}
-		});
 
 		
+
+		OnEditorActionListener createListener = new OnEditorActionListener(){
+			
+			@Override
+			public boolean onEditorAction(final TextView textView, final int id, final KeyEvent keyEvent) {
+				if (id == R.id.create || id == EditorInfo.IME_ACTION_DONE) {
+					stringInputOne = inputOne.getText().toString();
+					stringInputTwo =inputTwo.getText().toString();
+					stringInputThree = inputThree.getText().toString();
+					threePosItemList.add(0, new ThreePosItem(stringInputOne, stringInputTwo, stringInputThree));
+					
+					InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
+						      Context.INPUT_METHOD_SERVICE);
+						imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+						
+					return true;
+				}
+				return false;
+			
+			}
+		};
+
+		inputThree.setOnEditorActionListener(createListener);
 
 		addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -152,17 +123,12 @@ public class ThreePosFragment extends ListFragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				Log.d("List item clicked", "Item id: " + id);
-
 			}
 		});
 
 		View inputView = inflater.inflate(R.layout.fragment_threepositive, null);
-	
 
 		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
 		setListAdapter(adapter);
-		System.out.println("onactivitycreated works");
-
 	}
-
 }
