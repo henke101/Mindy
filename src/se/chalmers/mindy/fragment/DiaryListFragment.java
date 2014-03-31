@@ -2,6 +2,9 @@ package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,6 +12,7 @@ import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -22,27 +26,25 @@ public class DiaryListFragment extends ListFragment {
 	private static final int ACTIVITY_CREATE=0;
 	private static final int ACTIVITY_EDIT=1;
 
-	//private static final int INSERT_ID = Menu.FIRST;
-	private static final int DELETE_ID = Menu.FIRST + 1;
+	private static final int INSERT_ID = Menu.FIRST;
+	//private static final int DELETE_ID = Menu.FIRST + 1;
 
 	private DiaryDbAdapter mDbHelper;
+	private DiaryEditFragment fragmentDiary = new DiaryEditFragment();
 
 	/** Called when the activity is first created. */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.diary_list, container, false);
+		setHasOptionsMenu(true);
 		mDbHelper = new DiaryDbAdapter(getActivity());
 		mDbHelper.open();
-		fillData();
 		return v;
 	}
-	
+
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-//		final ListView diaryList = getListView();
-//		diaryList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-//        registerForContextMenu(diaryList);
 		fillData();
 	}
 
@@ -61,20 +63,41 @@ public class DiaryListFragment extends ListFragment {
 		SimpleCursorAdapter notes = 
 				new SimpleCursorAdapter(getActivity().getApplicationContext(), R.layout.diary_row, c, from, to);
 		setListAdapter(notes);
-		
+
 	}
 
-	public void createNote() {
-		Intent i = new Intent(getActivity(), DiaryEditFragment.class);
-		startActivityForResult(i, ACTIVITY_CREATE);
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	    //inflater.inflate(R.menu.menu_sample, menu);
+	    super.onCreateOptionsMenu(menu,inflater);
+	    menu.add(0, INSERT_ID, 0, R.string.menu_insert);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item){
+		switch(item.getItemId()) {
+		case INSERT_ID:
+			createNote();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	private void createNote() {
+//		Intent i = new Intent(getActivity(), DiaryEditFragment.class);
+//		startActivityForResult(i, ACTIVITY_CREATE);
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).commit();
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		Intent i = new Intent(getActivity(), DiaryEditFragment.class);
-		i.putExtra(DiaryDbAdapter.KEY_ROWID, id);
-		startActivityForResult(i, ACTIVITY_EDIT);
+//		Intent i = new Intent(getActivity(), DiaryEditFragment.class);
+//		i.putExtra(DiaryDbAdapter.KEY_ROWID, id);
+//		startActivityForResult(i, ACTIVITY_EDIT);
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).commit();
 	}
 
 	@Override
