@@ -152,7 +152,7 @@ public class MindyDatabaseAdapter {
 	 * Inserts a new set of test results in the database. Returns true if the data was inserted.
 	 * @return the success of the insertion
 	 */
-	public boolean insertNewTestResults() {
+	public boolean insertNewTestResults(EvaluationResult result) {
 		return true;
 	}
 
@@ -160,7 +160,7 @@ public class MindyDatabaseAdapter {
 	 * Updates an existing set of test results in the database. Returns true if the data was updated.
 	 * @return the success of the update
 	 */
-	public boolean updateTestResults() {
+	public boolean updateTestResults(EvaluationResult result) {
 		return true;
 	}
 
