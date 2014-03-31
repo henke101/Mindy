@@ -15,6 +15,7 @@ public class DiaryDbAdapter extends ContentProvider{
 	private SQLiteDatabase mDb;
 	private DiaryDatabaseHelper mDbHelper;
 
+
 	// column names
 	public static final String KEY_ID = "_id";
 	public static final String KEY_TITLE = "title";

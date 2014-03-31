@@ -18,10 +18,6 @@ public class DiaryEditFragment extends Fragment {
 	private EditText mTitleText;
 	private EditText mBodyText;
 	private Uri mCurrentNote;
-	
-	public static final String AUTHORITY = "com.example.android.honeypad.notesprovider";
-	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
-			+ "/notes");
 
 	public DiaryEditFragment(){
 
@@ -35,10 +31,9 @@ public class DiaryEditFragment extends Fragment {
 		mBodyText = (EditText) v.findViewById(R.id.diary_body);
 		Button confirmButton = (Button) v.findViewById(R.id.diary_confirm);
 		confirmButton.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View view) {
-				
+				saveNote();
 			}
 		});
 
@@ -68,16 +63,14 @@ public class DiaryEditFragment extends Fragment {
 			}
 		}
 	}
-//	private void saveNote() {
-//		// save/update the note
-//		ContentValues values = new ContentValues(2);
-//		values.put(DiaryDbAdapter.KEY_TITLE, mTitleText.getText().toString());
-//		values.put(DiaryDbAdapter.KEY_BODY, mBodyText.getText().toString());
-//		if (mCurrentNote != null) {
-//			getActivity().getContentResolver().update(mCurrentNote, values, null, null);
-//		} else {
-//			getActivity().getContentResolver().insert(DiaryDbAdapter.CONTENT_URI, values);
-//		}
-//		Toast.makeText(this, "Note Saved", Toast.LENGTH_SHORT).show();
-//	}
+	private void saveNote() {
+		// save/update the note
+		ContentValues values = new ContentValues(2);
+		values.put(DiaryDbAdapter.KEY_TITLE, mTitleText.getText().toString());
+		values.put(DiaryDbAdapter.KEY_BODY, mBodyText.getText().toString());
+		if (mCurrentNote != null) {
+			getActivity().getContentResolver().update(mCurrentNote, values, null, null);
+		}
+		Toast.makeText(getActivity(), "Sparad", Toast.LENGTH_SHORT).show();
+	}
 }
