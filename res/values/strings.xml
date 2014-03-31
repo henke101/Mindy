@@ -17,8 +17,8 @@
     <string name="confirm_note">Bekräfta</string>
     <string name="menu_delete">Delete Note</string>
     <string name="menu_insert">Add Note</string>
-    <string name="title">Title</string>
-    <string name="body">Body</string>
+    <string name="title">Rubrik</string>
+    <string name="body">Innehåll</string>
     <string name="confirm">Confirm</string>
 
 </resources>
