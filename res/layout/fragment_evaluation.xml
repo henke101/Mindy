@@ -15,8 +15,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:gravity="center_horizontal"
-            android:text="@string/lorem_ipsum"
+            android:text="@string/eval_intro"
             android:textSize="15sp" />
+          <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:background="#B8B894" />
 
         <TextView
             android:id="@+id/eval_question_1"
@@ -281,20 +286,14 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" >
 
-            <TextView
-                android:id="@+id/eval_question_4_label_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_gravity="left"
-                android:text="@string/eval_question_4_answer_1"
-                android:textSize="12sp" />
+           
 
             <TextView
                 android:id="@+id/eval_question_4_label_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="left"
                 android:text="@string/eval_question_4_answer_2"
                 android:textSize="12sp" />
 
@@ -305,6 +304,15 @@
                 android:layout_alignParentRight="true"
                 android:text="@string/eval_question_4_answer_3"
                 android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/eval_question_4_label_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/eval_question_4_answer_1"
+                android:textSize="12sp" />
+
         </RelativeLayout>
 
         <View
