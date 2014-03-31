@@ -28,8 +28,11 @@
 		    	android:layout_height="wrap_content"
 		    	android:hint="skriv glad sak"
 		    	android:inputType="text"
-		    	android:imeOptions="actionNext">
-		    	<requestFocus />
+		    	android:imeOptions="actionNext"
+		    	android:maxLines="1"
+		    	android:singleLine="true"
+		    	>
+		    	
 		     </EditText>
 		     <EditText
 		    	android:id="@+id/positive_two_input"
@@ -37,8 +40,10 @@
 		    	android:layout_height="wrap_content"
 		    	android:hint="nästa bra sak"
 		    	android:inputType="text"
-		    	android:imeOptions="actionNext">
-		    	<requestFocus />
+		    	android:imeOptions="actionNext"
+		    	android:maxLines="1"
+		    	android:singleLine="true">
+		    	
 		     </EditText>
 		     <EditText
 		    	android:id="@+id/positive_three_input"
@@ -46,8 +51,14 @@
 		    	android:layout_height="wrap_content"
 		    	android:hint="sista saken"
 		    	android:inputType="text"
-		    	android:imeOptions="actionDone">
-		    	<requestFocus />
+		    	android:maxLines="1"
+		    	android:singleLine="true"
+		    	android:imeActionId="@+id/create"
+                android:imeActionLabel="Skapa ny"
+                android:imeOptions="actionDone">
+		    	
 		     </EditText> 
+		     
+
 	</LinearLayout>
 </LinearLayout>
