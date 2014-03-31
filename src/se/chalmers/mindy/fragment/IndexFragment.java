@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.IndexAdapter;
 import se.chalmers.mindy.core.MainActivity;
-import se.chalmers.mindy.pojo.IndexListItem;
-import se.chalmers.mindy.pojo.SoundIndexListItem;
 import se.chalmers.mindy.util.Tools;
+import se.chalmers.mindy.view.IndexListItem;
+import se.chalmers.mindy.view.SoundIndexListItem;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
@@ -69,32 +69,36 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 
 		// Dummy items
 		dummyItems = new ArrayList<IndexListItem>();
-		dummyItems.add(new SoundIndexListItem(mActivity, "1 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "2 Kroppsscanning",
-				"Kroppscanning kan vara väldigt behagligt och därför somnar många av övningen. Och många beskriver hur de sover djupare, även efter många års sömnproblem.", R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "3 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "4 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "5 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "6 Urban Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "7 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "8 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "9 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "10 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "11 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "12 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
-		dummyItems.add(new SoundIndexListItem(mActivity, "13 Sömnpiller", "Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig",
-				R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "1 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems
+				.add(new SoundIndexListItem(
+						mActivity,
+						"2 Kroppsscanning",
+						"Kroppscanning kan vara väldigt behagligt och därför somnar många av övningen. Och många beskriver hur de sover djupare, även efter många års sömnproblem.",
+						R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "3 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "4 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "5 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "6 Urban Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "7 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "8 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "9 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "10 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "11 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "12 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
+		dummyItems.add(new SoundIndexListItem(mActivity, "13 Sömnpiller",
+				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
 
 		IndexAdapter adapter = new IndexAdapter(mActivity, dummyItems);
 

@@ -81,6 +81,7 @@ public class Tools {
 	public static void setTwoStepBitmapBackground(final Context context, final int drawableId, final ImageView imageView) {
 
 		imageView.setImageBitmap(Tools.decodeSampledBitmapFromResource(context.getResources(), drawableId, 100, 50));
+
 		// Load the background image in a background thread
 		Tools.loadBitmap(context, drawableId, imageView);
 	}

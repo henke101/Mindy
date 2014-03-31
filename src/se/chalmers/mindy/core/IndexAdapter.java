@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.chalmers.mindy.R;
-import se.chalmers.mindy.pojo.IndexListItem;
+import se.chalmers.mindy.view.IndexListItem;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
