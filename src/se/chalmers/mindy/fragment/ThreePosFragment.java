@@ -6,6 +6,7 @@ import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.core.ThreePosAdapter;
 import se.chalmers.mindy.core.ThreePosItem;
+import se.chalmers.mindy.util.CollapseAnimation;
 import se.chalmers.mindy.util.ExpanderAnimation;
 import android.app.Activity;
 import android.app.ListFragment;
@@ -125,10 +126,11 @@ public class ThreePosFragment extends ListFragment {
 				 * Lägger till ett nytt kort utav de tre inmatade orden
 				 * Men var ska vi placera den? Just nu kommer inte tredje ordet med i det nya kortet pga nuvarande placering
 				 */
-				threePosItemList.add(new ThreePosItem(stringInputOne, stringInputTwo, stringInputThree));
-
+				threePosItemList.add(0, new ThreePosItem(stringInputOne, stringInputTwo, stringInputThree));
+				CollapseAnimation collapseAnim = new CollapseAnimation(inputContainer, 500);
+				inputContainer.startAnimation(collapseAnim);
 		        return handled;
-		       			}
+			}
 		});
 
 		
@@ -141,6 +143,7 @@ public class ThreePosFragment extends ListFragment {
 				inputContainer.startAnimation(expanderAnim);
 			}
 		});
+
 		listView.addHeaderView(addItemHeader);
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -154,7 +157,7 @@ public class ThreePosFragment extends ListFragment {
 		});
 
 		View inputView = inflater.inflate(R.layout.fragment_threepositive, null);
-
+	
 
 		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
 		setListAdapter(adapter);

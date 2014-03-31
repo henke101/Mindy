@@ -18,7 +18,7 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 	int mCurrentlyFocusedId;
 	private int mLastFocusedPosition;
 
-	ArrayList<ThreePosItem> data = null;
+	ArrayList<ThreePosItem> data;
 
 	public ThreePosAdapter(final Context context, final int layoutResourceId, final ArrayList<ThreePosItem> data) {
 		super(context, layoutResourceId, data);
