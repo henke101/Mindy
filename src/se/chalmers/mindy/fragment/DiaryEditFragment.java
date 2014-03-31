@@ -1,6 +1,7 @@
 package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,9 +31,9 @@ public class DiaryEditFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.diary_edit, container, false);
 
-		mTitleText = (EditText) v.findViewById(R.id.title);
-		mBodyText = (EditText) v.findViewById(R.id.body);
-		Button confirmButton = (Button) v.findViewById(R.id.confirm);
+		mTitleText = (EditText) v.findViewById(R.id.diary_title);
+		mBodyText = (EditText) v.findViewById(R.id.diary_body);
+		Button confirmButton = (Button) v.findViewById(R.id.diary_confirm);
 		confirmButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override

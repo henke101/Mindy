@@ -23,9 +23,6 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class DiaryListFragment extends ListFragment {
 
-	private static final int ACTIVITY_CREATE=0;
-	private static final int ACTIVITY_EDIT=1;
-
 	private static final int INSERT_ID = Menu.FIRST;
 	//private static final int DELETE_ID = Menu.FIRST + 1;
 
@@ -68,9 +65,8 @@ public class DiaryListFragment extends ListFragment {
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-	    //inflater.inflate(R.menu.menu_sample, menu);
 	    super.onCreateOptionsMenu(menu,inflater);
-	    menu.add(0, INSERT_ID, 0, R.string.menu_insert);
+	    menu.add(0, INSERT_ID, 0, R.string.diary_menu_insert);
 	}
 
 	@Override
@@ -84,8 +80,6 @@ public class DiaryListFragment extends ListFragment {
 	}
 
 	private void createNote() {
-//		Intent i = new Intent(getActivity(), DiaryEditFragment.class);
-//		startActivityForResult(i, ACTIVITY_CREATE);
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).commit();
 	}
@@ -93,9 +87,6 @@ public class DiaryListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-//		Intent i = new Intent(getActivity(), DiaryEditFragment.class);
-//		i.putExtra(DiaryDbAdapter.KEY_ROWID, id);
-//		startActivityForResult(i, ACTIVITY_EDIT);
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).commit();
 	}
