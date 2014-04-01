@@ -36,28 +36,35 @@ public class ThreePositiveIndexItem extends IndexListItem {
 		MindyDatabaseAdapter dbAdapter = new MindyDatabaseAdapter(context);
 		dbAdapter.open();
 		TempThreePos threePos = dbAdapter.fetchLatestPositive();
+		dbAdapter.close();
 
 		Calendar currentTime = Calendar.getInstance();
 		Calendar positiveTime = threePos.getDate();
 
-		if (currentTime.get(Calendar.DAY_OF_YEAR) - positiveTime.get(Calendar.DAY_OF_YEAR) > 0) {
+		if (positiveTime != null && currentTime.get(Calendar.DAY_OF_YEAR) - positiveTime.get(Calendar.DAY_OF_YEAR) > 0) {
 			setDescription(context.getString(R.string.index_threepos_description_secondary));
 		}
 
-		TextView firstLabel = new TextView(context);
-		firstLabel.setText("1. " + threePos.getFirst());
-		formatTextView(firstLabel, 50, 20, 50, 5);
-		container.addView(firstLabel);
+		if (threePos.getFirst() != null && threePos.getFirst().length() > 0) {
+			TextView firstLabel = new TextView(context);
+			firstLabel.setText("1. " + threePos.getFirst());
+			formatTextView(firstLabel, 50, 25, 50, 10);
+			container.addView(firstLabel);
+		}
 
-		TextView secondLabel = new TextView(context);
-		secondLabel.setText("2. " + threePos.getSecond());
-		formatTextView(secondLabel, 50, 5, 50, 5);
-		container.addView(secondLabel);
+		if (threePos.getSecond() != null && threePos.getSecond().length() > 0) {
+			TextView secondLabel = new TextView(context);
+			secondLabel.setText("2. " + threePos.getSecond());
+			formatTextView(secondLabel, 50, 15, 50, 10);
+			container.addView(secondLabel);
+		}
 
-		TextView thirdLabel = new TextView(context);
-		thirdLabel.setText("3. " + threePos.getThird());
-		formatTextView(thirdLabel, 50, 5, 50, 20);
-		container.addView(thirdLabel);
+		if (threePos.getThird() != null && threePos.getThird().length() > 0) {
+			TextView thirdLabel = new TextView(context);
+			thirdLabel.setText("3. " + threePos.getThird());
+			formatTextView(thirdLabel, 50, 15, 50, 25);
+			container.addView(thirdLabel);
+		}
 
 		subviews.add(container);
 
@@ -66,7 +73,8 @@ public class ThreePositiveIndexItem extends IndexListItem {
 
 	public void formatTextView(TextView textView, int leftMargin, int topMargin, int rightMargin, int bottomMargin) {
 		textView.setTextSize(19.0f);
-		textView.setTypeface(robotoThin);
+		textView.setTypeface(robotoLight);
+		textView.setTextColor(context.getResources().getColor(R.color.text_color_dark));
 		textView.setPadding(leftMargin, topMargin, rightMargin, bottomMargin);
 	}
 }

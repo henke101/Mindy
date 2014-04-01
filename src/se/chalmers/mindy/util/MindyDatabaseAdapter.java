@@ -3,6 +3,7 @@ package se.chalmers.mindy.util;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import se.chalmers.mindy.R;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,7 +16,7 @@ public class MindyDatabaseAdapter {
 
 	// Database properties
 	private static final String DATABASE_NAME = "mindy_db";
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 
 	private static final String TABLE_TEST_QUESTIONS = "TestQuestions";
 	private static final String TABLE_TEST_RESULTS = "TestResults";
@@ -141,7 +142,10 @@ public class MindyDatabaseAdapter {
 			return new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar);
 
 		} else {
-			return null;
+			// Table is empty
+
+			return new TempThreePos(mCtx.getString(R.string.index_threepos_default_first), mCtx.getString(R.string.index_threepos_default_second),
+					mCtx.getString(R.string.index_threepos_default_third));
 		}
 	}
 
