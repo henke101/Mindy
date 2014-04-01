@@ -1,7 +1,5 @@
 package se.chalmers.mindy.core;
 
-import java.util.Calendar;
-
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
 import se.chalmers.mindy.fragment.EvaluationFragment;
@@ -9,7 +7,6 @@ import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
-import se.chalmers.mindy.util.TempThreePos;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -56,13 +53,6 @@ public class MainActivity extends Activity {
 		MindyDatabaseAdapter dbAdapter = new MindyDatabaseAdapter(this);
 		dbAdapter.open();
 
-		dbAdapter.deleteAllPositives();
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) - 2);
-		dbAdapter.insertNewThreePositive(new TempThreePos("Ferp", "Derp", "Nerp", cal));
-
-		cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) - 1);
-		dbAdapter.insertNewThreePositive(new TempThreePos("Merp", "Derp", "Nerp", cal));
 		// TODO /TEMPYTEMP
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
