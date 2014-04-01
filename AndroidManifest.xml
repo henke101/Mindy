@@ -21,7 +21,8 @@
         android:theme="@style/MindyTheme" >
         <activity
             android:name="se.chalmers.mindy.core.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

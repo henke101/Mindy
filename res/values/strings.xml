@@ -13,6 +13,9 @@
     <string name="about_developers">Utvecklad av:\n S. Andersson, H. Andersson, P. Eriksson, R. Hallberg, M. Thyren och V. Åkerskog.</string>
 	<string name="logo_description">Mindy Logo</string>
     <string name="expanded_text">Expanderad text</string>
+    <string name="add_positive_one">Skriv glad sak</string>
+    <string name="add_positive_two">Nästa bra sak</string>
+    <string name="add_positive_three">Sista saken</string>
     
 
 </resources>

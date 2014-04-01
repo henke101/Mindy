@@ -1,64 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    		android:layout_width="match_parent"
-    		android:layout_height="wrap_content"
-    		android:orientation="vertical"
-    	>
-    	
-    <Button 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <Button
         android:id="@+id/add_threepos_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lägg till ny"
-        android:background="@android:drawable/list_selector_background"/>
+        android:background="@android:drawable/list_selector_background"
+        android:text="Lägg till ny" />
 
-	<LinearLayout 
-	        android:id="@+id/input_container"
-	        android:layout_width="fill_parent"
-	        android:layout_height="130dip"
-	        android:layout_marginBottom="-100dip"
-	        android:orientation="vertical"
-	        android:visibility="gone" >
+    <LinearLayout
+        android:id="@+id/input_container"
+        android:layout_width="fill_parent"
+        android:layout_height="220dip"
+        android:layout_marginBottom="-100dip"
+        android:orientation="vertical"
+        android:visibility="gone" >
 
+        <RadioGroup
+            android:id="@+id/date_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
 
-		    <EditText
-		    	android:id="@+id/positive_one_input"
-		    	android:layout_width="fill_parent"
-		    	android:layout_height="wrap_content"
-		    	android:hint="skriv glad sak"
-		    	android:inputType="text"
-		    	android:imeOptions="actionNext"
-		    	android:maxLines="1"
-		    	android:singleLine="true"
-		    	>
-		    	
-		     </EditText>
-		     <EditText
-		    	android:id="@+id/positive_two_input"
-		    	android:layout_width="fill_parent"
-		    	android:layout_height="wrap_content"
-		    	android:hint="nästa bra sak"
-		    	android:inputType="text"
-		    	android:imeOptions="actionNext"
-		    	android:maxLines="1"
-		    	android:singleLine="true">
-		    	
-		     </EditText>
-		     <EditText
-		    	android:id="@+id/positive_three_input"
-		    	android:layout_width="fill_parent"
-		    	android:layout_height="wrap_content"
-		    	android:hint="sista saken"
-		    	android:inputType="text"
-		    	android:maxLines="1"
-		    	android:singleLine="true"
-		    	android:imeActionId="@+id/create"
-                android:imeActionLabel="Skapa ny"
-                android:imeOptions="actionDone">
-		    	
-		     </EditText> 
-		     
+            <RadioButton
+                android:id="@+id/yesterday_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Igår"
+                android:layout_gravity="center"
+                android:layout_weight="0.5" />
 
-	</LinearLayout>
+            <RadioButton
+                android:id="@+id/today_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Idag"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:checked="true" />
+            
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/positive_one_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_positive_one"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/positive_two_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_positive_two"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/positive_three_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_positive_three"
+            android:imeActionId="@+id/create"
+            android:imeActionLabel="Skapa ny"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
+        
+        <Button
+            android:id="@+id/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Klar"
+            android:layout_gravity="right" />
+        
+    </LinearLayout>
+
 </LinearLayout>
