@@ -8,6 +8,7 @@ import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.Tools;
 import se.chalmers.mindy.view.IndexListItem;
 import se.chalmers.mindy.view.SoundIndexListItem;
+import se.chalmers.mindy.view.ThreePositiveIndexItem;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
@@ -69,6 +70,7 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 
 		// Dummy items
 		dummyItems = new ArrayList<IndexListItem>();
+		dummyItems.add(new ThreePositiveIndexItem(mActivity));
 		dummyItems.add(new SoundIndexListItem(mActivity, "1 Sömnpiller",
 				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile));
 		dummyItems

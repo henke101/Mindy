@@ -1,5 +1,7 @@
 package se.chalmers.mindy.core;
 
+import java.util.Calendar;
+
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
 import se.chalmers.mindy.fragment.EvaluationFragment;
@@ -55,8 +57,12 @@ public class MainActivity extends Activity {
 		dbAdapter.open();
 
 		dbAdapter.deleteAllPositives();
-		dbAdapter.insertNewThreePositive(new TempThreePos("Ferp", "Derp", "Nerp"));
-		dbAdapter.insertNewThreePositive(new TempThreePos("Merp", "Derp", "Nerp"));
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) - 2);
+		dbAdapter.insertNewThreePositive(new TempThreePos("Ferp", "Derp", "Nerp", cal));
+
+		cal.set(Calendar.DAY_OF_YEAR, cal.get(Calendar.DAY_OF_YEAR) - 1);
+		dbAdapter.insertNewThreePositive(new TempThreePos("Merp", "Derp", "Nerp", cal));
 		// TODO /TEMPYTEMP
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -127,18 +133,18 @@ public class MainActivity extends Activity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-		
+
 		SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-		
-		if(!sharedPref.contains("started")){
-		Fragment fragmentEvaluation = new EvaluationFragment();
-		// Insert the fragment by replacing any existing fragment
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
-		
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt("started", 1);
-		editor.commit();
+
+		if (!sharedPref.contains("started")) {
+			Fragment fragmentEvaluation = new EvaluationFragment();
+			// Insert the fragment by replacing any existing fragment
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
+
+			SharedPreferences.Editor editor = sharedPref.edit();
+			editor.putInt("started", 1);
+			editor.commit();
 		}
 	}
 

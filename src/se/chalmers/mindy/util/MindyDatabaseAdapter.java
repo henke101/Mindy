@@ -1,6 +1,7 @@
 package se.chalmers.mindy.util;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,7 +15,7 @@ public class MindyDatabaseAdapter {
 
 	// Database properties
 	private static final String DATABASE_NAME = "mindy_db";
-	private static final int DATABASE_VERSION = 3;
+	private static final int DATABASE_VERSION = 4;
 
 	private static final String TABLE_TEST_QUESTIONS = "TestQuestions";
 	private static final String TABLE_TEST_RESULTS = "TestResults";
@@ -49,7 +50,7 @@ public class MindyDatabaseAdapter {
 	private static final String KEY_THREE_POSITIVE_THIRD = "_third";
 
 	private static final String CREATE_TABLE_THREE_POSITIVE = "create table " + TABLE_THREE_POSITIVE + " (" + KEY_ROWID
-			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_THREE_POSITIVE_DATE + " DATETIME NOT NULL, " + KEY_THREE_POSITIVE_FIRST + " TEXT, "
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_THREE_POSITIVE_DATE + " INTEGER NOT NULL, " + KEY_THREE_POSITIVE_FIRST + " TEXT, "
 			+ KEY_THREE_POSITIVE_SECOND + " TEXT, " + KEY_THREE_POSITIVE_THIRD + " TEXT);";
 
 	private static final String TAG = "MindyDatabaseAdapter";
@@ -75,9 +76,10 @@ public class MindyDatabaseAdapter {
 	 * @throws SQLException
 	 */
 	public MindyDatabaseAdapter open() throws SQLException {
-		mDbHelper = new DatabaseHelper(mCtx);
-		mDb = mDbHelper.getWritableDatabase();
-
+		if (!isOpen()) {
+			mDbHelper = new DatabaseHelper(mCtx);
+			mDb = mDbHelper.getWritableDatabase();
+		}
 		return this;
 	}
 
@@ -100,9 +102,9 @@ public class MindyDatabaseAdapter {
 		args.put(KEY_THREE_POSITIVE_THIRD, pos.getThird());
 
 		if (pos.getDate() != null) {
-			args.put(KEY_THREE_POSITIVE_DATE, Tools.getStringFromDate(pos.getDate()));
+			args.put(KEY_THREE_POSITIVE_DATE, pos.getDate().getTimeInMillis());
 		} else {
-			args.put(KEY_THREE_POSITIVE_DATE, Tools.getCurrentDateTime());
+			args.put(KEY_THREE_POSITIVE_DATE, Calendar.getInstance().getTimeInMillis());
 		}
 
 		return mDb.insert(TABLE_THREE_POSITIVE, null, args) > 0;
@@ -115,9 +117,10 @@ public class MindyDatabaseAdapter {
 				KEY_THREE_POSITIVE_THIRD, KEY_THREE_POSITIVE_DATE }, null, null, null, null, null);
 		if (threePosCursor.moveToFirst()) {
 			while (!threePosCursor.isAfterLast()) {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-				items.add(new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), Tools
-						.getDateFromString(threePosCursor.getString(4))));
+				items.add(new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar));
 				threePosCursor.moveToNext();
 			}
 		}
@@ -132,8 +135,10 @@ public class MindyDatabaseAdapter {
 				+ KEY_THREE_POSITIVE_DATE + " FROM " + TABLE_THREE_POSITIVE + ")", null, null, null, null);
 
 		if (threePosCursor.moveToFirst()) {
-			return new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3),
-					Tools.getDateFromString(threePosCursor.getString(4)));
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTimeInMillis(threePosCursor.getLong(4));
+
+			return new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar);
 
 		} else {
 			return null;

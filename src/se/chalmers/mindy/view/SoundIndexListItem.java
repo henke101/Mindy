@@ -5,7 +5,6 @@ import java.util.List;
 
 import se.chalmers.mindy.R;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.view.View;
@@ -47,7 +46,6 @@ public class SoundIndexListItem extends IndexListItem {
 		Context context = getContext();
 
 		int holoPurpleBright = context.getResources().getColor(android.R.color.holo_purple);
-		Typeface robotoLightCondensed = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_condensed_light.ttf");
 
 		float weight = 1.0f / 2.0f;
 		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, weight);
