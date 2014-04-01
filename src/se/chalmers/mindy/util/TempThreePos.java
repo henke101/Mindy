@@ -1,16 +1,16 @@
 package se.chalmers.mindy.util;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class TempThreePos {
 	private String first, second, third;
-	private Date date;
+	private Calendar date;
 
 	public TempThreePos(String first, String second, String third) {
 		this(first, second, third, null);
 	}
 
-	public TempThreePos(String first, String second, String third, Date date) {
+	public TempThreePos(String first, String second, String third, Calendar date) {
 		super();
 		this.first = first;
 		this.second = second;
@@ -42,11 +42,11 @@ public class TempThreePos {
 		this.third = third;
 	}
 
-	public Date getDate() {
+	public Calendar getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Calendar date) {
 		this.date = date;
 	}
 

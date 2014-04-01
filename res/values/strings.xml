@@ -41,4 +41,12 @@
     <string name="eval_submit">Fortsätt</string>
     <string name="eval_intro">Välkommen till Mindy! För att få en så bra och anpassad upplevelse som möjligt ber vi dig att besvara frågorna nedan så ärligt du kan. Svaren är självklart helt annonyma.</string>
 
+    <string name="index_threepos_title">Tre positiva saker</string>
+    <string name="index_threepos_description">Detta gjorde dig glad igår</string>
+    <string name="index_threepos_description_secondary">Detta gjorde dig glad senast</string>
+    
+    <string name="index_threepos_default_first">Här visas det senaste inlägget du gjorde i övningen \"Tre positiva saker\".</string>
+    <string name="index_threepos_default_second">Denna övning hjälper dig att minnas händelser som påverkade dig på ett bra sätt.</string>
+    <string name="index_threepos_default_third">Du har inte gjort några inlägg ännu. Gå till Övningar i sidomenyn för att skriva ett inlägg.</string>
+    
 </resources>

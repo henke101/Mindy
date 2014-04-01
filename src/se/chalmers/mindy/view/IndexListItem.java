@@ -1,4 +1,4 @@
-package se.chalmers.mindy.pojo;
+package se.chalmers.mindy.view;
 
 import java.util.List;
 

@@ -6,8 +6,6 @@ import se.chalmers.mindy.fragment.EvaluationFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
-import se.chalmers.mindy.util.MindyDatabaseAdapter;
-import se.chalmers.mindy.util.TempThreePos;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -39,25 +37,23 @@ public class MainActivity extends Activity {
 	private String[] sectionNames;
 	private Drawable mActionBarBackgroundDrawable;
 	private int mActionBarAlpha;
+	private AboutFragment fragmentAbout;
+	private PrefsFragment fragmentSettings;
+	private ExerciseFragment fragmentExercise;
+	private IndexFragment fragmentIndex;
+	private FragmentManager fragmentManager;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.nav_bar_background);
+		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.action_bar_background);
 		mActionBarBackgroundDrawable.setAlpha(0);
 
 		getActionBar().setBackgroundDrawable(mActionBarBackgroundDrawable);
 
-		// TODO TEMPYTEMP
-		MindyDatabaseAdapter dbAdapter = new MindyDatabaseAdapter(this);
-		dbAdapter.open();
-
-		dbAdapter.deleteAllPositives();
-		dbAdapter.insertNewThreePositive(new TempThreePos("Ferp", "Derp", "Nerp"));
-		dbAdapter.insertNewThreePositive(new TempThreePos("Merp", "Derp", "Nerp"));
-		// TODO /TEMPYTEMP
+		fragmentManager = getFragmentManager();
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -127,18 +123,18 @@ public class MainActivity extends Activity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-		
+
 		SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-		
-		if(!sharedPref.contains("started")){
-		Fragment fragmentEvaluation = new EvaluationFragment();
-		// Insert the fragment by replacing any existing fragment
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
-		
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt("started", 1);
-		editor.commit();
+
+		if (!sharedPref.contains("started")) {
+			Fragment fragmentEvaluation = new EvaluationFragment();
+			// Insert the fragment by replacing any existing fragment
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
+
+			SharedPreferences.Editor editor = sharedPref.edit();
+			editor.putInt("started", 1);
+			editor.commit();
 		}
 	}
 
@@ -176,12 +172,12 @@ public class MainActivity extends Activity {
 	 * */
 	private void selectItem(int position) {
 
-		FragmentManager fragmentManager = getFragmentManager();
-
 		if (position == 0) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentIndex = new IndexFragment();
+			if (fragmentIndex == null) {
+				fragmentIndex = new IndexFragment();
+			}
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentIndex).commit();
@@ -190,7 +186,7 @@ public class MainActivity extends Activity {
 		if (position == 1) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentExercise = new ExerciseFragment();
+			fragmentExercise = new ExerciseFragment();
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentExercise).commit();
@@ -202,7 +198,7 @@ public class MainActivity extends Activity {
 		if (position == 2) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentSettings = new PrefsFragment();
+			fragmentSettings = new PrefsFragment();
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
@@ -211,7 +207,7 @@ public class MainActivity extends Activity {
 		if (position == 3) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentAbout = new AboutFragment();
+			fragmentAbout = new AboutFragment();
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).commit();
@@ -250,4 +246,8 @@ public class MainActivity extends Activity {
 
 	}
 
+	public void setFragment(Fragment fragment) {
+		// Insert the fragment by replacing any existing fragment
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
+	}
 }
