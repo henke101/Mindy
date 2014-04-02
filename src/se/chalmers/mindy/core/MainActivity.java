@@ -6,9 +6,11 @@ import se.chalmers.mindy.fragment.EvaluationFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -51,7 +53,10 @@ public class MainActivity extends Activity {
 		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.action_bar_background);
 		mActionBarBackgroundDrawable.setAlpha(0);
 
-		getActionBar().setBackgroundDrawable(mActionBarBackgroundDrawable);
+		ActionBar ab = getActionBar();
+		ab.setBackgroundDrawable(mActionBarBackgroundDrawable);
+		ab.setDisplayHomeAsUpEnabled(true);
+		ab.setHomeButtonEnabled(true);
 
 		fragmentManager = getFragmentManager();
 
@@ -121,9 +126,6 @@ public class MainActivity extends Activity {
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-
 		SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
 
 		if (!sharedPref.contains("started")) {
@@ -158,7 +160,6 @@ public class MainActivity extends Activity {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		// Handle your other action bar items...
 
 		return super.onOptionsItemSelected(item);
 	}
@@ -231,7 +232,7 @@ public class MainActivity extends Activity {
 	 * @param listView the list to depend transparency upon
 	 * @param listHeaderHeight the height of the header in the list
 	 */
-	public void setNavigationBarBackgroundTransparency(AbsListView listView, int listHeaderHeight) {
+	public void setActionBarTransparencyFromListViewPosition(AbsListView listView, int listHeaderHeight) {
 
 		// Get the first visible child
 		int firstVisiblePosition = listView.getFirstVisiblePosition();
@@ -240,14 +241,24 @@ public class MainActivity extends Activity {
 		final int headerHeight = listHeaderHeight - getActionBar().getHeight();
 		final float ratio = (float) Math.min(Math.max(Math.abs(child.getTop()) + child.getHeight() * firstVisiblePosition, 0), headerHeight) / headerHeight;
 		final int newAlpha = (int) (ratio * 255);
-		mActionBarBackgroundDrawable.setAlpha(newAlpha);
 
-		mActionBarAlpha = newAlpha;
+		setActionBarBackgroundTransparency(newAlpha);
 
+	}
+
+	public void setActionBarBackgroundTransparency(int alpha) {
+
+		mActionBarBackgroundDrawable.setAlpha(alpha);
+		mActionBarAlpha = alpha;
 	}
 
 	public void setFragment(Fragment fragment) {
 		// Insert the fragment by replacing any existing fragment
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
+		// fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+		FragmentTransaction ft = fragmentManager.beginTransaction();
+		ft.add(R.id.content_frame, fragment);
+		ft.addToBackStack(null);
+		ft.commit();
 	}
 }
