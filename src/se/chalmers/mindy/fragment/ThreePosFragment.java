@@ -43,15 +43,13 @@ public class ThreePosFragment extends ListFragment {
 	SharedPreferences sharedPrefs;
 	Editor editor;
 	TextView expanded;
+	String date;
 	String stringInputOne;
 	String stringInputTwo;
 	String stringInputThree;
 	Calendar calendar;
 	SimpleDateFormat dfDate = new SimpleDateFormat("yyyy-MM-dd");
-	String date;
-
 	ArrayList<ThreePosItem> threePosItemList = new ArrayList<ThreePosItem>();
-	//	ThreePosItem[] threePosItemList = { new ThreePosItem("En jäkligt bra sak", "Jodå, jag lovar", "Just precis!"), new ThreePosItem("En Bra Sak", "En Annan Bra Sak", "Och Ytterliggare En Bra Sak") };
 
 	public ThreePosFragment() {
 
@@ -83,52 +81,17 @@ public class ThreePosFragment extends ListFragment {
 		// Initialize and add text input header.
 		View addItemHeader = inflater.inflate(R.layout.three_pos_input_header, null);
 		final Button addButton = (Button) addItemHeader.findViewById(R.id.add_threepos_button);
-		final RadioGroup dateButtons = (RadioGroup) addItemHeader.findViewById(R.id.date_buttons); 
+		final Button okButton = (Button) addItemHeader.findViewById(R.id.ok_button);
+		final RadioGroup dateButtons = (RadioGroup) addItemHeader.findViewById(R.id.date_buttons);
 		final LinearLayout inputContainer = (LinearLayout) addItemHeader.findViewById(R.id.input_container);
 		final EditText inputOne = (EditText) addItemHeader.findViewById(R.id.positive_one_input);
 		final EditText inputTwo = (EditText) addItemHeader.findViewById(R.id.positive_two_input);
 		final EditText inputThree = (EditText) addItemHeader.findViewById(R.id.positive_three_input);
-		final Button okButton = (Button) addItemHeader.findViewById(R.id.ok_button);
-		
-		OnEditorActionListener createListener = new OnEditorActionListener(){
-			
-			@Override
-			public boolean onEditorAction(final TextView textView, final int id, final KeyEvent keyEvent) {
-				if (id == R.id.create || id == EditorInfo.IME_ACTION_DONE) {
-					stringInputOne = inputOne.getText().toString();
-					stringInputTwo =inputTwo.getText().toString();
-					stringInputThree = inputThree.getText().toString();
+				
+		final ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
+		setListAdapter(adapter);
 
-					Log.d("stringInputOne:" , ""+ stringInputOne);
-					Log.d("stringInputTwo:", "" + stringInputTwo);
-					Log.d("stringInputThree:", "" + stringInputThree);
-					threePosItemList.add(0, new ThreePosItem(stringInputOne, stringInputTwo, stringInputThree));
-					
-					InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
-						      Context.INPUT_METHOD_SERVICE);
-					imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
-					
-					ExpandAnimation expandAnim = new ExpandAnimation(inputContainer, 500);
-					inputContainer.startAnimation(expandAnim);
-					
-					inputOne.setText(null);
-					inputTwo.setText(null);
-					inputThree.setText(null);
-					
-					inputOne.setHint(R.string.add_positive_one);
-					inputTwo.setHint(R.string.add_positive_two);
-					inputThree.setHint(R.string.add_positive_three);
-					
-					addButton.setText("L‰gg till ny");
-					
-					return true;
-				}
-				return false;
-			
-			}
-		};
-
-		inputThree.setOnEditorActionListener(createListener);
+		listView.addHeaderView(addItemHeader);
 
 		addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -149,7 +112,7 @@ public class ThreePosFragment extends ListFragment {
 				}
 			}
 		});
-
+		
 		dateButtons.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -167,9 +130,95 @@ public class ThreePosFragment extends ListFragment {
 			
 		});
 
-		
-		listView.addHeaderView(addItemHeader);
+		OnEditorActionListener createListener = new OnEditorActionListener(){
+			
+			@Override
+			public boolean onEditorAction(final TextView textView, final int id, final KeyEvent keyEvent) {
+				if (id == R.id.create || id == EditorInfo.IME_ACTION_DONE) {
+					if (date == null) {
+						calendar = Calendar.getInstance();
+						date = dfDate.format(calendar.getTime());
+					}
+					stringInputOne = inputOne.getText().toString();
+					stringInputTwo =inputTwo.getText().toString();
+					stringInputThree = inputThree.getText().toString();
 
+					Log.d("stringInputOne:" , ""+ stringInputOne);
+					Log.d("stringInputTwo:", "" + stringInputTwo);
+					Log.d("stringInputThree:", "" + stringInputThree);
+					threePosItemList.add(0, new ThreePosItem(date, stringInputOne, stringInputTwo, stringInputThree));
+					
+					InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
+						      Context.INPUT_METHOD_SERVICE);
+					imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+					
+					ExpandAnimation expandAnim = new ExpandAnimation(inputContainer, 500);
+					inputContainer.startAnimation(expandAnim);
+					
+					inputOne.setText(null);
+					inputTwo.setText(null);
+					inputThree.setText(null);
+					
+					inputOne.setHint(R.string.add_positive_one);
+					inputTwo.setHint(R.string.add_positive_two);
+					inputThree.setHint(R.string.add_positive_three);
+					
+					addButton.setText("L‰gg till ny");
+					
+					dateButtons.check(R.id.today_button);
+					
+					adapter.notifyDataSetChanged();
+							
+					return true;
+				}
+				return false;
+			
+			}
+		};
+
+		inputThree.setOnEditorActionListener(createListener);
+
+		/**
+		 * okButton saves all the input values into a card in the ThreePosItemList
+		 * Problem right now, the strings arent being refreshed. It displays old strings and in a strange order
+		 */
+		okButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (date == null) {
+					calendar = Calendar.getInstance();
+					date = dfDate.format(calendar.getTime());
+				}
+				stringInputOne = inputOne.getText().toString();
+				stringInputTwo =inputTwo.getText().toString();
+				stringInputThree = inputThree.getText().toString();
+				threePosItemList.add(0, new ThreePosItem(date, stringInputOne, stringInputTwo, stringInputThree));
+				
+				InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
+					      Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(inputThree.getWindowToken(), 0);
+				
+				ExpandAnimation expandAnim = new ExpandAnimation(inputContainer, 500);
+				inputContainer.startAnimation(expandAnim);
+				
+				inputOne.setText(null);
+				inputTwo.setText(null);
+				inputThree.setText(null);
+				
+				inputOne.setHint(R.string.add_positive_one);
+				inputTwo.setHint(R.string.add_positive_two);
+				inputThree.setHint(R.string.add_positive_three);
+				
+				addButton.setText("L‰gg till ny");
+				
+				dateButtons.check(R.id.today_button);
+				
+				adapter.notifyDataSetChanged();
+	
+			}
+		});
+		
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -178,39 +227,6 @@ public class ThreePosFragment extends ListFragment {
 				Log.d("List item clicked", "Item id: " + id);
 			}
 		});
-		/**
-		 * okButton saves all the input values into a card in the ThreePosItemList
-		 * Problem right now, the strings arent being refreshed. It displays old strings and in a strange order
-		 */
-//		okButton.setOnClickListener(new View.OnClickListener() {
-//			
-//			@Override
-//			public void onClick(View v) {
-//				stringInputOne = inputOne.getText().toString();
-//				stringInputTwo =inputTwo.getText().toString();
-//				stringInputThree = inputThree.getText().toString();
-//				threePosItemList.add(0, new ThreePosItem(stringInputOne, stringInputTwo, stringInputThree));
-//				
-//				InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
-//					      Context.INPUT_METHOD_SERVICE);
-//				imm.hideSoftInputFromWindow(inputThree.getWindowToken(), 0);
-//				
-//				ExpandAnimation expandAnim = new ExpandAnimation(inputContainer, 500);
-//				inputContainer.startAnimation(expandAnim);
-//				
-//				inputOne.setText(null);
-//				inputTwo.setText(null);
-//				inputThree.setText(null);
-//				
-//				inputOne.setHint(R.string.add_positive_one);
-//				inputTwo.setHint(R.string.add_positive_two);
-//				inputThree.setHint(R.string.add_positive_three);
-//				
-//				addButton.setText("L‰gg till ny");
-//			}
-//		});
-
-		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
-		setListAdapter(adapter);
+		
 	}
 }

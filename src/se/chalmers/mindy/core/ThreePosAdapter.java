@@ -46,6 +46,7 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {//implements Co
 		 * 
 		 * vill sortera varje card. men varje card är tre holders. hur kan jag jämföra två objekt i comparemetoden?
 		 */
+		holder.date = (TextView) row.findViewById(R.id.date_label);
 		holder.positiveOne = (TextView) row.findViewById(R.id.positive_one_label);
 		holder.positiveTwo = (TextView) row.findViewById(R.id.positive_two_label);
 		holder.positiveThree = (TextView) row.findViewById(R.id.positive_three_label);
@@ -59,18 +60,19 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {//implements Co
 		/**
 		 * was wrong to get the(position). We need the 0 position!
 		 */
+		holder.date.setText(data.get(position).getDate());
 		holder.positiveOne.setText(data.get(position).getPositiveOne()); 
 		holder.positiveTwo.setText(data.get(position).getPositiveTwo()); 
 		holder.positiveThree.setText(data.get(position).getPositiveThree());
 		Log.d("Positive three ", "skriver ut : " + data.get(position).getPositiveThree());
 		
-    	
 		return row;
 	}
+	
 
 	static class ThreePosItemHolder {
 
-		TextView positiveOne, positiveTwo, positiveThree;
+		TextView date, positiveOne, positiveTwo, positiveThree;
 	}
 /**
  * Need a compareTo method in order to implement comparable to be able to reverse our list of items
