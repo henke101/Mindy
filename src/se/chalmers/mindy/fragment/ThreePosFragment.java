@@ -98,7 +98,7 @@ public class ThreePosFragment extends ListFragment {
 					stringInputOne = inputOne.getText().toString();
 					stringInputTwo =inputTwo.getText().toString();
 					stringInputThree = inputThree.getText().toString();
-					threePosItemList.add(0, new ThreePosItem(stringInputOne, stringInputTwo, stringInputThree));
+					threePosItemList.add(new ThreePosItem(stringInputOne, stringInputTwo, stringInputThree));
 					
 					InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
 						      Context.INPUT_METHOD_SERVICE);
