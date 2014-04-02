@@ -1,6 +1,7 @@
 package se.chalmers.mindy.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import se.chalmers.mindy.R;
 import android.app.Activity;
@@ -12,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
+public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {//implements Comparable{
 
 	Context context;
 	int layoutResourceId;
@@ -38,15 +39,31 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 			row = inflater.inflate(layoutResourceId, parent, false);
 
 		}
-
+		
+		
+		/**
+		 * Vad vill vi sortera? -Vill sortera hur våra cards sätts ut i layouten
+		 * 
+		 * vill sortera varje card. men varje card är tre holders. hur kan jag jämföra två objekt i comparemetoden?
+		 */
 		holder.positiveOne = (TextView) row.findViewById(R.id.positive_one_label);
 		holder.positiveTwo = (TextView) row.findViewById(R.id.positive_two_label);
 		holder.positiveThree = (TextView) row.findViewById(R.id.positive_three_label);
 
-		holder.positiveOne.setText(data.get(position).getPositiveOne()); 
-		holder.positiveTwo.setText(data.get(position).getPositiveTwo()); 
-		holder.positiveThree.setText(data.get(position).getPositiveThree());
-		Log.d("Positive three ", "skriver ut : " + data.get(position).getPositiveThree());
+		/**
+		 * Added reversefunction, but it crashes because lack of good comparetoMethod
+		 * Not sure what object to sort?
+		 */
+		Collections.sort(data, Collections.reverseOrder());
+	//	Collections.sort(holder, Collections.reverseOrder());
+		/**
+		 * was wrong to get the(position). We need the 0 position!
+		 */
+		holder.positiveOne.setText(data.get(0).getPositiveOne()); 
+		holder.positiveTwo.setText(data.get(0).getPositiveTwo()); 
+		holder.positiveThree.setText(data.get(0).getPositiveThree());
+		Log.d("Positive three ", "skriver ut : " + data.get(0).getPositiveThree());
+		
     	
 		return row;
 	}
@@ -55,4 +72,17 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 
 		TextView positiveOne, positiveTwo, positiveThree;
 	}
+/**
+ * Need a compareTo method in order to implement comparable to be able to reverse our list of items
+ * But it is not working atm
+ * 
+ */
+//	@Override
+//	public int compareTo(Object arg0) {
+//		
+//		public int compareTo(ThreePosAdapter threePosAdapter) {
+//	        return threePosAdapter.compareTo(itemName);
+//	
+//		return 0;
+//	}
 }
