@@ -8,20 +8,14 @@ import se.chalmers.mindy.fragment.EvaluationFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
-<<<<<<< HEAD
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.res.AssetFileDescriptor;
-=======
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
->>>>>>> database
+import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Typeface;
@@ -81,11 +75,10 @@ public class MainActivity extends Activity {
 		// Get the section name array for Navigation Drawer
 		sectionNames = getResources().getStringArray(R.array.section_names);
 
-<<<<<<< HEAD
 		// TODO TEMP
 		MindyDatabaseAdapter adapter = new MindyDatabaseAdapter(this);
 		adapter.open();
-=======
+
 		final int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
 		final TextView title = (TextView) getWindow().findViewById(actionBarTitle);
 
@@ -95,7 +88,6 @@ public class MainActivity extends Activity {
 			title.setTextSize(22.0f);
 			title.setPadding(5, 1, 0, 0);
 		}
->>>>>>> database
 
 		// Set the adapter for the list view
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, sectionNames));
@@ -267,7 +259,6 @@ public class MainActivity extends Activity {
 
 	}
 
-<<<<<<< HEAD
 	public MediaPlayer getMediaPlayerInstance() {
 		if (mMediaPlayer == null) {
 			mMediaPlayer = new MediaPlayer();
@@ -301,7 +292,8 @@ public class MainActivity extends Activity {
 		mMediaPlayer.prepareAsync();
 
 		return mMediaPlayer;
-=======
+	}
+
 	public void setActionBarBackgroundTransparency(int alpha) {
 
 		mActionBarBackgroundDrawable.setAlpha(alpha);
@@ -316,6 +308,5 @@ public class MainActivity extends Activity {
 		ft.add(R.id.content_frame, fragment);
 		ft.addToBackStack(null);
 		ft.commit();
->>>>>>> database
 	}
 }
