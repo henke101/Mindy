@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import se.chalmers.mindy.R;
-import se.chalmers.mindy.pojo.IndexListItem;
+import se.chalmers.mindy.view.IndexListItem;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
@@ -58,13 +58,6 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 
 		// Initialize views
 		IndexItemHolder holder = new IndexItemHolder();
-		holder.title = (TextView) row.findViewById(R.id.item_title);
-		holder.title.setText(item.getTitle());
-		holder.title.setTypeface(robotoThin);
-
-		holder.description = (TextView) row.findViewById(R.id.item_description);
-		holder.description.setText(item.getDescription());
-		holder.description.setTypeface(robotoLight);
 
 		List<View> subviews = item.getSubviews();
 		LinearLayout ll = (LinearLayout) row.findViewById(R.id.list_item_contents);
@@ -74,6 +67,15 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 		for (View subview : subviews) {
 			ll.addView(subview);
 		}
+
+		holder.title = (TextView) row.findViewById(R.id.item_title);
+		holder.title.setText(item.getTitle());
+		holder.title.setTypeface(robotoThin);
+		holder.title.setOnClickListener(item.getTitleOnClickListener());
+
+		holder.description = (TextView) row.findViewById(R.id.item_description);
+		holder.description.setText(item.getDescription());
+		holder.description.setTypeface(robotoLight);
 
 		// If this view came from outside the screen, animate its entry
 		if (position > lastPosition) {

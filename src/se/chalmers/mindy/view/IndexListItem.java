@@ -1,9 +1,10 @@
-package se.chalmers.mindy.pojo;
+package se.chalmers.mindy.view;
 
 import java.util.List;
 
 import android.content.Context;
 import android.view.View;
+import android.view.View.OnClickListener;
 
 /**
  * 
@@ -24,5 +25,7 @@ public abstract class IndexListItem extends AbsListItem {
 	 * for any functionality they have.
 	 */
 	public abstract List<View> getSubviews();
+
+	public abstract OnClickListener getTitleOnClickListener();
 
 }

@@ -1,14 +1,16 @@
-package se.chalmers.mindy.pojo;
+package se.chalmers.mindy.view;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.core.MainActivity;
+import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -23,20 +25,24 @@ public class SoundIndexListItem extends IndexListItem {
 
 	private int audioContentResId;
 	private MediaPlayer mediaPlayer;
+	private Fragment fragment;
 
 	public SoundIndexListItem(Context context, String name, String description) {
 		super(context, name, description);
 
 		audioContentResId = 0;
+		fragment = null;
 	}
 
-	public SoundIndexListItem(Context context, String name, String description, int audioContentResId) {
+	public SoundIndexListItem(Context context, String name, String description, int audioContentResId, Fragment fragment) {
 		super(context, name, description);
 
 		this.audioContentResId = audioContentResId;
 
 		mediaPlayer = MediaPlayer.create(context, audioContentResId);
 		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+		this.fragment = fragment;
 
 	}
 
@@ -47,7 +53,6 @@ public class SoundIndexListItem extends IndexListItem {
 		Context context = getContext();
 
 		int holoPurpleBright = context.getResources().getColor(android.R.color.holo_purple);
-		Typeface robotoLightCondensed = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_condensed_light.ttf");
 
 		float weight = 1.0f / 2.0f;
 		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, weight);
@@ -120,5 +125,19 @@ public class SoundIndexListItem extends IndexListItem {
 		subviews.add(stopButton);
 
 		return subviews;
+	}
+
+	@Override
+	public OnClickListener getTitleOnClickListener() {
+		return new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (context instanceof MainActivity) {
+					((MainActivity) context).setFragment(fragment);
+				}
+			}
+		};
+
 	}
 }
