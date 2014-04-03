@@ -6,6 +6,7 @@ import java.util.Collections;
 import se.chalmers.mindy.R;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,11 +42,6 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {//implements Co
 		}
 		
 		
-		/**
-		 * Vad vill vi sortera? -Vill sortera hur våra cards sätts ut i layouten
-		 * 
-		 * vill sortera varje card. men varje card är tre holders. hur kan jag jämföra två objekt i comparemetoden?
-		 */
 		holder.date = (TextView) row.findViewById(R.id.date_label);
 		holder.positiveOne = (TextView) row.findViewById(R.id.positive_one_label);
 		holder.positiveTwo = (TextView) row.findViewById(R.id.positive_two_label);
@@ -65,6 +61,12 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {//implements Co
 		holder.positiveTwo.setText(data.get(position).getPositiveTwo()); 
 		holder.positiveThree.setText(data.get(position).getPositiveThree());
 		Log.d("Positive three ", "skriver ut : " + data.get(position).getPositiveThree());
+		
+//		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
+//		addButton.setTypeface(robotoLight);
+//		childFont = Typeface.createFromAsset(getActivity().getAssets(),"fonts/ProximaNova-Light.otf");
+//	     titleText.setTypeface(childFont);
+//	    nameText.setTypeface(childFont);
 		
 		return row;
 	}

@@ -14,8 +14,7 @@ public class ThreePosItem implements Comparable {
 	@Override
 	public int compareTo(Object another) {
 		if(another == null)
-			return -1;
-
+			return -1;		
 		try{
 			another = (ThreePosItem)another;
 		}catch(Exception e){
