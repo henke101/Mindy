@@ -2,6 +2,7 @@ package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,7 +29,15 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	private Button playPauseButton;
 
 	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+
+		((MainActivity) activity).setActionBarBackgroundTransparency(255);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 		super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.fragment_sleepingpill, null);
 
@@ -56,9 +64,6 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		mediaFilter = new IntentFilter(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY);
 		mediaFilter.setPriority(1000);
 		getActivity().getApplicationContext().registerReceiver(audioIntentReceiver, mediaFilter);
-
-		((MainActivity) getActivity()).setActionBarBackgroundTransparency(255);
-		getActivity().getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 
 		return view;
 	}
