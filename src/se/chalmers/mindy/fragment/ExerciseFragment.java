@@ -45,6 +45,7 @@ public class ExerciseFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		ListView listView = getListView();
 		listView.setBackgroundColor(Color.rgb(226, 226, 226));
+		listView.setDividerHeight(0);
 
 		View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
 		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
