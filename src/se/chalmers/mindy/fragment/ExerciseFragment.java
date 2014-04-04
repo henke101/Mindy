@@ -30,7 +30,7 @@ public class ExerciseFragment extends ListFragment{
 	SharedPreferences sharedPrefs;
 	Editor editor;
 
-	ExerciseItem[] exItemList = {new ExerciseItem("Somnpiller","forklarande text",new Color()), new ExerciseItem("då","då", new Color()), new ExerciseItem("PosNamn","PosDesc",new Color())};	
+	ExerciseItem[] exItemList = {new ExerciseItem("Sömnpiller","förklarande text",new Color()), new ExerciseItem("Pomodoroklocka","förklarande text", new Color()), new ExerciseItem("Tre Positiva saker","förklarande text",new Color())};	
 	
 	@Override
 	public void onAttach(final Activity activity) {
@@ -67,6 +67,17 @@ public class ExerciseFragment extends ListFragment{
 					System.out.println("Sleeping pressed");
 				}
 				 
+				/**
+				 * Rickard: insert your fragment here
+				
+				if(position ==2){
+					Fragment fragmentSleepingPill = new SleepingPillFragment();
+					// Insert the fragment by replacing any existing fragment
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
+					System.out.println("Sleeping pressed");
+				}
+				*/
 				if(position ==3){
 					ListFragment fragmentThreePos = new ThreePosFragment();
 					// Insert the fragment by replacing any existing fragment
