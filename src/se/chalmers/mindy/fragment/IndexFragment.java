@@ -13,7 +13,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -53,7 +52,7 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 
 		mListView = (ListView) root.findViewById(R.id.index_list);
 		mListView.setDividerHeight(0);
-		mListView.setBackgroundColor(Color.rgb(226, 226, 226));
+		mListView.setBackgroundColor(mActivity.getResources().getColor(R.color.bg_color_grey));
 		mListView.setHeaderDividersEnabled(true);
 
 		final View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);

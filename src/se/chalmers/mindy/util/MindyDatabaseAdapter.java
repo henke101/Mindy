@@ -127,6 +127,7 @@ public class MindyDatabaseAdapter {
 			}
 		}
 
+		threePosCursor.close();
 		return items;
 	}
 
@@ -140,7 +141,10 @@ public class MindyDatabaseAdapter {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-			return new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar);
+			TempThreePos result = new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar);
+
+			threePosCursor.close();
+			return result;
 
 		} else {
 			// Table is empty
