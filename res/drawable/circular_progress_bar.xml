@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <rotate
+            android:drawable="@drawable/progress_circular_background"
+            android:fromDegrees="-3"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="-3" >
+        </rotate>
+    </item>
+    <item>
+        <rotate
+            android:fromDegrees="90"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="90" >
+            <shape
+                android:innerRadiusRatio="2.225"
+                android:shape="ring"
+                android:thicknessRatio="70.0" >
+                <gradient
+                    android:endColor="@color/dark_purple_3"
+                    android:startColor="@color/dark_purple_3"
+                    android:type="sweep"
+                    android:useLevel="true" />
+            </shape>
+        </rotate>
+    </item>
+    <item>
+        <rotate
+            android:id="@+id/rotating_play_button"
+            android:drawable="@drawable/progress_particle"
+            android:fromDegrees="90"
+            android:pivotX="50%"
+            android:pivotY="50%"
+            android:toDegrees="450" />
+    </item>
+
+</layer-list>

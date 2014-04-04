@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/add_threepos_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/list_selector_background"
+        android:text="@string/button_add_new" />
+
+    <LinearLayout
+        android:id="@+id/input_container"
+        android:layout_width="fill_parent"
+        android:layout_height="220dip"
+        android:layout_marginBottom="-100dip"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <RadioGroup
+            android:id="@+id/date_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center" >
+
+            <RadioButton
+                android:id="@+id/yesterday_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_button_yesterday"
+                android:layout_gravity="center"
+                android:layout_weight="0.5" />
+
+            <RadioButton
+                android:id="@+id/today_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/radio_button_today"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:checked="true" />
+            
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/positive_one_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_positive_one"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/positive_two_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_positive_two"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/positive_three_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_positive_three"
+            android:imeActionId="@+id/create"
+            android:imeActionLabel="Skapa ny"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
+            android:singleLine="true" />
+        
+        <Button
+            android:id="@+id/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_ok"
+            android:layout_gravity="right" />
+        
+    </LinearLayout>
+
+</LinearLayout>
