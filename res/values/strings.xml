@@ -59,6 +59,8 @@
     <string name="index_threepos_default_first">Här visas det senaste inlägget du gjorde i övningen \"Tre positiva saker\".</string>
     <string name="index_threepos_default_second">Denna övning hjälper dig att minnas händelser som påverkade dig på ett bra sätt.</string>
     <string name="index_threepos_default_third">Du har inte gjort några inlägg ännu. Gå till Övningar i sidomenyn för att skriva ett inlägg.</string>
+    
+    <string name="exercises">Övningar</string>
 
     
 </resources>

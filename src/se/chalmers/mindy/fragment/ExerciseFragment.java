@@ -4,6 +4,7 @@ import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.ExerciseAdapter;
 import se.chalmers.mindy.core.ExerciseItem;
 import se.chalmers.mindy.core.MainActivity;
+import se.chalmers.mindy.util.Tools;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -17,6 +18,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -49,8 +51,11 @@ public class ExerciseFragment extends ListFragment {
 
 		View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
 		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
-		titleView.setText(R.string.app_name);
-		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
+		titleView.setText(R.string.exercises);
+		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
+
+		ImageView imageView = (ImageView) headerView.findViewById(R.id.header_background);
+		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.ice, imageView);
 
 		listView.addHeaderView(headerView);
 
