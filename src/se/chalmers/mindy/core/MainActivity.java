@@ -53,6 +53,8 @@ public class MainActivity extends Activity {
 	private FragmentManager fragmentManager;
 
 	private MediaPlayer mMediaPlayer;
+	
+	private MindyDatabaseAdapter adapter;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -76,7 +78,7 @@ public class MainActivity extends Activity {
 		sectionNames = getResources().getStringArray(R.array.section_names);
 
 		// TODO TEMP
-		MindyDatabaseAdapter adapter = new MindyDatabaseAdapter(this);
+		adapter = new MindyDatabaseAdapter(this);
 		adapter.open();
 
 		final int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
@@ -175,6 +177,13 @@ public class MainActivity extends Activity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void onDestroy(){
+		super.onDestroy();
+		
+		adapter.close();
+		
 	}
 
 	/**
@@ -309,5 +318,9 @@ public class MainActivity extends Activity {
 		ft.add(R.id.content_frame, fragment);
 		ft.addToBackStack(null);
 		ft.commit();
+	}
+	
+	public MindyDatabaseAdapter getMindyDb () {
+		return adapter;
 	}
 }

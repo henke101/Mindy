@@ -6,8 +6,8 @@ import java.util.List;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
+import se.chalmers.mindy.core.ThreePosItem;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
-import se.chalmers.mindy.util.TempThreePos;
 import android.app.Fragment;
 import android.content.Context;
 import android.view.View;
@@ -40,11 +40,12 @@ public class ThreePositiveIndexItem extends IndexListItem {
 
 		MindyDatabaseAdapter dbAdapter = new MindyDatabaseAdapter(context);
 		dbAdapter.open();
-		TempThreePos threePos = dbAdapter.fetchLatestPositive();
+		ThreePosItem threePos = dbAdapter.fetchLatestPositive();
 		dbAdapter.close();
 
 		Calendar currentTime = Calendar.getInstance();
-		Calendar positiveTime = threePos.getDate();
+		Calendar positiveTime = Calendar.getInstance();
+		positiveTime.setTimeInMillis(threePos.getDate() == null ? Calendar.getInstance().getTimeInMillis() : threePos.getDate().getTimeInMillis());
 
 		if (positiveTime != null
 				&& (currentTime.get(Calendar.DAY_OF_YEAR) - positiveTime.get(Calendar.DAY_OF_YEAR) > 0 || currentTime.get(Calendar.YEAR) > positiveTime
@@ -52,23 +53,23 @@ public class ThreePositiveIndexItem extends IndexListItem {
 			setDescription(context.getString(R.string.index_threepos_description_secondary));
 		}
 
-		if (threePos.getFirst() != null && threePos.getFirst().length() > 0) {
+		if (threePos.getPositiveOne() != null && threePos.getPositiveOne().length() > 0) {
 			TextView firstLabel = new TextView(context);
-			firstLabel.setText("1. " + threePos.getFirst());
+			firstLabel.setText("1. " + threePos.getPositiveOne());
 			formatTextView(firstLabel, 50, 40, 50, 10);
 			container.addView(firstLabel);
 		}
 
-		if (threePos.getSecond() != null && threePos.getSecond().length() > 0) {
+		if (threePos.getPositiveTwo() != null && threePos.getPositiveTwo().length() > 0) {
 			TextView secondLabel = new TextView(context);
-			secondLabel.setText("2. " + threePos.getSecond());
+			secondLabel.setText("2. " + threePos.getPositiveTwo());
 			formatTextView(secondLabel, 50, 15, 50, 10);
 			container.addView(secondLabel);
 		}
 
-		if (threePos.getThird() != null && threePos.getThird().length() > 0) {
+		if (threePos.getPositiveThree() != null && threePos.getPositiveThree().length() > 0) {
 			TextView thirdLabel = new TextView(context);
-			thirdLabel.setText("3. " + threePos.getThird());
+			thirdLabel.setText("3. " + threePos.getPositiveThree());
 			formatTextView(thirdLabel, 50, 15, 50, 40);
 			container.addView(thirdLabel);
 		}

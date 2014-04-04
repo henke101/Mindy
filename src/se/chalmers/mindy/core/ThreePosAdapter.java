@@ -1,6 +1,9 @@
 package se.chalmers.mindy.core;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 
 import se.chalmers.mindy.R;
 import android.app.Activity;
@@ -19,7 +22,9 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 	int layoutResourceId;
 	int mCurrentlyFocusedId;
 	ArrayList<ThreePosItem> data;
-
+	String stringDate;
+	SimpleDateFormat dfDate;
+	
 	public ThreePosAdapter(final Context context, final int layoutResourceId, final ArrayList<ThreePosItem> data) {
 		super(context, layoutResourceId, data);
 		this.layoutResourceId = layoutResourceId;
@@ -47,8 +52,10 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 	 * Change fonts in date and input strings in each card
 	 */
 		Typeface robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_light.ttf");
-
-		holder.dateLabel.setText(data.get(position).getDate());
+		
+		dfDate = new SimpleDateFormat("yyyy-MM-dd");
+		stringDate = dfDate.format(data.get(position).getDate().getTime());
+		holder.dateLabel.setText(stringDate);
 		holder.dateLabel.setTypeface(robotoLight);
 
 		holder.positiveOneLabel.setText(data.get(position).getPositiveOne());
