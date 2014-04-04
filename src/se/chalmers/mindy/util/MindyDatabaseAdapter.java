@@ -16,10 +16,10 @@ public class MindyDatabaseAdapter {
 
 	// Database properties
 	private static final String DATABASE_NAME = "mindy_db";
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 6;
 
-	private static final String TABLE_TEST_QUESTIONS = "TestQuestions";
-	private static final String TABLE_TEST_RESULTS = "TestResults";
+	private static final String TABLE_EVALUATION_QUESTIONS = "TestQuestions";
+	private static final String TABLE_EVALUATION_RESULTS = "TestResults";
 	private static final String TABLE_EXERCISES = "Exercises";
 	private static final String TABLE_THREE_POSITIVE = "ThreePositives";
 
@@ -54,18 +54,19 @@ public class MindyDatabaseAdapter {
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_THREE_POSITIVE_DATE + " INTEGER NOT NULL, " + KEY_THREE_POSITIVE_FIRST + " TEXT, "
 			+ KEY_THREE_POSITIVE_SECOND + " TEXT, " + KEY_THREE_POSITIVE_THIRD + " TEXT);";
 
+	private static final String CREATE_TABLE_EVALUATION_QUESTIONS = "create table " + TABLE_EVALUATION_QUESTIONS + " (" + KEY_ROWID
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_QUESTION_DESCRIPTION + " TEXT NOT NULL, " + KEY_QUESTION_TYPE + " INTEGER NOT NULL, "
+			+ KEY_QUESTION_IMPORTANCE + " INTEGER NOT NULL);";
+
+	private static final String CREATE_TABLE_EVALUATION_ANSWERS = "create table " + TABLE_EVALUATION_RESULTS + " (" + KEY_ROWID
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ANSWER + " TEXT NOT NULL, " + KEY_DATE_ANSWERED + " INTEGER NOT NULL, " + KEY_QUESTION_ID
+			+ " INTEGER, " + " FOREIGN KEY (" + KEY_QUESTION_ID + ") REFERENCES " + TABLE_EVALUATION_QUESTIONS + " (" + KEY_ROWID + "));";
+
 	private static final String TAG = "MindyDatabaseAdapter";
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
 	private final Context mCtx;
 
-	/*
-	private static final String CREATE_TABLE_ALARMS = "create table " + DATABASE_TABLE_ALARMS + " (" + KEY_ROWID + " INTEGER PRIMARY KEY, " + KEY_FROM
-			+ " INTEGER NOT NULL, " + KEY_TO + " INTEGER NOT NULL, " + KEY_SUN + " BOOLEAN NOT NULL, " + KEY_MON + " BOOLEAN NOT NULL, " + KEY_TUE
-			+ " BOOLEAN NOT NULL, " + KEY_WED + " BOOLEAN NOT NULL, " + KEY_THU + " BOOLEAN NOT NULL, " + KEY_FRI + " BOOLEAN NOT NULL, " + KEY_SAT
-			+ " BOOLEAN NOT NULL, " + KEY_VIBRATION + " BOOLEAN NOT NULL, " + KEY_MEDIA + " BOOLEAN NOT NULL, " + KEY_LOCK + " BOOLEAN NOT NULL, "
-			+ KEY_UNMUTE_ON_CALL + " BOOLEAN NOT NULL, " + KEY_DISABLE_NOTIFICATION_LIGHT + " BOOLEAN NOT NULL, " + KEY_BRIGHTNESS + " INTEGER NOT NULL);";
-	 */
 	public MindyDatabaseAdapter(final Context ctx) {
 		mCtx = ctx;
 	}
@@ -126,6 +127,7 @@ public class MindyDatabaseAdapter {
 			}
 		}
 
+		threePosCursor.close();
 		return items;
 	}
 
@@ -139,7 +141,10 @@ public class MindyDatabaseAdapter {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-			return new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar);
+			TempThreePos result = new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar);
+
+			threePosCursor.close();
+			return result;
 
 		} else {
 			// Table is empty
@@ -189,6 +194,8 @@ public class MindyDatabaseAdapter {
 		public void onCreate(final SQLiteDatabase db) {
 
 			db.execSQL(CREATE_TABLE_THREE_POSITIVE);
+			db.execSQL(CREATE_TABLE_EVALUATION_QUESTIONS);
+			db.execSQL(CREATE_TABLE_EVALUATION_ANSWERS);
 
 		}
 
