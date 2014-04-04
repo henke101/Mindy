@@ -252,7 +252,8 @@ public class MainActivity extends Activity {
 		View child = listView.getChildAt(firstVisiblePosition);
 
 		final int headerHeight = listHeaderHeight - getActionBar().getHeight();
-		final float ratio = (float) Math.min(Math.max(Math.abs(child.getTop()) + child.getHeight() * firstVisiblePosition, 0), headerHeight) / headerHeight;
+		final float ratio = (float) Math.min(Math.max(Math.abs(child.getTop()) + Math.max(child.getHeight(), 500) * firstVisiblePosition, 0), headerHeight)
+				/ headerHeight;
 		final int newAlpha = (int) (ratio * 255);
 
 		setActionBarBackgroundTransparency(newAlpha);

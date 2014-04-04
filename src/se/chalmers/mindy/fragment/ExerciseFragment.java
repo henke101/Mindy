@@ -16,13 +16,15 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class ExerciseFragment extends ListFragment {
+public class ExerciseFragment extends ListFragment implements OnScrollListener {
 
 	MainActivity mActivity;
 	SharedPreferences sharedPrefs;
@@ -30,6 +32,7 @@ public class ExerciseFragment extends ListFragment {
 
 	ExerciseItem[] exItemList = { new ExerciseItem("Sšmnpiller", "fšrklarande text", new Color()),
 			new ExerciseItem("Pomodoroklocka", "Fšrklarande text", new Color()), new ExerciseItem("Tre Positiva saker", "Fšrklarande text", new Color()) };
+	private View mListHeader;
 
 	@Override
 	public void onAttach(final Activity activity) {
@@ -46,18 +49,19 @@ public class ExerciseFragment extends ListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		ListView listView = getListView();
-		listView.setBackgroundColor(Color.rgb(226, 226, 226));
+		listView.setBackgroundColor(mActivity.getResources().getColor(R.color.bg_color_grey));
 		listView.setDividerHeight(0);
+		listView.setOnScrollListener(this);
 
-		View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
-		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
+		mListHeader = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
+		TextView titleView = (TextView) mListHeader.findViewById(R.id.header_title);
 		titleView.setText(R.string.exercises);
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
 
-		ImageView imageView = (ImageView) headerView.findViewById(R.id.header_background);
+		ImageView imageView = (ImageView) mListHeader.findViewById(R.id.header_background);
 		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.ice, imageView);
 
-		listView.addHeaderView(headerView);
+		listView.addHeaderView(mListHeader);
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -99,4 +103,15 @@ public class ExerciseFragment extends ListFragment {
 
 	}
 
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+		if (visibleItemCount > firstVisibleItem) {
+			mActivity.setActionBarTransparencyFromListViewPosition(view, mListHeader.getHeight());
+		}
+	}
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// Do nothing
+	}
 }
