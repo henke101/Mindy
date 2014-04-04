@@ -15,7 +15,7 @@
 	    android:layout_marginTop="30dip"
 	    android:layout_marginBottom="40dip"
 	    android:paddingTop="30dip"
-	    android:paddingBottom="30dip">
+	    android:paddingBottom="50dip">
 	    <TextView
 	        android:id="@+id/about"
 	        android:layout_width="match_parent"
@@ -23,12 +23,12 @@
 	        android:layout_marginBottom="20dip"
 	        android:gravity="center"
 	        android:text="@string/about"
-	        android:textSize="40sp"
-	    	android:textColor="@color/dark_purple_3"
+	        android:textSize="40sp" 
+	    	android:textColor="@color/text_color_dark"
        		android:shadowColor="@color/text_shadow_color"
         	android:shadowDx="1.0"
         	android:shadowDy="2.0"
-        	android:shadowRadius="8.0"
+        	android:shadowRadius="3.0"
 	    	/>
 	    
 	    <ImageView

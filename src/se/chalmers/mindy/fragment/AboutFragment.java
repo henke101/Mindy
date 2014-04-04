@@ -29,9 +29,10 @@ public class AboutFragment extends Fragment {
 		TextView tViewAboutDevelopers = (TextView) view.findViewById(R.id.about_developers);
 
 		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_light.ttf");
+		Typeface robotoThin = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_thin.ttf");
 		Typeface robotoCondensedLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_condensed_light.ttf");
 
-		tViewAbout.setTypeface(robotoLight);
+		tViewAbout.setTypeface(robotoThin);
 		tViewAboutVersion.setTypeface(robotoCondensedLight);
 		tViewAboutText.setTypeface(robotoCondensedLight);
 		tViewAboutDevelopers.setTypeface(robotoCondensedLight);
