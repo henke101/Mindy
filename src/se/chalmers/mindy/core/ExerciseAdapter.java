@@ -38,7 +38,7 @@ public class ExerciseAdapter extends ArrayAdapter<ExerciseItem>{
 			holder.exercise.setText(data[position].getName());
 			
 			holder.description = (TextView) row.findViewById(R.id.description_label);
-			holder.description.setText(data[position].getName());
+			holder.description.setText(data[position].getDescription());
 
 		}
 		

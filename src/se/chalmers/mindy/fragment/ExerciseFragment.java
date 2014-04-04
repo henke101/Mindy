@@ -30,7 +30,7 @@ public class ExerciseFragment extends ListFragment{
 	SharedPreferences sharedPrefs;
 	Editor editor;
 
-	ExerciseItem[] exItemList = {new ExerciseItem("hej","hej",new Color()), new ExerciseItem("då","då", new Color())};	
+	ExerciseItem[] exItemList = {new ExerciseItem("Sömnpiller","förklarande text",new Color()), new ExerciseItem("Pomodoroklocka","förklarande text", new Color()), new ExerciseItem("Tre Positiva saker","förklarande text",new Color())};	
 	
 	@Override
 	public void onAttach(final Activity activity) {
@@ -39,9 +39,9 @@ public class ExerciseFragment extends ListFragment{
 		mActivity = (MainActivity) activity;
 		sharedPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
 		editor = sharedPrefs.edit();	
-	
+
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
@@ -53,23 +53,45 @@ public class ExerciseFragment extends ListFragment{
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
 
 		listView.addHeaderView(headerView);
-		
+
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-				Fragment fragmentSleepingPill = new SleepingPillFragment();
-				// Insert the fragment by replacing any existing fragment
-				FragmentManager fragmentManager = getFragmentManager();
-				fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
+				if(position ==1){
+					Fragment fragmentSleepingPill = new SleepingPillFragment();
+					// Insert the fragment by replacing any existing fragment
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
+					System.out.println("Sleeping pressed");
+				}
+				 
+				/**
+				 * Rickard: insert your fragment here
+				
+				if(position ==2){
+					Fragment fragmentSleepingPill = new SleepingPillFragment();
+					// Insert the fragment by replacing any existing fragment
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
+					System.out.println("Sleeping pressed");
+				}
+				*/
+				if(position ==3){
+					ListFragment fragmentThreePos = new ThreePosFragment();
+					// Insert the fragment by replacing any existing fragment
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentThreePos).commit();
+					System.out.println("Pos Pressed");
+				}
 			}
 		});
-		
+
 		/** Setting the list adapter for the ListFragment */
 		ExerciseAdapter adapter = new ExerciseAdapter(mActivity.getLayoutInflater().getContext(), R.layout.card_item, exItemList);
 		setListAdapter(adapter);
 
 	}
-	
+
 }

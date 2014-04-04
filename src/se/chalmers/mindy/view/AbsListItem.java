@@ -1,6 +1,7 @@
-package se.chalmers.mindy.pojo;
+package se.chalmers.mindy.view;
 
 import android.content.Context;
+import android.graphics.Typeface;
 
 /**
  * 
@@ -15,9 +16,17 @@ public abstract class AbsListItem {
 	protected Context context;
 	protected String title, description;
 
+	protected Typeface robotoLightCondensed;
+	protected Typeface robotoLight;
+	protected Typeface robotoThin;
+
 	public AbsListItem(Context context, String name, String description) {
 		super();
 		this.context = context;
+
+		robotoLightCondensed = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_condensed_light.ttf");
+		robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_light.ttf");
+		robotoThin = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_thin.ttf");
 
 		title = name;
 		this.description = description;

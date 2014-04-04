@@ -11,6 +11,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -22,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -34,22 +37,39 @@ public class MainActivity extends Activity {
 	private String[] sectionNames;
 	private Drawable mActionBarBackgroundDrawable;
 	private int mActionBarAlpha;
+	private AboutFragment fragmentAbout;
+	private PrefsFragment fragmentSettings;
+	private ExerciseFragment fragmentExercise;
+	private IndexFragment fragmentIndex;
+	private FragmentManager fragmentManager;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.nav_bar_background);
+		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.action_bar_background);
 		mActionBarBackgroundDrawable.setAlpha(0);
 
 		getActionBar().setBackgroundDrawable(mActionBarBackgroundDrawable);
+
+		fragmentManager = getFragmentManager();
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
 		// Get the section name array for Navigation Drawer
 		sectionNames = getResources().getStringArray(R.array.section_names);
+
+		final int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+		final TextView title = (TextView) getWindow().findViewById(actionBarTitle);
+
+		if (title != null) {
+			Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/roboto_light.ttf");
+			title.setTypeface(typeface);
+			title.setTextSize(22.0f);
+			title.setPadding(5, 1, 0, 0);
+		}
 
 		// Set the adapter for the list view
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, sectionNames));
@@ -103,18 +123,18 @@ public class MainActivity extends Activity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-		
+
 		SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-		
-		if(!sharedPref.contains("started")){
-		Fragment fragmentEvaluation = new EvaluationFragment();
-		// Insert the fragment by replacing any existing fragment
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
-		
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt("started", 1);
-		editor.commit();
+
+		if (!sharedPref.contains("started")) {
+			Fragment fragmentEvaluation = new EvaluationFragment();
+			// Insert the fragment by replacing any existing fragment
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
+
+			SharedPreferences.Editor editor = sharedPref.edit();
+			editor.putInt("started", 1);
+			editor.commit();
 		}
 	}
 
@@ -152,12 +172,12 @@ public class MainActivity extends Activity {
 	 * */
 	private void selectItem(int position) {
 
-		FragmentManager fragmentManager = getFragmentManager();
-
 		if (position == 0) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentIndex = new IndexFragment();
+			if (fragmentIndex == null) {
+				fragmentIndex = new IndexFragment();
+			}
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentIndex).commit();
@@ -166,7 +186,7 @@ public class MainActivity extends Activity {
 		if (position == 1) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentExercise = new ExerciseFragment();
+			fragmentExercise = new ExerciseFragment();
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentExercise).commit();
@@ -178,7 +198,7 @@ public class MainActivity extends Activity {
 		if (position == 2) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentSettings = new PrefsFragment();
+			fragmentSettings = new PrefsFragment();
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
@@ -187,7 +207,7 @@ public class MainActivity extends Activity {
 		if (position == 3) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentAbout = new AboutFragment();
+			fragmentAbout = new AboutFragment();
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).commit();
@@ -226,4 +246,8 @@ public class MainActivity extends Activity {
 
 	}
 
+	public void setFragment(Fragment fragment) {
+		// Insert the fragment by replacing any existing fragment
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
+	}
 }

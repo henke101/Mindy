@@ -23,7 +23,9 @@
         <activity
             android:name="se.chalmers.mindy.core.MainActivity"
             android:label="@string/title_activity_main"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"  >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
