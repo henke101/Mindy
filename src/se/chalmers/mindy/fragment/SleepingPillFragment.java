@@ -138,13 +138,9 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 				playPauseButton.setBackgroundResource(R.drawable.play_button);
 			} else {
 
-<<<<<<< HEAD
 				if (mediaPlayer == null) {
-					mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sample_soundfile);
-=======
-				if (mediaPlayer == null){
-					mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sleeping_pill);                
->>>>>>> development
+					mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sleeping_pill);
+
 					audioProgressBar.setProgress(0);
 					audioProgressBar.setMax(mediaPlayer.getDuration());
 					new Thread(this).start();
