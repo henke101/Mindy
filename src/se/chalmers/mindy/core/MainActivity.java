@@ -135,16 +135,15 @@ public class MainActivity extends Activity {
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentIndex).commit();
 		}
-		
-		if(position==1){
-		// Create a new fragment and specify the planet to show based on
-		// position
-		Fragment fragmentExercise = new ExerciseFragment();
-		
-		// Insert the fragment by replacing any existing fragment
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame,
-		fragmentExercise).commit();
+
+		if (position == 1) {
+			// Create a new fragment and specify the planet to show based on
+			// position
+			Fragment fragmentExercise = new ExerciseFragment();
+
+			// Insert the fragment by replacing any existing fragment
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentExercise).commit();
 		}
 
 		/*
