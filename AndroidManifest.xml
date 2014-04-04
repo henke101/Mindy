@@ -23,8 +23,14 @@
         <activity
             android:name="se.chalmers.mindy.core.MainActivity"
             android:label="@string/title_activity_main"
+<<<<<<< HEAD
             android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"  
             android:screenOrientation="portrait">
+=======
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"  >
+
+>>>>>>> development
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
