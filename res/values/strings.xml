@@ -16,6 +16,11 @@
     <string name="add_positive_one">Skriv glad sak</string>
     <string name="add_positive_two">Nästa bra sak</string>
     <string name="add_positive_three">Sista saken</string>
+    <string name="radio_button_yesterday">Igår</string>
+    <string name="radio_button_today">Idag</string>
+    <string name="button_add_new">Lägg till ny</string>
+    <string name="button_abort">Avbryt</string>
+    <string name="button_ok">Klar</string>
     
 
 </resources>

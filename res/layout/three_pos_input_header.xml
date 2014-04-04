@@ -9,8 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:drawable/list_selector_background"
-        android:text="Lägg till ny"
-        android:fontFamily="fonts/roboto_bold.ttf" />
+        android:text="@string/button_add_new" />
 
     <LinearLayout
         android:id="@+id/input_container"
@@ -31,7 +30,7 @@
                 android:id="@+id/yesterday_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Igår"
+                android:text="@string/radio_button_yesterday"
                 android:layout_gravity="center"
                 android:layout_weight="0.5" />
 
@@ -39,7 +38,7 @@
                 android:id="@+id/today_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Idag"
+                android:text="@string/radio_button_today"
                 android:layout_gravity="center"
                 android:layout_weight="0.5"
                 android:checked="true" />
@@ -82,7 +81,7 @@
             android:id="@+id/ok_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Klar"
+            android:text="@string/button_ok"
             android:layout_gravity="right" />
         
     </LinearLayout>

@@ -3,6 +3,7 @@ package se.chalmers.mindy.fragment;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.core.ThreePosAdapter;
@@ -88,7 +89,6 @@ public class ThreePosFragment extends ListFragment {
 		 * Setting the fonts for the inputs
 		 */
 		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
-//		Typeface robotoCondensedLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
 		
 		inputOne.setTypeface(robotoLight);
 		inputTwo.setTypeface(robotoLight);
@@ -97,9 +97,6 @@ public class ThreePosFragment extends ListFragment {
 		okButton.setTypeface(robotoLight);
 
 
-//		tViewAboutVersion.setTypeface(robotoCondensedLight);
-//		tViewAboutText.setTypeface(robotoCondensedLight);
-//		tViewAboutDevelopers.setTypeface(robotoCondensedLight);
 		
 		final ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
 			
@@ -117,15 +114,11 @@ public class ThreePosFragment extends ListFragment {
 					      Context.INPUT_METHOD_SERVICE);
 
 				if (addButton.getText().equals("Avbryt")) {
-					
+					addButton.setText(R.string.button_add_new);
+					imm.hideSoftInputFromWindow(inputOne.getWindowToken(), 0);
 
-					//setTypeFace innan eller efter setText?
-					addButton.setText("Lägg till ny");
-					Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
-//					addButton.setTypeface(robotoLight);
-//					imm.hideSoftInputFromWindow(inputOne.getWindowToken(), 0);
 				} else {
-					addButton.setText("Avbryt");
+					addButton.setText(R.string.button_abort);
 					inputOne.requestFocus();
 					imm.showSoftInput(inputOne, 0);
 				}
@@ -163,24 +156,6 @@ public class ThreePosFragment extends ListFragment {
 					stringInputOne = inputOne.getText().toString();
 					stringInputTwo =inputTwo.getText().toString();
 					stringInputThree = inputThree.getText().toString();
-					
-					/*
-					 * 
-		
-					
-					TextView posOneLabel =(TextView) getView().findViewById(R.id.positive_one_label);
-					TextView posTwoLabel =(TextView) getView().findViewById(R.id.positive_two_label);
-					TextView posThreeLabel =(TextView) getView().findViewById(R.id.positive_three_label);
-					
-					
-					
-					Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
-					posOneLabel.setTypeface(robotoLight);
-					posTwoLabel.setTypeface(robotoLight);
-					posThreeLabel.setTypeface(robotoLight);
-					
-					
-					*/
 
 					Log.d("stringInputOne:" , ""+ stringInputOne);
 					Log.d("stringInputTwo:", "" + stringInputTwo);
@@ -202,9 +177,7 @@ public class ThreePosFragment extends ListFragment {
 					inputTwo.setHint(R.string.add_positive_two);
 					inputThree.setHint(R.string.add_positive_three);
 					
-//					Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
-					addButton.setText("Lägg till ny");
-//					addButton.setTypeface(robotoLight);
+					addButton.setText(R.string.button_add_new);
 					
 					dateButtons.check(R.id.today_button);
 					
@@ -219,10 +192,6 @@ public class ThreePosFragment extends ListFragment {
 
 		inputThree.setOnEditorActionListener(createListener);
 
-		/**
-		 * okButton saves all the input values into a card in the ThreePosItemList
-		 * Problem right now, the strings arent being refreshed. It displays old strings and in a strange order
-		 */
 		okButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -251,12 +220,7 @@ public class ThreePosFragment extends ListFragment {
 				inputTwo.setHint(R.string.add_positive_two);
 				inputThree.setHint(R.string.add_positive_three);
 				
-				addButton.setText("Lägg till ny");
-		/**
-		 * Not sure if necessary
-		 */
-				//Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
-			//	addButton.setTypeface(robotoLight);
+				addButton.setText(R.string.button_add_new);
 				
 				dateButtons.check(R.id.today_button);
 				
