@@ -4,23 +4,19 @@ import se.chalmers.mindy.R;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AbsoluteLayout;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class SleepingPillFragment extends Fragment implements Runnable, OnClickListener {

@@ -1,8 +1,6 @@
 package se.chalmers.mindy.fragment;
 
 
-import java.util.List;
-
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.ExerciseAdapter;
 import se.chalmers.mindy.core.ExerciseItem;
@@ -19,10 +17,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class ExerciseFragment extends ListFragment{
 

@@ -5,11 +5,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.BlurMaskFilter.Blur;
 import android.os.AsyncTask;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
