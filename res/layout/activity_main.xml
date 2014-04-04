@@ -19,6 +19,7 @@
         android:choiceMode="singleChoice"
         android:divider="#DDD"
         android:dividerHeight="1dp"
-        android:background="#EEE"/>
+        android:paddingTop="48dip"
+        android:background="#FFF"/>
 </android.support.v4.widget.DrawerLayout>
 
