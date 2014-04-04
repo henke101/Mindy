@@ -1,24 +1,31 @@
 package se.chalmers.mindy.core;
 
+import java.io.IOException;
+
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
 import se.chalmers.mindy.fragment.EvaluationFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
+import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -45,6 +52,8 @@ public class MainActivity extends Activity {
 	private IndexFragment fragmentIndex;
 	private FragmentManager fragmentManager;
 
+	private MediaPlayer mMediaPlayer;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -65,6 +74,10 @@ public class MainActivity extends Activity {
 
 		// Get the section name array for Navigation Drawer
 		sectionNames = getResources().getStringArray(R.array.section_names);
+
+		// TODO TEMP
+		MindyDatabaseAdapter adapter = new MindyDatabaseAdapter(this);
+		adapter.open();
 
 		final int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
 		final TextView title = (TextView) getWindow().findViewById(actionBarTitle);
@@ -244,6 +257,41 @@ public class MainActivity extends Activity {
 
 		setActionBarBackgroundTransparency(newAlpha);
 
+	}
+
+	public MediaPlayer getMediaPlayerInstance() {
+		if (mMediaPlayer == null) {
+			mMediaPlayer = new MediaPlayer();
+			mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		}
+
+		return mMediaPlayer;
+	}
+
+	/**
+	 * Sets or updates 
+	 * @param resid
+	 * @return
+	 */
+	public MediaPlayer setMediaPlayerResourceId(int resid) {
+		if (mMediaPlayer == null) {
+			throw new IllegalStateException("Media player has not been initialized yet. Run MainActivity.getMediaPlayerInstance() first.");
+		}
+		AssetFileDescriptor afd = getResources().openRawResourceFd(resid);
+
+		mMediaPlayer.reset();
+		try {
+			mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+		} catch (IllegalArgumentException e) {
+			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
+		} catch (IllegalStateException e) {
+			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
+		} catch (IOException e) {
+			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
+		}
+		mMediaPlayer.prepareAsync();
+
+		return mMediaPlayer;
 	}
 
 	public void setActionBarBackgroundTransparency(int alpha) {

@@ -1,8 +1,5 @@
 package se.chalmers.mindy.fragment;
 
-
-import java.util.List;
-
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.ExerciseAdapter;
 import se.chalmers.mindy.core.ExerciseItem;
@@ -19,33 +16,33 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
-public class ExerciseFragment extends ListFragment{
+public class ExerciseFragment extends ListFragment {
 
 	MainActivity mActivity;
 	SharedPreferences sharedPrefs;
 	Editor editor;
 
-	ExerciseItem[] exItemList = {new ExerciseItem("hej","hej",new Color()), new ExerciseItem("då","då", new Color())};	
-	
+	ExerciseItem[] exItemList = { new ExerciseItem("hej", "hej", new Color()), new ExerciseItem("då", "då", new Color()) };
+
 	@Override
 	public void onAttach(final Activity activity) {
 		super.onAttach(activity);
 
 		mActivity = (MainActivity) activity;
 		sharedPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
-		editor = sharedPrefs.edit();	
-	
+		editor = sharedPrefs.edit();
+
 	}
-	
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		ListView listView = getListView();
+		listView.setBackgroundColor(Color.rgb(226, 226, 226));
 
 		View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
 		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
@@ -53,7 +50,7 @@ public class ExerciseFragment extends ListFragment{
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
 
 		listView.addHeaderView(headerView);
-		
+
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -65,11 +62,11 @@ public class ExerciseFragment extends ListFragment{
 				fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
 			}
 		});
-		
+
 		/** Setting the list adapter for the ListFragment */
 		ExerciseAdapter adapter = new ExerciseAdapter(mActivity.getLayoutInflater().getContext(), R.layout.card_item, exItemList);
 		setListAdapter(adapter);
 
 	}
-	
+
 }
