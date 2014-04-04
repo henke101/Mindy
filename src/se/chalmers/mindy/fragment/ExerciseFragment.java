@@ -66,7 +66,7 @@ public class ExerciseFragment extends ListFragment{
 					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
 					System.out.println("Sleeping pressed");
 				}
-				
+				 
 				if(position ==3){
 					ListFragment fragmentThreePos = new ThreePosFragment();
 					// Insert the fragment by replacing any existing fragment
