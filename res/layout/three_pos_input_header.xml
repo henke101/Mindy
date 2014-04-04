@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:drawable/list_selector_background"
-        android:text="Lägg till ny" />
+        android:text="Lägg till ny"
+        android:fontFamily="fonts/roboto_bold.ttf" />
 
     <LinearLayout
         android:id="@+id/input_container"

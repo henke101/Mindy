@@ -3,8 +3,6 @@ package se.chalmers.mindy.fragment;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.core.ThreePosAdapter;
@@ -27,7 +25,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -105,8 +102,7 @@ public class ThreePosFragment extends ListFragment {
 //		tViewAboutDevelopers.setTypeface(robotoCondensedLight);
 		
 		final ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
-		
-	
+			
 		setListAdapter(adapter);
 
 		listView.addHeaderView(addItemHeader);
@@ -125,9 +121,9 @@ public class ThreePosFragment extends ListFragment {
 
 					//setTypeFace innan eller efter setText?
 					addButton.setText("Lägg till ny");
-//					Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
+					Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
 //					addButton.setTypeface(robotoLight);
-					imm.hideSoftInputFromWindow(inputOne.getWindowToken(), 0);
+//					imm.hideSoftInputFromWindow(inputOne.getWindowToken(), 0);
 				} else {
 					addButton.setText("Avbryt");
 					inputOne.requestFocus();
