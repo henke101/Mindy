@@ -71,6 +71,7 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		super.onPause();
 		if (mediaPlayer != null){
 			mediaPlayer.pause();
+			playPauseButton.setBackgroundResource(R.drawable.play_button);
 		}
 	}
 	@Override
@@ -79,6 +80,8 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		if (mediaPlayer != null){
 			mediaPlayer.release();		
 			mediaPlayer = null;
+			playPauseButton.setBackgroundResource(R.drawable.play_button);
+			audioProgressBar.setProgress(0);
 		}
 	}
 	@Override
@@ -100,6 +103,9 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		}
 	};
 
+	/**
+	 * Handles the progression of the progress bar
+	 */
 	@Override
 	public void run() {
 		int currentPosition= 0;

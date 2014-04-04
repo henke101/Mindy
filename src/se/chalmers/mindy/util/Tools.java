@@ -164,4 +164,34 @@ public class Tools {
 
 		return inSampleSize;
 	}
+	
+	public static Bitmap setLogoGlow(Resources res,int resourceID){
+	    int margin = 12;
+	    int halfMargin = margin / 2;
+
+	    int glowRadius = 12;
+
+	    // Source image
+	    Bitmap src = BitmapFactory.decodeResource(res,
+	            resourceID);
+
+	    Bitmap alpha = src.extractAlpha();
+
+	    // Output bitmap (source + glow)
+	    Bitmap bmp = Bitmap.createBitmap(src.getWidth() + margin,
+	            src.getHeight() + margin, Bitmap.Config.ARGB_8888);
+
+	    Canvas canvas = new Canvas(bmp);
+	    Paint paint = new Paint();
+	    paint.setColor(Color.WHITE);
+
+	    // Paint glow
+	    paint.setMaskFilter(new BlurMaskFilter(glowRadius, Blur.OUTER));
+	    canvas.drawBitmap(alpha, halfMargin, halfMargin, paint);
+
+	    // Paint source image
+	    canvas.drawBitmap(src, halfMargin, halfMargin, null);
+	    
+	    return bmp;
+	}
 }
