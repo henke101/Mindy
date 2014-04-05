@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.core.ThreePosItem;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,7 +17,7 @@ public class MindyDatabaseAdapter {
 
 	// Database properties
 	private static final String DATABASE_NAME = "mindy_db";
-	private static final int DATABASE_VERSION = 6;
+	private static final int DATABASE_VERSION = 7;
 
 	private static final String TABLE_EVALUATION_QUESTIONS = "TestQuestions";
 	private static final String TABLE_EVALUATION_RESULTS = "TestResults";
@@ -96,12 +97,12 @@ public class MindyDatabaseAdapter {
 		return mDb != null && mDb.isOpen();
 	}
 
-	public boolean insertNewThreePositive(TempThreePos pos) {
+	public boolean insertNewThreePositive(ThreePosItem pos) {
 
 		ContentValues args = new ContentValues();
-		args.put(KEY_THREE_POSITIVE_FIRST, pos.getFirst());
-		args.put(KEY_THREE_POSITIVE_SECOND, pos.getSecond());
-		args.put(KEY_THREE_POSITIVE_THIRD, pos.getThird());
+		args.put(KEY_THREE_POSITIVE_FIRST, pos.getPositiveOne());
+		args.put(KEY_THREE_POSITIVE_SECOND, pos.getPositiveTwo());
+		args.put(KEY_THREE_POSITIVE_THIRD, pos.getPositiveThree());
 
 		if (pos.getDate() != null) {
 			args.put(KEY_THREE_POSITIVE_DATE, pos.getDate().getTimeInMillis());
@@ -112,8 +113,8 @@ public class MindyDatabaseAdapter {
 		return mDb.insert(TABLE_THREE_POSITIVE, null, args) > 0;
 	}
 
-	public ArrayList<TempThreePos> fetchAllPositives() {
-		ArrayList<TempThreePos> items = new ArrayList<TempThreePos>();
+	public ArrayList<ThreePosItem> fetchAllPositives() {
+		ArrayList<ThreePosItem> items = new ArrayList<ThreePosItem>();
 
 		Cursor threePosCursor = mDb.query(TABLE_THREE_POSITIVE, new String[] { KEY_ROWID, KEY_THREE_POSITIVE_FIRST, KEY_THREE_POSITIVE_SECOND,
 				KEY_THREE_POSITIVE_THIRD, KEY_THREE_POSITIVE_DATE }, null, null, null, null, null);
@@ -122,7 +123,7 @@ public class MindyDatabaseAdapter {
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-				items.add(new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar));
+				items.add(new ThreePosItem(calendar, threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3)));
 				threePosCursor.moveToNext();
 			}
 		}
@@ -131,7 +132,7 @@ public class MindyDatabaseAdapter {
 		return items;
 	}
 
-	public TempThreePos fetchLatestPositive() {
+	public ThreePosItem fetchLatestPositive() {
 
 		Cursor threePosCursor = mDb.query(TABLE_THREE_POSITIVE, new String[] { KEY_ROWID, KEY_THREE_POSITIVE_FIRST, KEY_THREE_POSITIVE_SECOND,
 				KEY_THREE_POSITIVE_THIRD, KEY_THREE_POSITIVE_DATE }, KEY_THREE_POSITIVE_DATE + " in (SELECT MAX(" + KEY_THREE_POSITIVE_DATE + ") AS "
@@ -141,7 +142,7 @@ public class MindyDatabaseAdapter {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-			TempThreePos result = new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar);
+			ThreePosItem result = new ThreePosItem(calendar, threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3));
 
 			threePosCursor.close();
 			return result;
@@ -149,7 +150,7 @@ public class MindyDatabaseAdapter {
 		} else {
 			// Table is empty
 
-			return new TempThreePos(mCtx.getString(R.string.index_threepos_default_first), mCtx.getString(R.string.index_threepos_default_second),
+			return new ThreePosItem(mCtx.getString(R.string.index_threepos_default_first), mCtx.getString(R.string.index_threepos_default_second),
 					mCtx.getString(R.string.index_threepos_default_third));
 		}
 	}
@@ -203,6 +204,8 @@ public class MindyDatabaseAdapter {
 		public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
 			Log.d(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_THREE_POSITIVE);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVALUATION_QUESTIONS);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVALUATION_RESULTS);
 			onCreate(db);
 
 		}
