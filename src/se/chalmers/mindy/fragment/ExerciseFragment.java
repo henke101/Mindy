@@ -74,20 +74,10 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 					FragmentManager fragmentManager = getFragmentManager();
 					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
 					System.out.println("Sleeping pressed");
-				}
-
-				/**
-				 * Rickard: insert your fragment here
-				
-				if(position ==2){
-					Fragment fragmentSleepingPill = new SleepingPillFragment();
-					// Insert the fragment by replacing any existing fragment
-					FragmentManager fragmentManager = getFragmentManager();
-					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
-					System.out.println("Sleeping pressed");
-				}
-				*/
-				if (position == 3) {
+				} else if (position == 2) {
+					PomodoroFragment pomodoroFragment = new PomodoroFragment();
+					mActivity.setFragment(pomodoroFragment);
+				} else if (position == 3) {
 					ListFragment fragmentThreePos = new ThreePosFragment();
 					// Insert the fragment by replacing any existing fragment
 					FragmentManager fragmentManager = getFragmentManager();

@@ -200,6 +200,7 @@ public class MainActivity extends Activity {
 		if (position == 1) {
 			// Create a new fragment and specify the planet to show based on
 			// position
+
 			fragmentExercise = new ExerciseFragment();
 
 			// Insert the fragment by replacing any existing fragment
@@ -303,7 +304,6 @@ public class MainActivity extends Activity {
 
 	public void setFragment(Fragment fragment) {
 		// Insert the fragment by replacing any existing fragment
-		// fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
 		FragmentTransaction ft = fragmentManager.beginTransaction();
 		ft.add(R.id.content_frame, fragment);
