@@ -61,6 +61,7 @@
     <string name="index_threepos_default_third">Du har inte gjort några inlägg ännu. Gå till Övningar i sidomenyn för att skriva ett inlägg.</string>
     
     <string name="exercises">Övningar</string>
+    <string name="pomodoro_timer">Pomodorotimer</string>
 
     
 </resources>

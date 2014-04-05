@@ -32,8 +32,14 @@ public class PrefsFragment extends PreferenceFragment implements OnPreferenceCha
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
-		activity.setActionBarBackgroundTransparency(255);
+		super.onViewCreated(view, savedInstanceState);
 		view.setPadding(0, 160, 0, 0);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		activity.setActionBarBackgroundTransparency(255);
 	}
 
 	@Override

@@ -4,98 +4,123 @@ import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
-public class PomodoroFragment extends Fragment{
- 
+public class PomodoroFragment extends Fragment {
+
 	private MainActivity mActivity;
 	private SharedPreferences sharedPrefs;
-	private Editor editor;
 	private Button playButton;
 	private CountDownTimer pomodoroTimer;
-	private int barMax;
-	private ProgressDialog barTimer;
 	private Animation an;
 	private ProgressBar pb;
-	
+	private TextView mLabel;
+
+	int count = 0;
+
 	@Override
 	public void onAttach(final Activity activity) {
 		super.onAttach(activity);
 
-		mActivity = (MainActivity) activity; 
+		mActivity = (MainActivity) activity;
 		sharedPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
-		editor = sharedPrefs.edit();	
-	
-	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
 
-		View pomodoroView = mActivity.getLayoutInflater().inflate(R.layout.fragment_pomodoro, null);
-		TextView titleView = (TextView) pomodoroView.findViewById(R.id.header_title);
-		playButton = (Button)pomodoroView.findViewById(R.id.start);
-		titleView.setText(R.string.app_name);
-		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
-		
-		pb = (ProgressBar) pomodoroView.findViewById(R.id.pomodoro_timer);
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		super.onCreateView(inflater, container, savedInstanceState);
+
+		View parent = mActivity.getLayoutInflater().inflate(R.layout.fragment_pomodoro, null);
+
+		TextView titleView = (TextView) parent.findViewById(R.id.header_title);
+		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
+
+		mLabel = (TextView) parent.findViewById(R.id.timer_label);
+
+		playButton = (Button) parent.findViewById(R.id.start);
+		pb = (ProgressBar) parent.findViewById(R.id.pomodoro_timer);
 
 		an = new RotateAnimation(0.0f, 90.0f, 250f, 273f);
 		an.setFillAfter(true);
-		
+
 		playButton.setOnClickListener(new OnClickListener() {
+			int buttonMode = 0;
 
 			@Override
 			public void onClick(View v) {
-				if(playButton.getText().equals("Start")){
-					playButton.setText("Stop");
-					startTimer(25);
+
+				buttonMode = (buttonMode + 1) % 2;
+
+				if (buttonMode == 1) {
 					pb.startAnimation(an);
-				}
-				if(playButton.getText().equals("Stop")){
+					pomodoroTimer = getRunningTimer(25);
+					playButton.setText("Stop");
+				} else if (buttonMode == 0) {
 					playButton.setText("Start");
 					pomodoroTimer.cancel();
 					pb.clearAnimation();
 				}
 			}
 		});
+
+		return parent;
 	}
 
-	private void startTimer(final int min) {
-		pomodoroTimer = new CountDownTimer(60 * min * 1000, 500) {
+	@Override
+	public void onResume() {
+		super.onResume();
+		mActivity.setActionBarBackgroundTransparency(255);
+	}
+
+	private CountDownTimer getRunningTimer(final int minutes) {
+
+		pb.setMax(60 * minutes * 100);
+		pb.setProgress(60 * minutes * 100);
+
+		return new CountDownTimer(60 * minutes * 1000, 10) {
 
 			@Override
 			public void onTick(long leftTimeInMilliseconds) {
-				long seconds = leftTimeInMilliseconds / 1000;
-				int barVal= (barMax) - ((int)(seconds/60*100)+(int)(seconds%60));
-				barTimer.setProgress(barVal);
+				int seconds = (int) leftTimeInMilliseconds / 1000;
 
+				String paddedSeconds = seconds % 60 < 10 ? "0" + seconds % 60 : "" + seconds % 60;
+				mLabel.setText(seconds / 60 + ":" + paddedSeconds);
+
+				int progress = (int) leftTimeInMilliseconds / 10;
+				if (count == 0) {
+					pb.setProgress(progress);
+				} else if (count == 1) {
+					pb.setProgress(pb.getMax() - progress);
+				}
 			}
+
 			@Override
 			public void onFinish() {
-				barTimer.setProgress(0);
-				pb.clearAnimation();
+				count = (count + 1) % 2;
+				if (count == 1) {
+					pomodoroTimer = getRunningTimer(5);
+				} else if (count == 0) {
+					pomodoroTimer = getRunningTimer(25);
+				}
+
+				pb.setProgress(0);
 				playButton.setText("Start");
 			}
 		}.start();
 
 	}
-
 }
