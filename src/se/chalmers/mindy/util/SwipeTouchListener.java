@@ -3,7 +3,7 @@ package se.chalmers.mindy.util;
 import java.util.HashMap;
 
 import se.chalmers.mindy.core.AbsListAdapter;
-import se.chalmers.mindy.pojo.AbsListItem;
+import se.chalmers.mindy.view.AbsListItem;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
@@ -20,7 +20,7 @@ import android.widget.ListView;
  * Class responsible for handling touch events to fade/move dragged items as they are swiped out.
  * AbsListAdapter class has a convenience method for getting an instance of this class.
  * 
- * @author Viktor kerskog
+ * @author Viktor ï¿½kerskog
  *
  */
 public class SwipeTouchListener implements View.OnTouchListener {
@@ -144,7 +144,8 @@ public class SwipeTouchListener implements View.OnTouchListener {
 				// Depends upon the velocity of the swipe only if the velocity is between MINIMUM_VELOCITY and MAX_VELOCITY,
 				// else fixed values in order to avoid too slow or too fast animation
 				float currentXVelocityAbs = Math.abs(mVelocityTracker.getXVelocity());
-				long duration = (long) (currentXVelocityAbs > MIN_VELOCITY ? 100000 / Math.min(currentXVelocityAbs, MAX_VELOCITY) : (1 - fractionCovered) * SWIPE_DURATION);
+				long duration = (long) (currentXVelocityAbs > MIN_VELOCITY ? 100000 / Math.min(currentXVelocityAbs, MAX_VELOCITY) : (1 - fractionCovered)
+						* SWIPE_DURATION);
 
 				// Disable the list view so that the user cannot interrupt the animation through other interactions
 				mListView.setEnabled(false);
@@ -257,20 +258,24 @@ public class SwipeTouchListener implements View.OnTouchListener {
 
 							// For Ice Cream Sandwich we have to specify the end action with a listener
 							if (!Tools.isRuntimePastIceCreamSandwich()) {
-								child.animate().setListener(new AnimatorListenerAdapter() {
 
-									@Override
-									public void onAnimationEnd(Animator animation) {
-										mSwiping = false;
-										mListView.setEnabled(true);
-									}
-								});
-							}
+								if (firstAnimation) {
+									child.animate().setListener(new AnimatorListenerAdapter() {
 
-							child.animate().setDuration(MOVE_DURATION).translationY(0);
+										@Override
+										public void onAnimationEnd(Animator animation) {
+											mSwiping = false;
+											mListView.setEnabled(true);
+										}
+									});
+									firstAnimation = false;
+								}
 
-							if (firstAnimation) {
-								if (Tools.isRuntimePastIceCreamSandwich()) {
+								child.animate().setDuration(MOVE_DURATION).translationY(0);
+							} else {
+								child.animate().setDuration(MOVE_DURATION).translationY(0);
+
+								if (firstAnimation) {
 									child.animate().withEndAction(new Runnable() {
 										@Override
 										public void run() {
@@ -289,18 +294,48 @@ public class SwipeTouchListener implements View.OnTouchListener {
 						startTop = top + (i > 0 ? childHeight : -childHeight);
 						int delta = startTop - top;
 						child.setTranslationY(delta);
+						// For Ice Cream Sandwich we have to specify the end action with a listener
+						if (!Tools.isRuntimePastIceCreamSandwich()) {
+
+							if (firstAnimation) {
+								child.animate().setListener(new AnimatorListenerAdapter() {
+
+									@Override
+									public void onAnimationEnd(Animator animation) {
+										mSwiping = false;
+										mListView.setEnabled(true);
+									}
+								});
+								firstAnimation = false;
+							}
+
+							child.animate().setDuration(MOVE_DURATION).translationY(0);
+						} else {
+							child.animate().setDuration(MOVE_DURATION).translationY(0);
+
+							if (firstAnimation) {
+								child.animate().withEndAction(new Runnable() {
+									@Override
+									public void run() {
+										mSwiping = false;
+										mListView.setEnabled(true);
+									}
+								});
+							}
+							firstAnimation = false;
+						}
+						/*
 						child.animate().setDuration(MOVE_DURATION).translationY(0);
 						if (firstAnimation) {
 							child.animate().withEndAction(new Runnable() {
 								@Override
 								public void run() {
-									// mBackgroundContainer.hideBackground();
 									mSwiping = false;
 									mListView.setEnabled(true);
 								}
 							});
 							firstAnimation = false;
-						}
+						}*/
 					}
 				}
 				mItemIdTopMap.clear();

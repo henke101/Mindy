@@ -1,5 +1,7 @@
 package se.chalmers.mindy.core;
 
+import java.io.IOException;
+
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
 import se.chalmers.mindy.fragment.EvaluationFragment;
@@ -7,18 +9,26 @@ import se.chalmers.mindy.fragment.DiaryListFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
+import se.chalmers.mindy.util.MindyDatabaseAdapter;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.SharedPreferences;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
-import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -26,6 +36,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -39,21 +50,51 @@ public class MainActivity extends Activity {
 	private Drawable mActionBarBackgroundDrawable;
 	private int mActionBarAlpha;
 
+	private AboutFragment fragmentAbout;
+	private PrefsFragment fragmentSettings;
+	private ExerciseFragment fragmentExercise;
+	private IndexFragment fragmentIndex;
+	private FragmentManager fragmentManager;
+
+	private MediaPlayer mMediaPlayer;
+	
+	private MindyDatabaseAdapter adapter;
+
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.nav_bar_background);
+		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.action_bar_background);
 		mActionBarBackgroundDrawable.setAlpha(0);
 
-		getActionBar().setBackgroundDrawable(mActionBarBackgroundDrawable);
+		ActionBar ab = getActionBar();
+		ab.setBackgroundDrawable(mActionBarBackgroundDrawable);
+		ab.setDisplayHomeAsUpEnabled(true);
+		ab.setHomeButtonEnabled(true);
+
+		fragmentManager = getFragmentManager();
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
 		// Get the section name array for Navigation Drawer
 		sectionNames = getResources().getStringArray(R.array.section_names);
+
+		// TODO TEMP
+		adapter = new MindyDatabaseAdapter(this);
+		adapter.open();
+
+		final int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+		final TextView title = (TextView) getWindow().findViewById(actionBarTitle);
+
+		if (title != null) {
+			Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/roboto_light.ttf");
+			title.setTypeface(typeface);
+			title.setTextSize(22.0f);
+			title.setPadding(5, 1, 0, 0);
+		}
 
 		// Set the adapter for the list view
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, sectionNames));
@@ -72,7 +113,7 @@ public class MainActivity extends Activity {
 
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_navigation_drawer, R.string.drawer_open, R.string.drawer_close) {
 
 			/** Called when a drawer has settled in a completely closed state. */
 			@Override
@@ -105,20 +146,18 @@ public class MainActivity extends Activity {
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-		
+
 		SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
-		
-		if(!sharedPref.contains("started")){
-		Fragment fragmentEvaluation = new EvaluationFragment();
-		// Insert the fragment by replacing any existing fragment
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
-		
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt("started", 1);
-		editor.commit();
+
+		if (!sharedPref.contains("started")) {
+			Fragment fragmentEvaluation = new EvaluationFragment();
+			// Insert the fragment by replacing any existing fragment
+			FragmentManager fragmentManager = getFragmentManager();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
+
+			SharedPreferences.Editor editor = sharedPref.edit();
+			editor.putInt("started", 1);
+			editor.commit();
 		}
 	}
 
@@ -142,9 +181,15 @@ public class MainActivity extends Activity {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		// Handle your other action bar items...
 
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void onDestroy(){
+		super.onDestroy();
+		
+		adapter.close();
+		
 	}
 
 	/**
@@ -156,27 +201,25 @@ public class MainActivity extends Activity {
 	 * */
 	private void selectItem(int position) {
 
-		FragmentManager fragmentManager = getFragmentManager();
-
 		if (position == 0) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentIndex = new IndexFragment();
+			if (fragmentIndex == null) {
+				fragmentIndex = new IndexFragment();
+			}
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentIndex).commit();
 		}
 
 		if (position == 1) {
-
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentExercise = new ExerciseFragment();
+
+			fragmentExercise = new ExerciseFragment();
 
 			// Insert the fragment by replacing any existing fragment
-
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentExercise).commit();
-
 		}
 
 		/*
@@ -185,7 +228,7 @@ public class MainActivity extends Activity {
 		if (position == 2) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentSettings = new PrefsFragment();
+			fragmentSettings = new PrefsFragment();
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
@@ -193,7 +236,7 @@ public class MainActivity extends Activity {
 		if (position == 3) {
 			// Create a new fragment and specify the planet to show based on
 			// position
-			Fragment fragmentAbout = new AboutFragment();
+			fragmentAbout = new AboutFragment();
 
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).commit();
@@ -225,23 +268,72 @@ public class MainActivity extends Activity {
 	 * @param listView the list to depend transparency upon
 	 * @param listHeaderHeight the height of the header in the list
 	 */
-	public void setNavigationBarBackgroundTransparency(AbsListView listView, int listHeaderHeight) {
+	public void setActionBarTransparencyFromListViewPosition(AbsListView listView, int listHeaderHeight) {
 
 		// Get the first visible child
 		int firstVisiblePosition = listView.getFirstVisiblePosition();
 		View child = listView.getChildAt(firstVisiblePosition);
 
 		final int headerHeight = listHeaderHeight - getActionBar().getHeight();
-		final float ratio = (float) Math.min(Math.max(Math.abs(child.getTop()) + child.getHeight() * firstVisiblePosition, 0), headerHeight) / headerHeight;
+		final float ratio = (float) Math.min(Math.max(Math.abs(child.getTop()) + Math.max(child.getHeight(), 500) * firstVisiblePosition, 0), headerHeight)
+				/ headerHeight;
 		final int newAlpha = (int) (ratio * 255);
-		mActionBarBackgroundDrawable.setAlpha(newAlpha);
 
-		mActionBarAlpha = newAlpha;
+		setActionBarBackgroundTransparency(newAlpha);
 
 	}
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	   super.onActivityResult(requestCode, resultCode, data);
+
+	public MediaPlayer getMediaPlayerInstance() {
+		if (mMediaPlayer == null) {
+			mMediaPlayer = new MediaPlayer();
+			mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		}
+
+		return mMediaPlayer;
 	}
 
+	/**
+	 * Sets or updates 
+	 * @param resid
+	 * @return
+	 */
+	public MediaPlayer setMediaPlayerResourceId(int resid) {
+		if (mMediaPlayer == null) {
+			throw new IllegalStateException("Media player has not been initialized yet. Run MainActivity.getMediaPlayerInstance() first.");
+		}
+		AssetFileDescriptor afd = getResources().openRawResourceFd(resid);
+
+		mMediaPlayer.reset();
+		try {
+			mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+		} catch (IllegalArgumentException e) {
+			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
+		} catch (IllegalStateException e) {
+			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
+		} catch (IOException e) {
+			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
+		}
+		mMediaPlayer.prepareAsync();
+
+		return mMediaPlayer;
+	}
+
+	public void setActionBarBackgroundTransparency(int alpha) {
+
+		mActionBarBackgroundDrawable.setAlpha(alpha);
+		mActionBarAlpha = alpha;
+	}
+
+	public void setFragment(Fragment fragment) {
+		// Insert the fragment by replacing any existing fragment
+
+		FragmentTransaction ft = fragmentManager.beginTransaction();
+		ft.add(R.id.content_frame, fragment);
+		ft.addToBackStack(null);
+		ft.commit();
+	}
+	
+	public MindyDatabaseAdapter getMindyDb () {
+		return adapter;
+	}
 }
