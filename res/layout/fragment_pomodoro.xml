@@ -19,7 +19,7 @@
         android:shadowRadius="5.0"
    	    android:textSize="50sp"
    	    android:text="@string/pomodoro_timer"
-   	    android:textColor="@color/text_color_dark"
+   	    android:textColor="@color/text_color"
 		/>
     <ProgressBar
         android:id="@+id/pomodoro_timer"
@@ -48,7 +48,7 @@
         android:shadowRadius="5.0"
    	    android:textSize="70sp"
    	    android:text="25:00"
-   	    android:textColor="@color/text_color_dark"
+   	    android:textColor="@color/text_color"
 		/>
 
     <RelativeLayout

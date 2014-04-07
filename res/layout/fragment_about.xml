@@ -24,7 +24,7 @@
 	        android:gravity="center"
 	        android:text="@string/about"
 	        android:textSize="40sp" 
-	    	android:textColor="@color/text_color_dark"
+	    	android:textColor="@color/text_color"
        		android:shadowColor="@color/text_shadow_color"
         	android:shadowDx="1.0"
         	android:shadowDy="2.0"
@@ -45,7 +45,7 @@
 	        android:gravity="center"
 	        android:text="@string/about_version_title"
 	        android:textSize="12sp"
-	        android:textColor="@color/dark_purple_3" />
+	        android:textColor="@color/text_color" />
 	
 	    <TextView
 	        android:id="@+id/about_text"
@@ -58,7 +58,7 @@
 	 		android:paddingLeft="20dp" 
 	        android:text="@string/about_text"
 	        android:textSize="15sp"
-	        android:textColor="@color/dark_purple_3" />
+	        android:textColor="@color/text_color" />
 	
 	    <TextView
 	        android:id="@+id/about_developers"
@@ -67,7 +67,7 @@
 	        android:gravity="center"
 	        android:text="@string/about_developers"
 	        android:textSize="12sp"
-	        android:textColor="@color/dark_purple_3"
+	        android:textColor="@color/text_color"
 	 		android:paddingRight="50dp"
 	 		android:paddingLeft="50dp" />
     </LinearLayout>
