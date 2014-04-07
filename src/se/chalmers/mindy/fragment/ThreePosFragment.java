@@ -10,6 +10,7 @@ import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.core.ThreePosAdapter;
 import se.chalmers.mindy.core.ThreePosItem;
 import se.chalmers.mindy.util.ExpandAnimation;
+import se.chalmers.mindy.util.Tools;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
@@ -72,11 +74,17 @@ public class ThreePosFragment extends ListFragment {
 		ListView listView = getListView();
 
 		LayoutInflater inflater = mActivity.getLayoutInflater();
+		
+		// = mActivity.getLayoutInflater().inflate(R.layout., null);
 
-		View headerView = inflater.inflate(R.layout.fragment_threepositive, null);
-		TextView titleView = (TextView) headerView.findViewById(R.id.pos_title);
-		titleView.setText(R.string.app_name);
-		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_condensed_light.ttf"));
+		View headerView = inflater.inflate(R.layout.list_header, null);
+		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
+		titleView.setText(getResources().getStringArray(R.array.exercise_names)[2]);
+		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
+		titleView.setTextSize(30);
+
+		ImageView imageView = (ImageView) headerView.findViewById(R.id.header_background);
+		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.fluff, imageView);
 
 		listView.addHeaderView(headerView);
 
