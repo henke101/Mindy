@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.core.ThreePosItem;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,10 +17,10 @@ public class MindyDatabaseAdapter {
 
 	// Database properties
 	private static final String DATABASE_NAME = "mindy_db";
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 7;
 
-	private static final String TABLE_TEST_QUESTIONS = "TestQuestions";
-	private static final String TABLE_TEST_RESULTS = "TestResults";
+	private static final String TABLE_EVALUATION_QUESTIONS = "TestQuestions";
+	private static final String TABLE_EVALUATION_RESULTS = "TestResults";
 	private static final String TABLE_EXERCISES = "Exercises";
 	private static final String TABLE_THREE_POSITIVE = "ThreePositives";
 
@@ -54,18 +55,19 @@ public class MindyDatabaseAdapter {
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_THREE_POSITIVE_DATE + " INTEGER NOT NULL, " + KEY_THREE_POSITIVE_FIRST + " TEXT, "
 			+ KEY_THREE_POSITIVE_SECOND + " TEXT, " + KEY_THREE_POSITIVE_THIRD + " TEXT);";
 
+	private static final String CREATE_TABLE_EVALUATION_QUESTIONS = "create table " + TABLE_EVALUATION_QUESTIONS + " (" + KEY_ROWID
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_QUESTION_DESCRIPTION + " TEXT NOT NULL, " + KEY_QUESTION_TYPE + " INTEGER NOT NULL, "
+			+ KEY_QUESTION_IMPORTANCE + " INTEGER NOT NULL);";
+
+	private static final String CREATE_TABLE_EVALUATION_ANSWERS = "create table " + TABLE_EVALUATION_RESULTS + " (" + KEY_ROWID
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ANSWER + " TEXT NOT NULL, " + KEY_DATE_ANSWERED + " INTEGER NOT NULL, " + KEY_QUESTION_ID
+			+ " INTEGER, " + " FOREIGN KEY (" + KEY_QUESTION_ID + ") REFERENCES " + TABLE_EVALUATION_QUESTIONS + " (" + KEY_ROWID + "));";
+
 	private static final String TAG = "MindyDatabaseAdapter";
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
 	private final Context mCtx;
 
-	/*
-	private static final String CREATE_TABLE_ALARMS = "create table " + DATABASE_TABLE_ALARMS + " (" + KEY_ROWID + " INTEGER PRIMARY KEY, " + KEY_FROM
-			+ " INTEGER NOT NULL, " + KEY_TO + " INTEGER NOT NULL, " + KEY_SUN + " BOOLEAN NOT NULL, " + KEY_MON + " BOOLEAN NOT NULL, " + KEY_TUE
-			+ " BOOLEAN NOT NULL, " + KEY_WED + " BOOLEAN NOT NULL, " + KEY_THU + " BOOLEAN NOT NULL, " + KEY_FRI + " BOOLEAN NOT NULL, " + KEY_SAT
-			+ " BOOLEAN NOT NULL, " + KEY_VIBRATION + " BOOLEAN NOT NULL, " + KEY_MEDIA + " BOOLEAN NOT NULL, " + KEY_LOCK + " BOOLEAN NOT NULL, "
-			+ KEY_UNMUTE_ON_CALL + " BOOLEAN NOT NULL, " + KEY_DISABLE_NOTIFICATION_LIGHT + " BOOLEAN NOT NULL, " + KEY_BRIGHTNESS + " INTEGER NOT NULL);";
-	 */
 	public MindyDatabaseAdapter(final Context ctx) {
 		mCtx = ctx;
 	}
@@ -95,12 +97,12 @@ public class MindyDatabaseAdapter {
 		return mDb != null && mDb.isOpen();
 	}
 
-	public boolean insertNewThreePositive(TempThreePos pos) {
+	public boolean insertNewThreePositive(ThreePosItem pos) {
 
 		ContentValues args = new ContentValues();
-		args.put(KEY_THREE_POSITIVE_FIRST, pos.getFirst());
-		args.put(KEY_THREE_POSITIVE_SECOND, pos.getSecond());
-		args.put(KEY_THREE_POSITIVE_THIRD, pos.getThird());
+		args.put(KEY_THREE_POSITIVE_FIRST, pos.getPositiveOne());
+		args.put(KEY_THREE_POSITIVE_SECOND, pos.getPositiveTwo());
+		args.put(KEY_THREE_POSITIVE_THIRD, pos.getPositiveThree());
 
 		if (pos.getDate() != null) {
 			args.put(KEY_THREE_POSITIVE_DATE, pos.getDate().getTimeInMillis());
@@ -111,8 +113,8 @@ public class MindyDatabaseAdapter {
 		return mDb.insert(TABLE_THREE_POSITIVE, null, args) > 0;
 	}
 
-	public ArrayList<TempThreePos> fetchAllPositives() {
-		ArrayList<TempThreePos> items = new ArrayList<TempThreePos>();
+	public ArrayList<ThreePosItem> fetchAllPositives() {
+		ArrayList<ThreePosItem> items = new ArrayList<ThreePosItem>();
 
 		Cursor threePosCursor = mDb.query(TABLE_THREE_POSITIVE, new String[] { KEY_ROWID, KEY_THREE_POSITIVE_FIRST, KEY_THREE_POSITIVE_SECOND,
 				KEY_THREE_POSITIVE_THIRD, KEY_THREE_POSITIVE_DATE }, null, null, null, null, null);
@@ -121,15 +123,16 @@ public class MindyDatabaseAdapter {
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-				items.add(new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar));
+				items.add(new ThreePosItem(calendar, threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3)));
 				threePosCursor.moveToNext();
 			}
 		}
 
+		threePosCursor.close();
 		return items;
 	}
 
-	public TempThreePos fetchLatestPositive() {
+	public ThreePosItem fetchLatestPositive() {
 
 		Cursor threePosCursor = mDb.query(TABLE_THREE_POSITIVE, new String[] { KEY_ROWID, KEY_THREE_POSITIVE_FIRST, KEY_THREE_POSITIVE_SECOND,
 				KEY_THREE_POSITIVE_THIRD, KEY_THREE_POSITIVE_DATE }, KEY_THREE_POSITIVE_DATE + " in (SELECT MAX(" + KEY_THREE_POSITIVE_DATE + ") AS "
@@ -139,12 +142,15 @@ public class MindyDatabaseAdapter {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-			return new TempThreePos(threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3), calendar);
+			ThreePosItem result = new ThreePosItem(calendar, threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3));
+
+			threePosCursor.close();
+			return result;
 
 		} else {
 			// Table is empty
 
-			return new TempThreePos(mCtx.getString(R.string.index_threepos_default_first), mCtx.getString(R.string.index_threepos_default_second),
+			return new ThreePosItem(mCtx.getString(R.string.index_threepos_default_first), mCtx.getString(R.string.index_threepos_default_second),
 					mCtx.getString(R.string.index_threepos_default_third));
 		}
 	}
@@ -189,6 +195,8 @@ public class MindyDatabaseAdapter {
 		public void onCreate(final SQLiteDatabase db) {
 
 			db.execSQL(CREATE_TABLE_THREE_POSITIVE);
+			db.execSQL(CREATE_TABLE_EVALUATION_QUESTIONS);
+			db.execSQL(CREATE_TABLE_EVALUATION_ANSWERS);
 
 		}
 
@@ -196,6 +204,8 @@ public class MindyDatabaseAdapter {
 		public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
 			Log.d(TAG, "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_THREE_POSITIVE);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVALUATION_QUESTIONS);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVALUATION_RESULTS);
 			onCreate(db);
 
 		}
