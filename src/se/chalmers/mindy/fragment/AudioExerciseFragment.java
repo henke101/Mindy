@@ -53,6 +53,8 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 		// View circProgressBar = view.findViewById(R.drawable.circular_progress_bar);
 		// startAudio = (Button) circProgressBar.findViewById(R.id.rotating_play_button);
 
+		// Typeface robotoConLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
+
 		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_light.ttf");
 
 		Bundle bundle = getArguments();
@@ -67,6 +69,9 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 
 		info = (TextView) view.findViewById(R.id.info_audio);
 		title = (TextView) view.findViewById(R.id.title_audio);
+
+		// info.setTypeface(robotoConLight);
+		// title.setTypeface(robotoConLight);
 
 		info.setTypeface(robotoLight);
 		info.setText(infoID);

@@ -4,6 +4,18 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
+   <TextView
+        android:id="@+id/three_positive_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop = "10dip"
+        android:layout_marginLeft = "10dip"
+        android:layout_marginRight = "10dip"
+        android:text="@string/desc_three_pos"
+        android:textSize="10sp"
+    	android:textColor="@color/dark_purple_3" />
+    
     <Button
         android:id="@+id/add_threepos_button"
         android:layout_width="match_parent"

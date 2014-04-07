@@ -2,7 +2,7 @@ package se.chalmers.mindy.core;
 
 import android.graphics.Color;
 
-public class ExerciseItem implements Comparable {
+public class ExerciseItem   {
 	
 	private String name, description;
 	private Color typeColor;
@@ -13,24 +13,7 @@ public class ExerciseItem implements Comparable {
 		this.typeColor = typeColor;
 	}
 	
-	public int compareTo(Object another) {
-		if(another == null)
-			return 1;
-
-		try{
-			another = (ExerciseItem)another;
-		}catch(Exception e){
-			return -2;
-		}
-		
-		if(this.getDescription().equals("Mindfulness") && ((ExerciseItem) another).getDescription().equals("Positiv Psykologi") || this.getDescription().equals("Mindfulness") && ((ExerciseItem) another).getDescription().equals("Studieteknik") || this.getDescription().equals("Positiv Psykologi") && ((ExerciseItem) another).getDescription().equals("Studieteknik"))
-			return 1;
-		
-		if(this.getDescription().equals("Positiv Psykologi") && ((ExerciseItem) another).getDescription().equals("Mindfulness") || this.getDescription().equals("Studieteknik") && ((ExerciseItem) another).getDescription().equals("Mindfulness") || this.getDescription().equals("Studieteknik") && ((ExerciseItem) another).getDescription().equals("Postiv Psykologi"))
-			return -1;
-		
-		return 0;
-	}
+	
 	
 	public String getName(){
 		return name;
@@ -55,6 +38,10 @@ public class ExerciseItem implements Comparable {
 	public void setTypeColor(Color typeColor){
 		this.typeColor = typeColor;
 	}
+
+
+
+
 
 
 }

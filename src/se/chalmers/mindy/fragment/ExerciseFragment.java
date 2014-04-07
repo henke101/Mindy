@@ -32,7 +32,12 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 	String[] exerciseName;
 	String[] exerciseDescription;
 	ExerciseItem[] exItemList;
+
 	private View mListHeader;
+
+
+//	ExerciseItem[] exItemList = {new ExerciseItem(R.string.sleeping_pill, R.string.short_desc_sleeping, new Color()), new ExerciseItem(R.string.pomodoro_name, R.string.short_desc_pomodoro, new Color()), new ExerciseItem(R.string.three_pos_name, R.string.short_desc_three_pos,new Color())};	
+	
 
 	@Override
 	public void onAttach(final Activity activity) {

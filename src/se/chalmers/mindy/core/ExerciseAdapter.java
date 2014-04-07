@@ -27,6 +27,8 @@ public class ExerciseAdapter extends ArrayAdapter<ExerciseItem>{
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		View row = convertView;
 		ExerciseItemHolder holder = null;
+		Typeface robotoConLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_condensed_light.ttf");
+		Typeface robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_light.ttf");
 		
 		if(row == null){
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
@@ -36,9 +38,11 @@ public class ExerciseAdapter extends ArrayAdapter<ExerciseItem>{
 
 			holder.exercise = (TextView) row.findViewById(R.id.exercise_label);
 			holder.exercise.setText(data[position].getName());
+			holder.exercise.setTypeface(robotoConLight);
 			
 			holder.description = (TextView) row.findViewById(R.id.description_label);
 			holder.description.setText(data[position].getDescription());
+			holder.description.setTypeface(robotoLight);
 
 		}
 		
