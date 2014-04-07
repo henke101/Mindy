@@ -51,21 +51,14 @@ public class SoundIndexListItem extends IndexListItem {
 
 		Context context = getContext();
 
-		int holoPurpleBright = context.getResources().getColor(android.R.color.holo_purple);
-
 		float weight = 1.0f / 2.0f;
-		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, weight);
 
 		final Button playButton = new Button(context);
 		final Button pauseButton = new Button(context);
 		final Button stopButton = new Button(context);
 
 		playButton.setText(R.string.index_play);
-		playButton.setBackgroundResource(android.R.drawable.list_selector_background);
-		playButton.setTextColor(holoPurpleBright);
-		playButton.setTypeface(robotoLightCondensed);
-		playButton.setLayoutParams(param);
-		playButton.setFocusable(false);
+		setViewAttributes(playButton);
 
 		playButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -80,11 +73,7 @@ public class SoundIndexListItem extends IndexListItem {
 		subviews.add(playButton);
 
 		pauseButton.setText(R.string.index_pause);
-		pauseButton.setBackgroundResource(android.R.drawable.list_selector_background);
-		pauseButton.setTextColor(holoPurpleBright);
-		pauseButton.setTypeface(robotoLightCondensed);
-		pauseButton.setLayoutParams(param);
-		pauseButton.setFocusable(false);
+		setViewAttributes(pauseButton);
 		pauseButton.setVisibility(View.GONE);
 
 		pauseButton.setOnClickListener(new View.OnClickListener() {
@@ -101,11 +90,7 @@ public class SoundIndexListItem extends IndexListItem {
 		subviews.add(pauseButton);
 
 		stopButton.setText(R.string.index_stop);
-		stopButton.setBackgroundResource(android.R.drawable.list_selector_background);
-		stopButton.setTextColor(holoPurpleBright);
-		stopButton.setTypeface(robotoLightCondensed);
-		stopButton.setLayoutParams(param);
-		stopButton.setFocusable(false);
+		setViewAttributes(stopButton);
 		stopButton.setVisibility(View.GONE);
 
 		stopButton.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +109,16 @@ public class SoundIndexListItem extends IndexListItem {
 		subviews.add(stopButton);
 
 		return subviews;
+	}
+
+	public void setViewAttributes(final Button button) {
+		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f / 2.0f);
+
+		button.setBackgroundResource(R.drawable.selector_button);
+		button.setTextColor(context.getResources().getColorStateList(R.drawable.selector_button_text));
+		button.setTypeface(robotoLightCondensed);
+		button.setLayoutParams(param);
+		button.setFocusable(false);
 	}
 
 	@Override
