@@ -39,4 +39,5 @@
     <color name="text_shadow_color_light">#FFAAAAAA</color>
     
     <color name="divider_background">#FFDDDDDD</color>
+    <color name="text_color">#1C111E</color>
 </resources>
