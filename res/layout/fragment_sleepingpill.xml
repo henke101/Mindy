@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/progress_bar_layout"
@@ -11,7 +11,7 @@
         android:layout_height="220dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp" >
+        android:layout_marginTop="78dp" >
 
         <ProgressBar
             android:id="@+id/audio_progress_bar"
