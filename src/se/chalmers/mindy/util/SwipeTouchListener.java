@@ -20,7 +20,7 @@ import android.widget.ListView;
  * Class responsible for handling touch events to fade/move dragged items as they are swiped out.
  * AbsListAdapter class has a convenience method for getting an instance of this class.
  * 
- * @author Viktor Åkerskog
+ * @author Viktor ÔøΩkerskog
  *
  */
 public class SwipeTouchListener implements View.OnTouchListener {

@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -69,6 +70,7 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 
 		// Dummy items
 		dummyItems = new ArrayList<IndexListItem>();
+
 		dummyItems.add(new ThreePositiveIndexItem(mActivity, new ExerciseFragment()));
 		dummyItems.add(new SoundIndexListItem(mActivity, "1 Sömnpiller",
 				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile,

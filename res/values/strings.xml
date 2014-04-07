@@ -26,12 +26,23 @@
     <string name="button_abort">Avbryt</string>
     <string name="button_ok">Klar</string>
 
-   
     <string name="index_play">Spela</string>
     <string name="index_pause">Paus</string>
     <string name="index_stop">Stopp</string>
     <string name="sleeping_pill">Sömnpiller</string>
     <string name="play_button">Tryck här</string>
+
+    <string name="title_note">Mindy</string>
+    <string name="body_note">Body</string>
+    <string name="confirm_note">Bekräfta</string>
+
+    <string name="create_note_button_text">Nytt inlägg</string>
+    <string name="cancel">Avbryt</string>
+    <string name="diary_confirm">Bekräfta</string>
+    <string name="diary_menu_delete">Ta bort</string>
+    <string name="diary_menu_insert">Lägg till</string>
+    <string name="diary_title">Rubrik</string>
+    <string name="diary_body"></string>
     
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident.</string>
    

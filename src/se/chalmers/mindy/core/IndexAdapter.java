@@ -21,7 +21,7 @@ import android.widget.TextView;
  * 
  * 
  * 
- * @author Viktor Åkerskog
+ * @author Viktor kerskog
  *
  */
 public class IndexAdapter extends AbsListAdapter<IndexListItem> {
