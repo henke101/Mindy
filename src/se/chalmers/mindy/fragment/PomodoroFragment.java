@@ -27,6 +27,7 @@ public class PomodoroFragment extends Fragment implements OnClickListener {
 
 	int count = 0;
 	int buttonMode = 0;
+	int runCount = 0;
 
 	@Override
 	public void onAttach(final Activity activity) {
@@ -69,13 +70,18 @@ public class PomodoroFragment extends Fragment implements OnClickListener {
 		mProgressBar.setProgress(60 * minutes * 100);
 
 		return new CountDownTimer(60 * minutes * 1000, 10) {
+			int prevSeconds = -1;
 
 			@Override
 			public void onTick(long leftTimeInMilliseconds) {
 				int seconds = (int) leftTimeInMilliseconds / 1000;
 
-				String paddedSeconds = seconds % 60 < 10 ? "0" + seconds % 60 : "" + seconds % 60;
-				mLabel.setText(seconds / 60 + ":" + paddedSeconds);
+				// Only update the text view if the content will be different (i.e. if we have progressed [at least] a second)
+				if (prevSeconds != seconds) {
+					String paddedSeconds = seconds % 60 < 10 ? "0" + seconds % 60 : "" + seconds % 60;
+					mLabel.setText(seconds / 60 + ":" + paddedSeconds);
+					prevSeconds = seconds;
+				}
 
 				int progress = (int) leftTimeInMilliseconds / 10;
 				if (count == 0) {
@@ -101,7 +107,7 @@ public class PomodoroFragment extends Fragment implements OnClickListener {
 				}
 
 				mProgressBar.setProgress(0);
-				mTimerButton.setText("Start");
+				mTimerButton.setText(R.string.pomodoro_timer_start);
 			}
 		}.start();
 

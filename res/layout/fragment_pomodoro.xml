@@ -33,7 +33,7 @@
         android:progress="60"
         android:progressDrawable="@drawable/pomodoro" />
     
-    <TextView 
+    <TextView
    	    android:id="@+id/timer_label"
    	    android:layout_width="match_parent"
    	    android:layout_height="match_parent"
