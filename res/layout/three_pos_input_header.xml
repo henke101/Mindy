@@ -8,7 +8,7 @@
         android:id="@+id/add_threepos_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:drawable/list_selector_background"
+        android:background="@drawable/selector_drawer"
         android:text="@string/button_add_new" />
 
     <LinearLayout

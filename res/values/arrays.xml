@@ -15,15 +15,17 @@
     <item>Pomodorotimer</item>
     <item>Tre positiva saker</item>
     <item>Kroppsscanning</item>
+    <item>Studiedagbok</item>
     
 </string-array>
 
 <string-array 
     name="exercise_descriptions">
-    <item>En dagbok ver vad du har lärt dig.</item>
-    <item>En logg för att komma ihåg 3 positiva saker som varje dag har hänt dig.</item>
     <item>En lugnande ljudfil för att förbättra din sömn.</item>
+    <item>Pomodoro</item>
+    <item>En logg för att komma ihåg 3 positiva saker som varje dag har hänt dig.</item>
     <item>En ljudfil som hjälper dig att slappna av.</item>
+    <item>En dagbok ver vad du har lärt dig.</item>
     
 </string-array>
 </resources>

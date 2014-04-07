@@ -29,7 +29,8 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 	MainActivity mActivity;
 	SharedPreferences sharedPrefs;
 	Editor editor;
-	private String[] exerciseName;
+	String[] exerciseName;
+	String[] exerciseDescription;
 	ExerciseItem[] exItemList;
 	private View mListHeader;
 
@@ -70,10 +71,11 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 		listView.addHeaderView(mListHeader);
 		
 		exerciseName = getResources().getStringArray(R.array.exercise_names);
-		exItemList = new ExerciseItem[]{ new ExerciseItem(exerciseName[0], "fšrklarande text", new Color()),
-					new ExerciseItem(exerciseName[1], "Fšrklarande text", new Color()), 
-					new ExerciseItem(exerciseName[2], "Fšrklarande text", new Color()), 
-					new ExerciseItem(exerciseName[3],"text", new Color())};
+		exerciseDescription = getResources().getStringArray(R.array.exercise_descriptions);
+		exItemList = new ExerciseItem[]{ new ExerciseItem(exerciseName[0], exerciseDescription[0], new Color()),
+					new ExerciseItem(exerciseName[1], exerciseDescription[1], new Color()), 
+					new ExerciseItem(exerciseName[2], exerciseDescription[2], new Color()), 
+					new ExerciseItem(exerciseName[3],exerciseDescription[3], new Color())};
 		
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
