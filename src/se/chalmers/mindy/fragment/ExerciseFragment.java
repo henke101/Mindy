@@ -6,6 +6,7 @@ import se.chalmers.mindy.core.ExerciseItem;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.Tools;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -28,9 +29,8 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 	MainActivity mActivity;
 	SharedPreferences sharedPrefs;
 	Editor editor;
-
-	ExerciseItem[] exItemList = { new ExerciseItem("Sšmnpiller", "fšrklarande text", new Color()),
-			new ExerciseItem("Pomodoroklocka", "Fšrklarande text", new Color()), new ExerciseItem("Tre Positiva saker", "Fšrklarande text", new Color()) };
+	private String[] exerciseName;
+	ExerciseItem[] exItemList;
 	private View mListHeader;
 
 	@Override
@@ -68,20 +68,39 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.fluff, imageView);
 
 		listView.addHeaderView(mListHeader);
-
+		
+		exerciseName = getResources().getStringArray(R.array.exercise_names);
+		exItemList = new ExerciseItem[]{ new ExerciseItem(exerciseName[0], "fšrklarande text", new Color()),
+					new ExerciseItem(exerciseName[1], "Fšrklarande text", new Color()), 
+					new ExerciseItem(exerciseName[2], "Fšrklarande text", new Color()), 
+					new ExerciseItem(exerciseName[3],"text", new Color())};
+		
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				if (position == 1) {
-					mActivity.setFragment(new SleepingPillFragment());
+
+					Fragment fragmentSleepingPill = new AudioExerciseFragment();
+					Bundle bundle = new Bundle();
+					bundle.putInt("audioID", R.raw.sleeping_pill);
+					bundle.putInt("titleID", R.string.sleeping_pill);
+					bundle.putInt("infoID", R.string.lorem_ipsum);
+					fragmentSleepingPill.setArguments(bundle);
+
+					// Insert the fragment by replacing any existing fragment
+					System.out.println("Sleeping pressed");
+					mActivity.setFragment(fragmentSleepingPill);
+
 				} else if (position == 2) {
-
 					mActivity.setFragment(new PomodoroFragment());
+					
 				} else if (position == 3) {
-
 					mActivity.setFragment(new ThreePosFragment());
+					
+				} else if (position == 4) {
+					
 				}
 			}
 		});

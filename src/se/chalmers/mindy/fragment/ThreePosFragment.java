@@ -19,8 +19,11 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -31,9 +34,6 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.view.KeyEvent;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 
 public class ThreePosFragment extends ListFragment {
 
@@ -46,6 +46,12 @@ public class ThreePosFragment extends ListFragment {
 	String stringInputThree;
 	Calendar cDate;
 	ArrayList<ThreePosItem> threePosItemList = new ArrayList<ThreePosItem>();
+	EditText inputOne;
+	EditText inputTwo;
+	EditText inputThree;
+	Button addButton;
+	RadioGroup dateButtons;
+	LinearLayout inputContainer;
 
 	public ThreePosFragment() {
 
@@ -76,14 +82,15 @@ public class ThreePosFragment extends ListFragment {
 
 		// Initialize and add text input header.
 		View addItemHeader = inflater.inflate(R.layout.three_pos_input_header, null);
-		final Button addButton = (Button) addItemHeader.findViewById(R.id.add_threepos_button);
 		final Button okButton = (Button) addItemHeader.findViewById(R.id.ok_button);
-		final RadioGroup dateButtons = (RadioGroup) addItemHeader.findViewById(R.id.date_buttons);
-		final LinearLayout inputContainer = (LinearLayout) addItemHeader.findViewById(R.id.input_container);
-		final EditText inputOne = (EditText) addItemHeader.findViewById(R.id.positive_one_input);
-		final EditText inputTwo = (EditText) addItemHeader.findViewById(R.id.positive_two_input);
-		final EditText inputThree = (EditText) addItemHeader.findViewById(R.id.positive_three_input);
-				
+		
+		inputContainer = (LinearLayout) addItemHeader.findViewById(R.id.input_container);
+		dateButtons = (RadioGroup) addItemHeader.findViewById(R.id.date_buttons);
+		addButton = (Button) addItemHeader.findViewById(R.id.add_threepos_button);	
+		inputOne = (EditText) addItemHeader.findViewById(R.id.positive_one_input);
+		inputTwo = (EditText) addItemHeader.findViewById(R.id.positive_two_input);
+		inputThree  = (EditText) addItemHeader.findViewById(R.id.positive_three_input);
+		
 		/**
 		 * Setting the fonts for the inputs
 		 */
@@ -145,40 +152,11 @@ public class ThreePosFragment extends ListFragment {
 			@Override
 			public boolean onEditorAction(final TextView textView, final int id, final KeyEvent keyEvent) {
 				if (id == R.id.create || id == EditorInfo.IME_ACTION_DONE) {
-					if (cDate == null) {
-						cDate = Calendar.getInstance();
-					}
-					stringInputOne = inputOne.getText().toString();
-					stringInputTwo = inputTwo.getText().toString();
-					stringInputThree = inputThree.getText().toString();
 
-					Log.d("date" , ""+ cDate.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()));
-					ThreePosItem newPosItem = new ThreePosItem(cDate, stringInputOne, stringInputTwo, stringInputThree);
-					mActivity.getMindyDb().insertNewThreePositive(newPosItem);
-					threePosItemList = mActivity.getMindyDb().fetchAllPositives();
-					
-					InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
-						      Context.INPUT_METHOD_SERVICE);
-					imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+					createNewCard();
 					
 					ExpandAnimation expandAnim = new ExpandAnimation(inputContainer, 500);
 					inputContainer.startAnimation(expandAnim);
-					
-					inputOne.setText(null);
-					inputTwo.setText(null);
-					inputThree.setText(null);
-					
-					inputOne.setHint(R.string.add_positive_one);
-					inputTwo.setHint(R.string.add_positive_two);
-					inputThree.setHint(R.string.add_positive_three);
-					
-					addButton.setText(R.string.button_add_new);
-					
-					dateButtons.check(R.id.today_button);
-					
-					Collections.reverse(threePosItemList);
-					ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
-					setListAdapter(adapter);
 							
 					return true;
 				}
@@ -193,39 +171,11 @@ public class ThreePosFragment extends ListFragment {
 			
 			@Override
 			public void onClick(View v) {
-				if (cDate == null) {
-					cDate = Calendar.getInstance();
-				}
-				stringInputOne = inputOne.getText().toString();
-				stringInputTwo =inputTwo.getText().toString();
-				stringInputThree = inputThree.getText().toString();
-				
-				ThreePosItem newPosItem = new ThreePosItem(cDate, stringInputOne, stringInputTwo, stringInputThree);
-				mActivity.getMindyDb().insertNewThreePositive(newPosItem);
-				threePosItemList = mActivity.getMindyDb().fetchAllPositives();
-				
-				InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
-					      Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(inputThree.getWindowToken(), 0);
+
+				createNewCard();
 				
 				ExpandAnimation expandAnim = new ExpandAnimation(inputContainer, 500);
 				inputContainer.startAnimation(expandAnim);
-				
-				inputOne.setText(null);
-				inputTwo.setText(null);
-				inputThree.setText(null);
-				
-				inputOne.setHint(R.string.add_positive_one);
-				inputTwo.setHint(R.string.add_positive_two);
-				inputThree.setHint(R.string.add_positive_three);
-				
-				addButton.setText(R.string.button_add_new);
-				
-				dateButtons.check(R.id.today_button);
-				
-				Collections.reverse(threePosItemList);
-				ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
-				setListAdapter(adapter);
 	
 			}
 		});
@@ -240,4 +190,36 @@ public class ThreePosFragment extends ListFragment {
 		});
 		
 	}
+	 private void createNewCard() {
+			if (cDate == null) {
+				cDate = Calendar.getInstance();
+			}
+			stringInputOne = inputOne.getText().toString();
+			stringInputTwo =inputTwo.getText().toString();
+			stringInputThree = inputThree.getText().toString();
+			
+			ThreePosItem newPosItem = new ThreePosItem(cDate, stringInputOne, stringInputTwo, stringInputThree);
+			mActivity.getMindyDb().insertNewThreePositive(newPosItem);
+			threePosItemList = mActivity.getMindyDb().fetchAllPositives();
+			
+			InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
+				      Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(inputThree.getWindowToken(), 0);
+			
+			inputOne.setText(null);
+			inputTwo.setText(null);
+			inputThree.setText(null);
+			
+			inputOne.setHint(R.string.add_positive_one);
+			inputTwo.setHint(R.string.add_positive_two);
+			inputThree.setHint(R.string.add_positive_three);
+			
+			addButton.setText(R.string.button_add_new);
+			
+			dateButtons.check(R.id.today_button);
+			
+			Collections.reverse(threePosItemList);
+			ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
+			setListAdapter(adapter);
+	 }
 }
