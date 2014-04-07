@@ -2,6 +2,7 @@ package se.chalmers.mindy.core;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
+import se.chalmers.mindy.fragment.EvaluationFragment;
 import se.chalmers.mindy.fragment.DiaryListFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
@@ -10,16 +11,17 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -34,12 +36,18 @@ public class MainActivity extends Activity {
 	private CharSequence mTitle;
 
 	private String[] sectionNames;
-	private PrefsFragment prefsFragment;
+	private Drawable mActionBarBackgroundDrawable;
+	private int mActionBarAlpha;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.nav_bar_background);
+		mActionBarBackgroundDrawable.setAlpha(0);
+
+		getActionBar().setBackgroundDrawable(mActionBarBackgroundDrawable);
 
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -55,9 +63,12 @@ public class MainActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				selectItem(position);
-				prefsFragment = new PrefsFragment();
 			}
 		});
+
+		if (getFragmentManager().findFragmentById(R.id.content_frame) == null) {
+			selectItem(0);
+		}
 
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -78,6 +89,17 @@ public class MainActivity extends Activity {
 				getActionBar().setTitle(mDrawerTitle);
 				invalidateOptionsMenu();
 			}
+
+			@Override
+			public void onDrawerSlide(View drawerView, float slideOffset) {
+				mActionBarBackgroundDrawable.setAlpha(Math.max(Math.min((int) (slideOffset * 1000), 255), mActionBarAlpha));
+			}
+
+			@Override
+			public void onDrawerStateChanged(int newState) {
+
+			}
+
 		};
 
 		// Set the drawer toggle as the DrawerListener
@@ -85,7 +107,19 @@ public class MainActivity extends Activity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-
+		
+		SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
+		
+		if(!sharedPref.contains("started")){
+		Fragment fragmentEvaluation = new EvaluationFragment();
+		// Insert the fragment by replacing any existing fragment
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentEvaluation).commit();
+		
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putInt("started", 1);
+		editor.commit();
+		}
 	}
 
 	@Override
@@ -113,12 +147,6 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_main, menu);
-		return true;
-	}
-
 	/**
 	 * Swaps fragments in the main content view
 	 * 
@@ -127,8 +155,8 @@ public class MainActivity extends Activity {
 	 * Will be done dynamically, add the rest of the fragments
 	 * */
 	private void selectItem(int position) {
-		// Print out which position
-		Log.d(ACTIVITY_SERVICE, "" + position);
+
+		FragmentManager fragmentManager = getFragmentManager();
 
 		if (position == 0) {
 			// Create a new fragment and specify the planet to show based on
@@ -136,19 +164,19 @@ public class MainActivity extends Activity {
 			Fragment fragmentIndex = new IndexFragment();
 
 			// Insert the fragment by replacing any existing fragment
-			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentIndex).commit();
 		}
 
-		if(position==1){
+		if (position == 1) {
+
 			// Create a new fragment and specify the planet to show based on
 			// position
 			Fragment fragmentExercise = new ExerciseFragment();
 
 			// Insert the fragment by replacing any existing fragment
-			FragmentManager fragmentManager = getFragmentManager();
-			fragmentManager.beginTransaction().replace(R.id.content_frame,
-					fragmentExercise).commit();
+
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentExercise).commit();
+
 		}
 
 		/*
@@ -160,15 +188,14 @@ public class MainActivity extends Activity {
 			Fragment fragmentSettings = new PrefsFragment();
 
 			// Insert the fragment by replacing any existing fragment
-			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
 		}
 		if (position == 3) {
 			// Create a new fragment and specify the planet to show based on
 			// position
 			Fragment fragmentAbout = new AboutFragment();
+
 			// Insert the fragment by replacing any existing fragment
-			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).commit();
 		}
 		if (position == 4) {
@@ -177,13 +204,13 @@ public class MainActivity extends Activity {
 			// position
 			ListFragment fragmentDiary = new DiaryListFragment();
 			// Insert the fragment by replacing any existing fragment
-			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).commit();
 		}
 		// Highlight the selected item, update the title, and close the drawer
 		mDrawerList.setItemChecked(position, true);
 		setTitle(sectionNames[position]);
 		mDrawerLayout.closeDrawer(mDrawerList);
+
 	}
 
 	@Override
@@ -191,4 +218,30 @@ public class MainActivity extends Activity {
 		mTitle = title;
 		getActionBar().setTitle(mTitle);
 	}
+
+	/**
+	 * Sets the transparency of the action bar depending on the scroll position of a list view. Used by fragments.
+	 * 
+	 * @param listView the list to depend transparency upon
+	 * @param listHeaderHeight the height of the header in the list
+	 */
+	public void setNavigationBarBackgroundTransparency(AbsListView listView, int listHeaderHeight) {
+
+		// Get the first visible child
+		int firstVisiblePosition = listView.getFirstVisiblePosition();
+		View child = listView.getChildAt(firstVisiblePosition);
+
+		final int headerHeight = listHeaderHeight - getActionBar().getHeight();
+		final float ratio = (float) Math.min(Math.max(Math.abs(child.getTop()) + child.getHeight() * firstVisiblePosition, 0), headerHeight) / headerHeight;
+		final int newAlpha = (int) (ratio * 255);
+		mActionBarBackgroundDrawable.setAlpha(newAlpha);
+
+		mActionBarAlpha = newAlpha;
+
+	}
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+	   super.onActivityResult(requestCode, resultCode, data);
+	}
+
 }

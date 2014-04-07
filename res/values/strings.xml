@@ -1,17 +1,51 @@
 <resources>
 
     <string name="app_name">Mindy</string>
+    <string name="app_name_underlined"><u>Mindy</u></string>
     <string name="drawer_open">Öppna</string>
     <string name="drawer_close">Stäng</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="swtchpref_notification">Notiser</string>
     <string name="title_activity_main">Mindy</string>
+    <string name="title_fragment_index">Aktuellt</string>
+   
     <string name="about">Mindy</string>
     <string name="about_version_title">Version 1.0</string>
     <string name="about_text">Mindy är din hjälpreda oavsett om du är stressad över studierna eller behöver hjälp att strukturera upp studierna. Med hjälp av Mindfulness, Positiv psykologi och Studieteknik kommer denna skräddarsydda app hitta lämpliga övningar åt dig.</string>
     <string name="about_developers">Utvecklad av:\n S. Andersson, H. Andersson, P. Eriksson, R. Hallberg, M. Thyren och V. Åkerskog.</string>
-    <string name="logo_description">Mindy Logo</string>
+    <string name="logo_description">Mindy Logo</string>   
+    <string name="index_play">Spela</string>
+    <string name="index_pause">Paus</string>
+    <string name="index_stop">Stopp</string>
+    <string name="sleeping_pill">Sömnpiller</string>
+    <string name="play_button">Tryck här</string>
+    
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Excepteur sint occaecat cupidatat non proident.</string>
+   
+    <string name="eval_question_1_text">Tycker du att du har en studieteknik som ger dig de resultat du vill uppnå?</string>
+    <string name="eval_question_2_text">Har du bra balans mellan studier och fritid?</string>
+    <string name="eval_question_3_text">Hur nöjd känner du dig med dina studieresultat?</string>
+    <string name="eval_question_4_text">Hur tycker du att bristande studieteknik påverkar din mentala hälsa?</string>
+    <string name="eval_question_1_answer_left">Stämmer inte alls</string>
+    <string name="eval_question_1_answer_right">Stämmer bra</string>
+    <string name="eval_question_2_answer_left">För mycket studier</string>
+    <string name="eval_question_2_answer_right">För mycket fritid</string>
+    <string name="eval_question_3_answer_left">Inte alls nöjd</string>
+    <string name="eval_question_3_answer_right">Mycket nöjd</string>
+    <string name="eval_question_4_answer_1">Sömnbrist</string>
+    <string name="eval_question_4_answer_2">Dåligt självförtroende</string>
+    <string name="eval_question_4_answer_3">Osäkerhet i grupparbete</string>
+    <string name="eval_question_4_answer_4">Tror inte på min förmåga</string>
+    <string name="eval_submit">Fortsätt</string>
+    <string name="eval_intro">Välkommen till Mindy! För att få en så bra och anpassad upplevelse som möjligt ber vi dig att besvara frågorna nedan så ärligt du kan. Svaren är självklart helt annonyma.</string>
+
+    <string name="title_note">Mindy</string>
+    <string name="body_note">Body</string>
+    <string name="confirm_note">Bekräfta</string>
+
+    <string name="create_note_button_text">Nytt inlägg</string>
+    <string name="cancel">Avbryt</string>
     <string name="diary_confirm">Bekräfta</string>
     <string name="diary_menu_delete">Ta bort</string>
     <string name="diary_menu_insert">Lägg till</string>
