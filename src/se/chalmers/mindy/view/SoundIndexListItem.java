@@ -27,13 +27,12 @@ public class SoundIndexListItem extends IndexListItem {
 	private MediaPlayer mediaPlayer;
 	private Fragment fragment;
 
-	public SoundIndexListItem(Context context, String name, String description) {
-		super(context, name, description);
+	public SoundIndexListItem(Context context, int nameResId, int descriptionResId, int audioContentResId, Fragment fragment) {
+		this(context, context.getResources().getString(nameResId), context.getResources().getString(descriptionResId), audioContentResId, fragment);
 
-		audioContentResId = 0;
-		fragment = null;
 	}
 
+	// context.getResources().getString(nameResId), context.getResources().getString(descriptionResId)
 	public SoundIndexListItem(Context context, String name, String description, int audioContentResId, Fragment fragment) {
 		super(context, name, description);
 

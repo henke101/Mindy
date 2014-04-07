@@ -40,4 +40,7 @@
     
     <color name="divider_background">#FFDDDDDD</color>
     <color name="text_color">#1C111E</color>
+    
+    
+    <color name="action_bar_background">#858</color>
 </resources>

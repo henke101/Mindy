@@ -48,6 +48,7 @@ public class PomodoroFragment extends Fragment implements OnClickListener {
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
 
 		mLabel = (TextView) parent.findViewById(R.id.timer_label);
+		mLabel.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
 
 		mProgressBar = (ProgressBar) parent.findViewById(R.id.pomodoro_timer);
 

@@ -26,6 +26,10 @@ public class ThreePositiveIndexItem extends IndexListItem {
 		this(context, name, "", fragment);
 	}
 
+	public ThreePositiveIndexItem(Context context, int nameResId, int descriptionResId, int audioContentResId, Fragment fragment) {
+		this(context, context.getResources().getString(nameResId), context.getResources().getString(descriptionResId), fragment);
+	}
+
 	public ThreePositiveIndexItem(Context context, String name, String description, Fragment fragment) {
 		super(context, name, description);
 		this.fragment = fragment;

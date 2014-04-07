@@ -48,7 +48,7 @@
         android:shadowRadius="5.0"
    	    android:textSize="70sp"
    	    android:text="@string/pomodoro_timer_placeholder"
-   	    android:textColor="@color/text_color"
+   	    android:textColor="@color/text_color_dark"
 		/>
 
     <RelativeLayout
