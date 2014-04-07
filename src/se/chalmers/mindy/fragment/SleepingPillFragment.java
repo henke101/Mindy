@@ -14,7 +14,6 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,16 +32,12 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	private TextView title;
 	private Button playPauseButton;
 	private MediaPlayerService mpService;
-	private boolean isBound;
-
+	
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.fragment_sleepingpill, null);
-		isBound = false;
-		Intent intent = new Intent(new Intent(getActivity().getApplicationContext(), MediaPlayerService.class));
-		getActivity().startService(intent);
-		/*getActivity().bindService(intent, mpConnection, Context.BIND_AUTO_CREATE);*/
+		startMPService();
 
 		//View circProgressBar = view.findViewById(R.drawable.circular_progress_bar);
 		//startAudio = (Button) circProgressBar.findViewById(R.id.rotating_play_button);
@@ -68,8 +63,15 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		mediaFilter.setPriority(1000);
 		//mpService = new MediaPlayerService();
 		
-		// insert registerReceiver here
+		getActivity().getApplicationContext().registerReceiver(audioIntentReceiver, mediaFilter);
 		return view;
+	}
+
+	private void startMPService() {
+		Intent intent = new Intent(new Intent(getActivity().getApplicationContext(), MediaPlayerService.class));
+		getActivity().startService(intent);
+		getActivity().bindService(intent, mpConnection, Context.BIND_AUTO_CREATE);
+		
 	}
 
 	@Override
@@ -80,23 +82,10 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 			playPauseButton.setBackgroundResource(R.drawable.play_button);
 		}
 	}
-	@Override
-	public void onStop(){
-		super.onStop();
-		if (mediaPlayer != null){
-			mediaPlayer.release();		
-			mediaPlayer = null;
-			playPauseButton.setBackgroundResource(R.drawable.play_button);
-			audioProgressBar.setProgress(0);
-		}
-	}
+	
 	@Override
 	public void onDestroy(){
 		super.onDestroy();
-		if (mediaPlayer != null){
-			mediaPlayer.release();		
-			mediaPlayer = null;
-		}
 		getActivity().getApplicationContext().unregisterReceiver(audioIntentReceiver);
 	}
 
@@ -148,9 +137,8 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 			else{ 
 
 				if (mediaPlayer == null){
-				
 					mediaPlayer = mpService.getMediaPlayer();   
-					//Log.d("sleeping pill", ""+ mediaPlayer.getDuration());
+					Log.d("sleeping pill, mediaplayer = ", ""+ mediaPlayer);
 					audioProgressBar.setProgress(0);
 					audioProgressBar.setMax(mediaPlayer.getDuration());
 					new Thread(this).start();
@@ -161,20 +149,19 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		}
 	}
 
-/*	private ServiceConnection mpConnection = new ServiceConnection() {
+	private ServiceConnection mpConnection = new ServiceConnection() {
 
 	    public void onServiceConnected(ComponentName className,
 	            IBinder service) {
 	        MyLocalBinder binder = (MyLocalBinder) service;
 	        mpService = binder.getService();
-	        isBound = true;
+	        Log.d("mp service = ", "" +mpService );
 	    }
 	    
 	    public void onServiceDisconnected(ComponentName arg0) {
-	        isBound = false;
 	    }
 	    
-	   };*/
+	   };
 
 }
 
