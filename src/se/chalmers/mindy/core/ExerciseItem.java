@@ -4,10 +4,10 @@ import android.graphics.Color;
 
 public class ExerciseItem   {
 	
-	private int name, description;
+	private String name, description;
 	private Color typeColor;
 	
-	public ExerciseItem(int name, int description, Color typeColor){
+	public ExerciseItem(String name, String description, Color typeColor){
 		this.name = name;
 		this.description= description;
 		this.typeColor = typeColor;
@@ -15,11 +15,11 @@ public class ExerciseItem   {
 	
 	
 	
-	public int getName(){
+	public String getName(){
 		return name;
 	}
 	
-	public int getDescription(){
+	public String getDescription(){
 		return description;
 	}
 	
@@ -27,11 +27,11 @@ public class ExerciseItem   {
 		return typeColor;
 	}
 	
-	public void setName(int name){
+	public void setName(String name){
 		this.name = name;
 	}
 	
-	public void setDescription(int description){
+	public void setDescription(String description){
 		this.description = description;
 	}
 	

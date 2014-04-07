@@ -3,6 +3,7 @@
     
     <!--  Could be used as a background color -->
       <color name="bg_color">#E6E3D8</color>
+      <color name="bg_color_grey">#E0E0E0</color>
       
       <!-- Just white -->
      <color name="white">#FFFFFF</color>
@@ -38,4 +39,8 @@
     <color name="text_shadow_color_light">#FFAAAAAA</color>
     
     <color name="divider_background">#FFDDDDDD</color>
+    <color name="text_color">#1C111E</color>
+    
+    
+    <color name="action_bar_background">#858</color>
 </resources>

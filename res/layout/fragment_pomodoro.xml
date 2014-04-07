@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/bg_color_grey">
+	<TextView 
+   	    android:id="@+id/header_title"
+   	    android:layout_width="match_parent"
+   	    android:layout_height="100dip"
+   		android:layout_centerHorizontal="true"
+   	    android:layout_alignParentTop="true"
+        android:layout_marginTop="48dp"
+   	    android:paddingBottom="12dip"
+   	    android:gravity="center_horizontal|bottom"
+        android:shadowColor="@color/text_shadow_color"
+        android:shadowDx="1.0"
+        android:shadowDy="2.0"
+        android:shadowRadius="5.0"
+   	    android:textSize="50sp"
+   	    android:text="@string/pomodoro_timer"
+   	    android:textColor="@color/text_color"
+		/>
+    <ProgressBar
+        android:id="@+id/pomodoro_timer"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/header_title"
+        android:layout_above="@+id/button_container"
+        android:layout_centerVertical="true"
+        android:max="60"
+        android:progress="60"
+        android:progressDrawable="@drawable/pomodoro" />
+    
+    <TextView
+   	    android:id="@+id/timer_label"
+   	    android:layout_width="match_parent"
+   	    android:layout_height="match_parent"
+   		android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/header_title"
+        android:layout_above="@+id/button_container"
+   	    android:gravity="center"
+        android:shadowColor="@color/text_shadow_color"
+        android:shadowDx="1.0"
+        android:shadowDy="2.0"
+        android:shadowRadius="5.0"
+   	    android:textSize="70sp"
+   	    android:text="@string/pomodoro_timer_placeholder"
+   	    android:textColor="@color/text_color_dark"
+		/>
+
+    <RelativeLayout
+        android:id="@+id/button_container" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom" >
+
+        <Button
+            android:id="@+id/start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/pomodoro_timer_start"/>
+    </RelativeLayout>
+
+</RelativeLayout>

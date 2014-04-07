@@ -1,11 +1,18 @@
 package se.chalmers.mindy.core;
 
+import java.util.Calendar;
+
 public class ThreePosItem implements Comparable {
 
-	private String date, positiveOne, positiveTwo, positiveThree;
+	private String positiveOne, positiveTwo, positiveThree;
+	private Calendar cDate;
+	
+	public ThreePosItem(String positiveOne, String positiveTwo, String positiveThree) {
+		this(null, positiveOne, positiveTwo, positiveThree);
+	}
 
-	public ThreePosItem(String date, String positiveOne, String positiveTwo, String positiveThree ){
-		this.date = date;
+	public ThreePosItem(Calendar cDate, String positiveOne, String positiveTwo, String positiveThree ){
+		this.cDate = cDate;
 		this.positiveOne = positiveOne;
 		this.positiveTwo = positiveTwo;
 		this.positiveThree = positiveThree;
@@ -39,8 +46,8 @@ public class ThreePosItem implements Comparable {
 		return positiveThree;
 	}
 	
-	public String getDate() {
-		return date;
+	public Calendar getDate() {
+		return cDate;
 	}
 
 	public void setPositiveOne(String positiveOne) {
@@ -55,8 +62,8 @@ public class ThreePosItem implements Comparable {
 		this.positiveThree = positiveThree;
 	}
 
-	public void setDate(String date){
-		this.date = date;
+	public void setDate(Calendar cDate){
+		this.cDate = cDate;
 	}
 
 }

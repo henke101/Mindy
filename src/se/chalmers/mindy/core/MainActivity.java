@@ -1,22 +1,34 @@
 package se.chalmers.mindy.core;
 
+import java.io.IOException;
+
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
 import se.chalmers.mindy.fragment.EvaluationFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
+import se.chalmers.mindy.util.MindyDatabaseAdapter;
+import se.chalmers.mindy.util.Tools;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -43,15 +55,26 @@ public class MainActivity extends Activity {
 	private IndexFragment fragmentIndex;
 	private FragmentManager fragmentManager;
 
+	private MediaPlayer mMediaPlayer;
+
+	private MindyDatabaseAdapter adapter;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		BitmapDrawable glowingLogo = new BitmapDrawable(getResources(), Tools.setLogoGlow(getResources(), R.drawable.ic_test2_launcher));
+		getActionBar().setLogo(glowingLogo);
+
 		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.action_bar_background);
+		mActionBarBackgroundDrawable.setColorFilter(getResources().getColor(R.color.action_bar_background), PorterDuff.Mode.MULTIPLY);
 		mActionBarBackgroundDrawable.setAlpha(0);
 
-		getActionBar().setBackgroundDrawable(mActionBarBackgroundDrawable);
+		ActionBar ab = getActionBar();
+		ab.setBackgroundDrawable(mActionBarBackgroundDrawable);
+		ab.setDisplayHomeAsUpEnabled(true);
+		ab.setHomeButtonEnabled(true);
 
 		fragmentManager = getFragmentManager();
 
@@ -60,6 +83,10 @@ public class MainActivity extends Activity {
 
 		// Get the section name array for Navigation Drawer
 		sectionNames = getResources().getStringArray(R.array.section_names);
+
+		// TODO TEMP
+		adapter = new MindyDatabaseAdapter(this);
+		adapter.open();
 
 		final int actionBarTitle = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
 		final TextView title = (TextView) getWindow().findViewById(actionBarTitle);
@@ -88,7 +115,7 @@ public class MainActivity extends Activity {
 
 		mTitle = mDrawerTitle = getTitle();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_navigation_drawer, R.string.drawer_open, R.string.drawer_close) {
 
 			/** Called when a drawer has settled in a completely closed state. */
 			@Override
@@ -120,9 +147,6 @@ public class MainActivity extends Activity {
 
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
 
 		SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
 
@@ -158,9 +182,16 @@ public class MainActivity extends Activity {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		// Handle your other action bar items...
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+
+		adapter.close();
+
 	}
 
 	/**
@@ -186,6 +217,7 @@ public class MainActivity extends Activity {
 		if (position == 1) {
 			// Create a new fragment and specify the planet to show based on
 			// position
+
 			fragmentExercise = new ExerciseFragment();
 
 			// Insert the fragment by replacing any existing fragment
@@ -231,23 +263,73 @@ public class MainActivity extends Activity {
 	 * @param listView the list to depend transparency upon
 	 * @param listHeaderHeight the height of the header in the list
 	 */
-	public void setNavigationBarBackgroundTransparency(AbsListView listView, int listHeaderHeight) {
+	public void setActionBarTransparencyFromListViewPosition(AbsListView listView, int listHeaderHeight) {
 
 		// Get the first visible child
 		int firstVisiblePosition = listView.getFirstVisiblePosition();
 		View child = listView.getChildAt(firstVisiblePosition);
 
 		final int headerHeight = listHeaderHeight - getActionBar().getHeight();
-		final float ratio = (float) Math.min(Math.max(Math.abs(child.getTop()) + child.getHeight() * firstVisiblePosition, 0), headerHeight) / headerHeight;
+		final float ratio = (float) Math.min(Math.max(Math.abs(child.getTop()) + Math.max(child.getHeight(), 500) * firstVisiblePosition, 0), headerHeight)
+				/ headerHeight;
 		final int newAlpha = (int) (ratio * 255);
-		mActionBarBackgroundDrawable.setAlpha(newAlpha);
 
-		mActionBarAlpha = newAlpha;
+		setActionBarBackgroundTransparency(newAlpha);
 
+	}
+
+	public MediaPlayer getMediaPlayerInstance() {
+		if (mMediaPlayer == null) {
+			mMediaPlayer = new MediaPlayer();
+			mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+		}
+
+		return mMediaPlayer;
+	}
+
+	/**
+	 * Sets or updates 
+	 * @param resid
+	 * @return
+	 */
+	public MediaPlayer setMediaPlayerResourceId(int resid) {
+		if (mMediaPlayer == null) {
+			throw new IllegalStateException("Media player has not been initialized yet. Run MainActivity.getMediaPlayerInstance() first.");
+		}
+		AssetFileDescriptor afd = getResources().openRawResourceFd(resid);
+
+		mMediaPlayer.reset();
+		try {
+			mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
+		} catch (IllegalArgumentException e) {
+			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
+		} catch (IllegalStateException e) {
+			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
+		} catch (IOException e) {
+			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
+		}
+		mMediaPlayer.prepareAsync();
+
+		return mMediaPlayer;
+	}
+
+	public void setActionBarBackgroundTransparency(int alpha) {
+
+		mActionBarBackgroundDrawable.setAlpha(alpha);
+		mActionBarAlpha = alpha;
 	}
 
 	public void setFragment(Fragment fragment) {
 		// Insert the fragment by replacing any existing fragment
-		fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
+
+		FragmentTransaction ft = fragmentManager.beginTransaction();
+		ft.replace(R.id.content_frame, fragment);
+		ft.addToBackStack(null);
+		ft.commit();
 	}
+
+	public MindyDatabaseAdapter getMindyDb() {
+		return adapter;
+	}
+
 }
