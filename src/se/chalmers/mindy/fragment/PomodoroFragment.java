@@ -4,10 +4,12 @@ import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,7 @@ public class PomodoroFragment extends Fragment {
 	private TextView mLabel;
 
 	int count = 0;
+	int buttonMode = 0;
 
 	@Override
 	public void onAttach(final Activity activity) {
@@ -43,6 +46,7 @@ public class PomodoroFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
+		mActivity.setActionBarBackgroundTransparency(255);
 
 		View parent = mActivity.getLayoutInflater().inflate(R.layout.fragment_pomodoro, null);
 
@@ -58,7 +62,6 @@ public class PomodoroFragment extends Fragment {
 		an.setFillAfter(true);
 
 		playButton.setOnClickListener(new OnClickListener() {
-			int buttonMode = 0;
 
 			@Override
 			public void onClick(View v) {
@@ -68,9 +71,9 @@ public class PomodoroFragment extends Fragment {
 				if (buttonMode == 1) {
 					pb.startAnimation(an);
 					pomodoroTimer = getRunningTimer(25);
-					playButton.setText("Stop");
+					playButton.setText(R.string.pomodoro_timer_stop);
 				} else if (buttonMode == 0) {
-					playButton.setText("Start");
+					playButton.setText(R.string.pomodoro_timer_start);
 					pomodoroTimer.cancel();
 					pb.clearAnimation();
 				}
@@ -84,6 +87,7 @@ public class PomodoroFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		mActivity.setActionBarBackgroundTransparency(255);
+		playButton.setText(buttonMode == 0 ? R.string.pomodoro_timer_start : R.string.pomodoro_timer_stop);
 	}
 
 	private CountDownTimer getRunningTimer(final int minutes) {
@@ -111,6 +115,12 @@ public class PomodoroFragment extends Fragment {
 			@Override
 			public void onFinish() {
 				count = (count + 1) % 2;
+
+				// Get vibrator service
+				Vibrator v = (Vibrator) mActivity.getSystemService(Context.VIBRATOR_SERVICE);
+				// Vibrate for 500 milliseconds
+				v.vibrate(500);
+
 				if (count == 1) {
 					pomodoroTimer = getRunningTimer(5);
 				} else if (count == 0) {
