@@ -40,13 +40,13 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 		//View circProgressBar = view.findViewById(R.drawable.circular_progress_bar);
 		//startAudio = (Button) circProgressBar.findViewById(R.id.rotating_play_button);
 
-		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
+		Typeface robotoConLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
 
 		info = (TextView) view.findViewById(R.id.info_audio);
 		title = (TextView) view.findViewById(R.id.title_audio);
 
-		info.setTypeface(robotoLight);
-		title.setTypeface(robotoLight);
+		info.setTypeface(robotoConLight);
+		title.setTypeface(robotoConLight);
 
 		audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
 		audioProgressBar.setClickable(true);

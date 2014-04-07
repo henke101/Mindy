@@ -30,7 +30,7 @@ public class ExerciseFragment extends ListFragment{
 	SharedPreferences sharedPrefs;
 	Editor editor;
 
-	ExerciseItem[] exItemList = {new ExerciseItem("Sömnpiller","förklarande text",new Color()), new ExerciseItem("Pomodoroklocka","förklarande text", new Color()), new ExerciseItem("Tre Positiva saker","förklarande text",new Color())};	
+	ExerciseItem[] exItemList = {new ExerciseItem(R.string.sleeping_pill, R.string.short_desc_sleeping, new Color()), new ExerciseItem(R.string.pomodoro_name, R.string.short_desc_pomodoro, new Color()), new ExerciseItem(R.string.three_pos_name, R.string.short_desc_three_pos,new Color())};	
 	
 	@Override
 	public void onAttach(final Activity activity) {

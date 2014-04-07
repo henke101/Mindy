@@ -2,41 +2,24 @@ package se.chalmers.mindy.core;
 
 import android.graphics.Color;
 
-public class ExerciseItem implements Comparable {
+public class ExerciseItem   {
 	
-	private String name, description;
+	private int name, description;
 	private Color typeColor;
 	
-	public ExerciseItem(String name, String description, Color typeColor){
+	public ExerciseItem(int name, int description, Color typeColor){
 		this.name = name;
 		this.description= description;
 		this.typeColor = typeColor;
 	}
 	
-	public int compareTo(Object another) {
-		if(another == null)
-			return 1;
-
-		try{
-			another = (ExerciseItem)another;
-		}catch(Exception e){
-			return -2;
-		}
-		
-		if(this.getDescription().equals("Mindfulness") && ((ExerciseItem) another).getDescription().equals("Positiv Psykologi") || this.getDescription().equals("Mindfulness") && ((ExerciseItem) another).getDescription().equals("Studieteknik") || this.getDescription().equals("Positiv Psykologi") && ((ExerciseItem) another).getDescription().equals("Studieteknik"))
-			return 1;
-		
-		if(this.getDescription().equals("Positiv Psykologi") && ((ExerciseItem) another).getDescription().equals("Mindfulness") || this.getDescription().equals("Studieteknik") && ((ExerciseItem) another).getDescription().equals("Mindfulness") || this.getDescription().equals("Studieteknik") && ((ExerciseItem) another).getDescription().equals("Postiv Psykologi"))
-			return -1;
-		
-		return 0;
-	}
 	
-	public String getName(){
+	
+	public int getName(){
 		return name;
 	}
 	
-	public String getDescription(){
+	public int getDescription(){
 		return description;
 	}
 	
@@ -44,17 +27,21 @@ public class ExerciseItem implements Comparable {
 		return typeColor;
 	}
 	
-	public void setName(String name){
+	public void setName(int name){
 		this.name = name;
 	}
 	
-	public void setDescription(String description){
+	public void setDescription(int description){
 		this.description = description;
 	}
 	
 	public void setTypeColor(Color typeColor){
 		this.typeColor = typeColor;
 	}
+
+
+
+
 
 
 }

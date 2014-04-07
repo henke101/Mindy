@@ -71,7 +71,7 @@ public class ThreePosFragment extends ListFragment {
 		View headerView = inflater.inflate(R.layout.fragment_threepositive, null);
 		TextView titleView = (TextView) headerView.findViewById(R.id.pos_title);
 		titleView.setText(R.string.app_name);
-		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_light.ttf"));
+		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_condensed_light.ttf"));
 
 		listView.addHeaderView(headerView);
 
@@ -84,17 +84,24 @@ public class ThreePosFragment extends ListFragment {
 		final EditText inputOne = (EditText) addItemHeader.findViewById(R.id.positive_one_input);
 		final EditText inputTwo = (EditText) addItemHeader.findViewById(R.id.positive_two_input);
 		final EditText inputThree = (EditText) addItemHeader.findViewById(R.id.positive_three_input);
+		TextView positiveTextLabel = (TextView) addItemHeader.findViewById(R.id.three_positive_text);
+		
+		
+
+		
 				
 		/**
 		 * Setting the fonts for the inputs
 		 */
-		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
+		Typeface robotoConLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
+		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_light.ttf");
 		
-		inputOne.setTypeface(robotoLight);
-		inputTwo.setTypeface(robotoLight);
-		inputThree.setTypeface(robotoLight);
-		addButton.setTypeface(robotoLight);
-		okButton.setTypeface(robotoLight);
+		positiveTextLabel.setTypeface(robotoLight);
+		inputOne.setTypeface(robotoConLight);
+		inputTwo.setTypeface(robotoConLight);
+		inputThree.setTypeface(robotoConLight);
+		addButton.setTypeface(robotoConLight);
+		okButton.setTypeface(robotoConLight);
 
 
 		
@@ -138,7 +145,6 @@ public class ThreePosFragment extends ListFragment {
 					calendar = Calendar.getInstance();
 					date = dfDate.format(calendar.getTime());
 				}
-				
 				
 			}
 			
