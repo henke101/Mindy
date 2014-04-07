@@ -28,9 +28,8 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 	MainActivity mActivity;
 	SharedPreferences sharedPrefs;
 	Editor editor;
-
-	ExerciseItem[] exItemList = { new ExerciseItem("Sšmnpiller", "fšrklarande text", new Color()),
-			new ExerciseItem("Pomodoroklocka", "Fšrklarande text", new Color()), new ExerciseItem("Tre Positiva saker", "Fšrklarande text", new Color()) };
+	private String[] exerciseName;
+	ExerciseItem[] exItemList;
 	private View mListHeader;
 
 	@Override
@@ -68,7 +67,13 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.fluff, imageView);
 
 		listView.addHeaderView(mListHeader);
-
+		
+		exerciseName = getResources().getStringArray(R.array.exercise_names);
+		exItemList = new ExerciseItem[]{ new ExerciseItem(exerciseName[0], "fšrklarande text", new Color()),
+					new ExerciseItem(exerciseName[1], "Fšrklarande text", new Color()), 
+					new ExerciseItem(exerciseName[2], "Fšrklarande text", new Color()), 
+					new ExerciseItem(exerciseName[3],"text", new Color())};
+		
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -76,12 +81,16 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 
 				if (position == 1) {
 					mActivity.setFragment(new SleepingPillFragment());
+					
 				} else if (position == 2) {
-
 					mActivity.setFragment(new PomodoroFragment());
+					
 				} else if (position == 3) {
-
 					mActivity.setFragment(new ThreePosFragment());
+					
+				} else if (position == 4) {
+					mActivity.setFragment(new SleepingPillFragment());
+					
 				}
 			}
 		});
