@@ -14,6 +14,8 @@
         android:resizeable="true"
         android:smallScreens="true" />
 
+	<uses-permission android:name="android.permission.VIBRATE"/>
+	
     <application
         android:allowBackup="false"
         android:icon="@drawable/ic_test2_launcher"
@@ -23,15 +25,18 @@
         <activity
             android:name="se.chalmers.mindy.core.MainActivity"
             android:label="@string/title_activity_main"
+            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"   
             android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"  >
-
+            android:screenOrientation="portrait">
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        
     </application>
-
+    
 </manifest>

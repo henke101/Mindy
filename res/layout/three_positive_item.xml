@@ -6,7 +6,7 @@
     android:layout_marginLeft="10dip"
     android:layout_marginRight="10dip"
     android:layout_marginTop="10dip"
-    android:background="@drawable/list_item"
+    android:background="@drawable/list_item_bg"
     android:orientation="vertical"
     android:paddingBottom="10dip"
     android:paddingLeft="10dip"
