@@ -242,7 +242,7 @@ public class MainActivity extends Activity {
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).commit();
 		}
 		if (position == 4) {
-			//Studiedagboken
+			// Diary
 			// Create a new fragment and specify the planet to show based on
 			// position
 			ListFragment fragmentDiary = new DiaryListFragment();

@@ -1,6 +1,7 @@
 package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -33,34 +34,34 @@ public class DiaryListFragment extends ListFragment{
 	private static final int INSERT_ID = Menu.FIRST;
 	//private static final int DELETE_ID = Menu.FIRST + 1;
 
-	private DiaryDbAdapter mDbHelper;
+	private MindyDatabaseAdapter mDbHelper;
 	private SimpleCursorAdapter mListAdapter;
 	private Context mContext;
 	private Cursor mCursor;
 
 	/** Called when the activity is first created. */
-	//	@Override
-	//	public void onCreate(Bundle savedInstanceState){
-	//		super.onCreate(savedInstanceState);
-	//		
-	//		mDbHelper = new DiaryDbAdapter(this.getActivity());
-	//		mDbHelper.open();
-	//		mContext = getActivity();
-	//
-	//		//fillData();
-	//	}
-	//	
-	//	@Override
-	//	public void onActivityCreated(Bundle savedInstanceState){
-	//		super.onActivityCreated(savedInstanceState);
-	//		fillData();
-	//	}
+//		@Override
+//		public void onCreate(Bundle savedInstanceState){
+//			super.onCreate(savedInstanceState);
+//			
+//			mDbHelper = new MindyDatabaseAdapter(this.getActivity());
+//			mDbHelper.open();
+//			mContext = getActivity();
+//	
+//			//fillData();
+//		}
+//		
+//		@Override
+//		public void onActivityCreated(Bundle savedInstanceState){
+//			super.onActivityCreated(savedInstanceState);
+//			fillData();
+//		}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.diary_list, container, false);
 		setHasOptionsMenu(true);
 
-		mDbHelper = new DiaryDbAdapter(this.getActivity());
+		mDbHelper = new MindyDatabaseAdapter(this.getActivity());
 		mDbHelper.open();
 		mContext = getActivity();
 
@@ -90,15 +91,17 @@ public class DiaryListFragment extends ListFragment{
 
 	private void fillData() {
 		Cursor mCursor = mDbHelper.fetchAllNotes();
+		getActivity().startManagingCursor(mCursor);
 		// Create an array to specify the fields we want to display in the list
-		String[] from = new String[]{DiaryDbAdapter.KEY_TITLE};
+		String[] from = new String[]{MindyDatabaseAdapter.KEY_TITLE};
 
 		// and an array of the fields we want to bind those fields to
 		int[] to = new int[]{R.id.row};
 
 		// Now create a simple cursor adapter and set it to display
+//		ListView list = (ListView) getActivity().findViewById(android.R.id.list); 
 		mListAdapter = 
-				new SimpleCursorAdapter(getActivity().getLayoutInflater().getContext(), R.layout.diary_list, mCursor, from, to);
+				new SimpleCursorAdapter(this.getActivity(), R.layout.diary_row, mCursor, from, to);
 		setListAdapter(mListAdapter);
 		mCursor.close();
 	}

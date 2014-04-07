@@ -23,8 +23,9 @@ public class MindyDatabaseAdapter {
 	private static final String TABLE_EVALUATION_RESULTS = "TestResults";
 	private static final String TABLE_EXERCISES = "Exercises";
 	private static final String TABLE_THREE_POSITIVE = "ThreePositives";
+	private static final String TABLE_DIARY = "diary";
 
-	private static final String KEY_ROWID = "_id";
+	public static final String KEY_ROWID = "_id";
 
 	// Test question table
 	private static final String KEY_QUESTION_DESCRIPTION = "_question";
@@ -51,6 +52,10 @@ public class MindyDatabaseAdapter {
 	private static final String KEY_THREE_POSITIVE_SECOND = "_second";
 	private static final String KEY_THREE_POSITIVE_THIRD = "_third";
 
+	//Diary table
+	public static final String KEY_TITLE = "_title";
+	public static final String KEY_BODY = "_body";
+
 	private static final String CREATE_TABLE_THREE_POSITIVE = "create table " + TABLE_THREE_POSITIVE + " (" + KEY_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_THREE_POSITIVE_DATE + " INTEGER NOT NULL, " + KEY_THREE_POSITIVE_FIRST + " TEXT, "
 			+ KEY_THREE_POSITIVE_SECOND + " TEXT, " + KEY_THREE_POSITIVE_THIRD + " TEXT);";
@@ -62,6 +67,9 @@ public class MindyDatabaseAdapter {
 	private static final String CREATE_TABLE_EVALUATION_ANSWERS = "create table " + TABLE_EVALUATION_RESULTS + " (" + KEY_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ANSWER + " TEXT NOT NULL, " + KEY_DATE_ANSWERED + " INTEGER NOT NULL, " + KEY_QUESTION_ID
 			+ " INTEGER, " + " FOREIGN KEY (" + KEY_QUESTION_ID + ") REFERENCES " + TABLE_EVALUATION_QUESTIONS + " (" + KEY_ROWID + "));";
+
+	private static final String CREATE_TABLE_DIARY = "create table " + TABLE_DIARY + " (" + KEY_ROWID 
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_TITLE + " TITLE NOT NULL, " + KEY_BODY + " TEXT NOT NULL);";
 
 
 	private static final String TAG = "MindyDatabaseAdapter";
@@ -137,7 +145,7 @@ public class MindyDatabaseAdapter {
 
 		Cursor threePosCursor = mDb.query(TABLE_THREE_POSITIVE, new String[] { KEY_ROWID, KEY_THREE_POSITIVE_FIRST, KEY_THREE_POSITIVE_SECOND,
 				KEY_THREE_POSITIVE_THIRD, KEY_THREE_POSITIVE_DATE }, KEY_THREE_POSITIVE_DATE + " in (SELECT MAX(" + KEY_THREE_POSITIVE_DATE + ") AS "
-				+ KEY_THREE_POSITIVE_DATE + " FROM " + TABLE_THREE_POSITIVE + ")", null, null, null, null);
+						+ KEY_THREE_POSITIVE_DATE + " FROM " + TABLE_THREE_POSITIVE + ")", null, null, null, null);
 
 		if (threePosCursor.moveToFirst()) {
 			Calendar calendar = Calendar.getInstance();
@@ -186,6 +194,56 @@ public class MindyDatabaseAdapter {
 			mDb.delete(TABLE_THREE_POSITIVE, null, null);
 		}
 	}
+	/**
+	 * for the diary list
+	 * @param title of the note
+	 * @param body text of the note
+	 * @return
+	 */
+	public long createNote(String title, String body) {
+		ContentValues initialValues = new ContentValues();
+		initialValues.put(KEY_TITLE, title);
+		initialValues.put(KEY_BODY, body);
+		Log.i("inside: ","createNote");
+		return mDb.insert(TABLE_DIARY, null, initialValues);
+	}
+
+	public boolean deleteNote(long rowId) {
+
+		return mDb.delete(TABLE_DIARY, KEY_ROWID + "=" + rowId, null) > 0;
+	}
+
+	public Cursor fetchAllNotes() {
+		Log.i("inside: ","fetchAllNotes");
+		Cursor mCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID, KEY_TITLE,
+				KEY_BODY }, null, null, null, null, null);
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		mCursor.close();
+		return mCursor;
+	}
+
+	public Cursor fetchNote(long rowId) throws SQLException {
+
+		Cursor mCursor =
+
+				mDb.query(true, TABLE_DIARY, new String[] {KEY_ROWID, KEY_TITLE,
+						KEY_BODY }, KEY_ROWID + "=" + rowId, null, null, null, null, null);
+		if (mCursor != null) {
+			mCursor.moveToFirst();
+		}
+		mCursor.close();
+		return mCursor;
+	}
+
+	public boolean updateNote(long rowId, String title, String body) {
+		ContentValues args = new ContentValues();
+		args.put(KEY_TITLE, title);
+		args.put(KEY_BODY, body);
+
+		return mDb.update(TABLE_DIARY, args, KEY_ROWID + "=" + rowId, null) > 0;
+	}
 
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -199,6 +257,7 @@ public class MindyDatabaseAdapter {
 			db.execSQL(CREATE_TABLE_THREE_POSITIVE);
 			db.execSQL(CREATE_TABLE_EVALUATION_QUESTIONS);
 			db.execSQL(CREATE_TABLE_EVALUATION_ANSWERS);
+			db.execSQL(CREATE_TABLE_DIARY);
 
 		}
 
@@ -208,6 +267,7 @@ public class MindyDatabaseAdapter {
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_THREE_POSITIVE);
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVALUATION_QUESTIONS);
 			db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVALUATION_RESULTS);
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_DIARY);
 			onCreate(db);
 
 		}

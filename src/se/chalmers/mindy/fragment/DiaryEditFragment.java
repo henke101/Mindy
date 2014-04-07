@@ -1,6 +1,7 @@
 package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,7 +21,7 @@ public class DiaryEditFragment extends Fragment {
 	private EditText mTitleText;
 	private EditText mBodyText;
 	private Long mRowId;
-	private DiaryDbAdapter mDbHelper;
+	private MindyDatabaseAdapter mDbHelper;
 
 	public DiaryEditFragment(){
 
@@ -31,19 +32,19 @@ public class DiaryEditFragment extends Fragment {
 
 		View v = inflater.inflate(R.layout.diary_edit, container, false);
 
-		mDbHelper = new DiaryDbAdapter(getActivity());
+		mDbHelper = new MindyDatabaseAdapter(getActivity());
 		mDbHelper = mDbHelper.open();
 		
 		mTitleText = (EditText) v.findViewById(R.id.diary_title);
 		mBodyText = (EditText) v.findViewById(R.id.diary_body);
 		
-		mRowId = (savedInstanceState == null) ? null :
-			(Long) savedInstanceState.getSerializable(DiaryDbAdapter.KEY_ROWID);
-		if (mRowId == null) {
-			Bundle extras = getActivity().getIntent().getExtras();
-			mRowId = extras != null ? extras.getLong(DiaryDbAdapter.KEY_ROWID)
-					: null;	
-		}
+//		mRowId = (savedInstanceState == null) ? null :
+//			(Long) savedInstanceState.getSerializable(DiaryDbAdapter.KEY_ROWID);
+//		if (mRowId == null) {
+//			Bundle extras = getActivity().getIntent().getExtras();
+//			mRowId = extras != null ? extras.getLong(DiaryDbAdapter.KEY_ROWID)
+//					: null;	
+//		}
 		
 		Button confirmButton = (Button) v.findViewById(R.id.diary_confirm);
 		Button cancelButton = (Button) v.findViewById(R.id.new_note_cancel);
@@ -73,9 +74,9 @@ public class DiaryEditFragment extends Fragment {
 		if (mRowId != null) {
 			Cursor note = mDbHelper.fetchNote(mRowId);
 			mTitleText.setText(note.getString(
-					note.getColumnIndexOrThrow(DiaryDbAdapter.KEY_TITLE)));
+					note.getColumnIndexOrThrow(MindyDatabaseAdapter.KEY_TITLE)));
 			mBodyText.setText(note.getString(
-					note.getColumnIndexOrThrow(DiaryDbAdapter.KEY_BODY)));
+					note.getColumnIndexOrThrow(MindyDatabaseAdapter.KEY_BODY)));
 			Log.i("inside: ","populateFields !null");
 			note.close();
 		}
@@ -85,7 +86,7 @@ public class DiaryEditFragment extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		saveState();
-		outState.putSerializable(DiaryDbAdapter.KEY_ROWID, mRowId);
+		outState.putSerializable(MindyDatabaseAdapter.KEY_ROWID, mRowId);
 	}
 
 	@Override
