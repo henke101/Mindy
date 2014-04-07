@@ -6,6 +6,7 @@ import se.chalmers.mindy.core.ExerciseItem;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.Tools;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.ListFragment;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -80,8 +81,18 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				if (position == 1) {
-					mActivity.setFragment(new SleepingPillFragment());
-					
+
+					Fragment fragmentSleepingPill = new AudioExerciseFragment();
+					Bundle bundle = new Bundle();
+					bundle.putInt("audioID", R.raw.sleeping_pill);
+					bundle.putInt("titleID", R.string.sleeping_pill);
+					bundle.putInt("infoID", R.string.lorem_ipsum);
+					fragmentSleepingPill.setArguments(bundle);
+
+					// Insert the fragment by replacing any existing fragment
+					System.out.println("Sleeping pressed");
+					mActivity.setFragment(fragmentSleepingPill);
+
 				} else if (position == 2) {
 					mActivity.setFragment(new PomodoroFragment());
 					
@@ -89,7 +100,6 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 					mActivity.setFragment(new ThreePosFragment());
 					
 				} else if (position == 4) {
-					mActivity.setFragment(new SleepingPillFragment());
 					
 				}
 			}

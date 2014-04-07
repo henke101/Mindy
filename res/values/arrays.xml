@@ -11,9 +11,9 @@
 
 <string-array 
     name="exercise_names">
-    <item>Studiedagbok</item>
-    <item>Tre positiva saker</item>
     <item>Sömnpiller</item>
+    <item>Pomodorotimer</item>
+    <item>Tre positiva saker</item>
     <item>Kroppsscanning</item>
     
 </string-array>

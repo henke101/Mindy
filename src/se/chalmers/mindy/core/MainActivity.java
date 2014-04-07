@@ -8,6 +8,7 @@ import se.chalmers.mindy.fragment.EvaluationFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
+import se.chalmers.mindy.util.Tools;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -19,6 +20,7 @@ import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -60,6 +62,10 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		BitmapDrawable glowingLogo = new BitmapDrawable(getResources(), Tools.setLogoGlow(getResources(),
+				R.drawable.ic_test2_launcher));
+		getActionBar().setLogo(glowingLogo);
 
 		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.action_bar_background);
 		mActionBarBackgroundDrawable.setAlpha(0);
@@ -324,4 +330,5 @@ public class MainActivity extends Activity {
 	public MindyDatabaseAdapter getMindyDb() {
 		return adapter;
 	}
+
 }
