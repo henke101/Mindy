@@ -220,7 +220,7 @@ public class MindyDatabaseAdapter {
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
-		mCursor.close();
+		//mCursor.close();
 		return mCursor;
 	}
 

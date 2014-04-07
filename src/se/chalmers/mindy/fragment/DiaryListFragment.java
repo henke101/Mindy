@@ -36,9 +36,6 @@ public class DiaryListFragment extends ListFragment{
 
 	private MindyDatabaseAdapter mDbHelper;
 	private SimpleCursorAdapter mListAdapter;
-	private Context mContext;
-	private Cursor mCursor;
-
 	/** Called when the activity is first created. */
 //		@Override
 //		public void onCreate(Bundle savedInstanceState){
@@ -63,7 +60,6 @@ public class DiaryListFragment extends ListFragment{
 
 		mDbHelper = new MindyDatabaseAdapter(this.getActivity());
 		mDbHelper.open();
-		mContext = getActivity();
 
 		fillData();
 
@@ -103,7 +99,7 @@ public class DiaryListFragment extends ListFragment{
 		mListAdapter = 
 				new SimpleCursorAdapter(this.getActivity(), R.layout.diary_row, mCursor, from, to);
 		setListAdapter(mListAdapter);
-		mCursor.close();
+		//mCursor.close();
 	}
 
 	@Override
