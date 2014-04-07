@@ -42,7 +42,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
+        
+         <Button
+            android:id="@+id/delete_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/new_note_cancel"
+            android:text="@string/diary_delete_note"
+            android:visibility="invisible"/>
         <Button
             android:id="@+id/new_note_cancel"
             android:layout_width="wrap_content"

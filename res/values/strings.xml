@@ -38,7 +38,8 @@
 
     <string name="create_note_button_text">Nytt inlägg</string>
     <string name="cancel">Avbryt</string>
-    <string name="diary_confirm">Bekräfta</string>
+    <string name="diary_confirm">Spara inlägg</string>
+    <string name="diary_delete_note">Ta bort inlägg</string>
     <string name="diary_menu_delete">Ta bort</string>
     <string name="diary_menu_insert">Lägg till</string>
     <string name="diary_title">Rubrik</string>

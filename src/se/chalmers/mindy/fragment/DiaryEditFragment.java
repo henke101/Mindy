@@ -38,17 +38,25 @@ public class DiaryEditFragment extends Fragment {
 		mTitleText = (EditText) v.findViewById(R.id.diary_title);
 		mBodyText = (EditText) v.findViewById(R.id.diary_body);
 		
-//		mRowId = (savedInstanceState == null) ? null :
-//			(Long) savedInstanceState.getSerializable(DiaryDbAdapter.KEY_ROWID);
-//		if (mRowId == null) {
-//			Bundle extras = getActivity().getIntent().getExtras();
-//			mRowId = extras != null ? extras.getLong(DiaryDbAdapter.KEY_ROWID)
-//					: null;	
-//		}
 		
 		Button confirmButton = (Button) v.findViewById(R.id.diary_confirm);
 		Button cancelButton = (Button) v.findViewById(R.id.new_note_cancel);
+		Button deleteButton = (Button) v.findViewById(R.id.delete_note);
+		
+		Bundle bundle = getArguments();
+		if (bundle != null){
+		mRowId = bundle.getLong("rowID");
+		deleteButton.setVisibility(View.VISIBLE);
+		}
 
+		deleteButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				mDbHelper.deleteNote(mRowId);
+				FragmentManager fragmentManager = getFragmentManager();
+				fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
+			}
+		});
 		confirmButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -77,7 +85,7 @@ public class DiaryEditFragment extends Fragment {
 			mBodyText.setText(note.getString(
 					note.getColumnIndexOrThrow(MindyDatabaseAdapter.KEY_BODY)));
 			Log.i("inside: ","populateFields !null");
-			note.close();
+			//note.close();
 		}
 		Log.i("inside: ","populateFields");
 	}

@@ -120,6 +120,12 @@ public class DiaryListFragment extends ListFragment{
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
+		FragmentManager fragmentManager = getFragmentManager();
+		DiaryEditFragment fragment = new DiaryEditFragment();
+		Bundle bundle = new Bundle();
+		bundle.putLong("rowID", id );
+		fragment.setArguments(bundle);
+		fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
 		Log.i("Hello!", "Clicked! YAY!");
 		}
 
