@@ -69,14 +69,13 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.fluff, imageView);
 
 		listView.addHeaderView(mListHeader);
-		
+
 		exerciseName = getResources().getStringArray(R.array.exercise_names);
 		exerciseDescription = getResources().getStringArray(R.array.exercise_descriptions);
-		exItemList = new ExerciseItem[]{ new ExerciseItem(exerciseName[0], exerciseDescription[0], new Color()),
-					new ExerciseItem(exerciseName[1], exerciseDescription[1], new Color()), 
-					new ExerciseItem(exerciseName[2], exerciseDescription[2], new Color()), 
-					new ExerciseItem(exerciseName[3],exerciseDescription[3], new Color())};
-		
+		exItemList = new ExerciseItem[] { new ExerciseItem(exerciseName[0], exerciseDescription[0], new Color()),
+				new ExerciseItem(exerciseName[1], exerciseDescription[1], new Color()), new ExerciseItem(exerciseName[2], exerciseDescription[2], new Color()),
+				new ExerciseItem(exerciseName[3], exerciseDescription[3], new Color()) };
+
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -92,17 +91,16 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 					fragmentSleepingPill.setArguments(bundle);
 
 					// Insert the fragment by replacing any existing fragment
-					System.out.println("Sleeping pressed");
 					mActivity.setFragment(fragmentSleepingPill);
 
 				} else if (position == 2) {
 					mActivity.setFragment(new PomodoroFragment());
-					
+
 				} else if (position == 3) {
 					mActivity.setFragment(new ThreePosFragment());
-					
+
 				} else if (position == 4) {
-					
+
 				}
 			}
 		});
