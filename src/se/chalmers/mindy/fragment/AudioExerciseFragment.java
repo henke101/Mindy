@@ -25,7 +25,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class SleepingPillFragment extends Fragment implements Runnable, OnClickListener {
+public class AudioExerciseFragment extends Fragment implements Runnable, OnClickListener {
 	private MediaPlayer mediaPlayer;
 	private View view;
 	private IntentFilter mediaFilter;
@@ -34,7 +34,7 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	private TextView title;
 	private Button playPauseButton;
 	private MediaPlayerService mpService;
-	
+	private int audioID;
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -46,22 +46,28 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-
-
 		super.onCreateView(inflater, container, savedInstanceState);
-		view = inflater.inflate(R.layout.fragment_sleepingpill, null);
-		startMPService();
+		view = inflater.inflate(R.layout.fragment_audio_exercise, null);
 
 		// View circProgressBar = view.findViewById(R.drawable.circular_progress_bar);
 		// startAudio = (Button) circProgressBar.findViewById(R.id.rotating_play_button);
 
 		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_light.ttf");
 
+		Bundle bundle = this.getArguments();
+		audioID = bundle.getInt("audioID");
+		startMPService();
+		
+		int titleID = bundle.getInt("titleID");
+		int infoID = bundle.getInt("infoID");
+		
 		info = (TextView) view.findViewById(R.id.info_audio);
 		title = (TextView) view.findViewById(R.id.title_audio);
 
 		info.setTypeface(robotoLight);
+		info.setText(infoID);
 		title.setTypeface(robotoLight);
+		title.setText(titleID);
 
 		audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
 		audioProgressBar.setClickable(true);
@@ -83,6 +89,7 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 
 	private void startMPService() {
 		Intent intent = new Intent(new Intent(getActivity().getApplicationContext(), MediaPlayerService.class));
+		intent.putExtra("audioID", audioID);
 		getActivity().startService(intent);
 		getActivity().bindService(intent, mpConnection, Context.BIND_AUTO_CREATE);
 		

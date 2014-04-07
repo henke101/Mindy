@@ -13,6 +13,7 @@ import android.util.Log;
 public class MediaPlayerService extends Service{
 
 	private MediaPlayer mediaPlayer;
+	private Intent intent;
 
 	private final IBinder myBinder = new MyLocalBinder();
 
@@ -36,13 +37,15 @@ public class MediaPlayerService extends Service{
 
 	@Override
 	public void onCreate(){
-		initializePlayer();
 		Log.d("mpservice", "on create reached");
 
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		this.intent = intent;
+		Log.d("intent.audioID", ""+intent.getExtras().getInt("audioID"));
+		initializePlayer();
 		return Service.START_STICKY; 
 	}
 	@Override
@@ -56,7 +59,7 @@ public class MediaPlayerService extends Service{
 
 	public void initializePlayer(){
 		Log.d("mpservice", ""+ this + "sound file " + R.raw.sleeping_pill);
-		mediaPlayer = MediaPlayer.create(MediaPlayerService.this, R.raw.sleeping_pill);                
+		mediaPlayer = MediaPlayer.create(MediaPlayerService.this, intent.getExtras().getInt("audioID"));                
 		Log.d("mpservice", "player created");
 		mediaPlayer.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK);
 

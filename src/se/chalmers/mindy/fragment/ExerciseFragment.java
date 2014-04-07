@@ -69,7 +69,13 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				if (position == 1) {
-					Fragment fragmentSleepingPill = new SleepingPillFragment();
+					Fragment fragmentSleepingPill = new AudioExerciseFragment();
+					Bundle bundle = new Bundle();
+					bundle.putInt("audioID", R.raw.sleeping_pill);
+					bundle.putInt("titleID", R.string.sleeping_pill);
+					bundle.putInt("infoID", R.string.lorem_ipsum);
+					fragmentSleepingPill.setArguments(bundle);
+
 					// Insert the fragment by replacing any existing fragment
 					FragmentManager fragmentManager = getFragmentManager();
 					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
