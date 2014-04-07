@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
-import android.util.Log;
 
 public class MediaPlayerService extends Service {
 
@@ -27,17 +26,8 @@ public class MediaPlayerService extends Service {
 		}
 	}
 
-	public MediaPlayerService() {
-	}
-
 	public MediaPlayer getMediaPlayer() {
 		return mediaPlayer;
-	}
-
-	@Override
-	public void onCreate() {
-		Log.d("mpservice", "on create reached");
-
 	}
 
 	@Override
