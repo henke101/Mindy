@@ -1,14 +1,19 @@
 package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.util.MediaPlayerService;
+import se.chalmers.mindy.util.MediaPlayerService.MyLocalBinder;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,11 +32,17 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 	private TextView info;
 	private TextView title;
 	private Button playPauseButton;
+	private MediaPlayerService mpService;
+	private boolean isBound;
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		view = inflater.inflate(R.layout.fragment_sleepingpill, null);
+		isBound = false;
+		Intent intent = new Intent(new Intent(getActivity().getApplicationContext(), MediaPlayerService.class));
+		getActivity().startService(intent);
+		/*getActivity().bindService(intent, mpConnection, Context.BIND_AUTO_CREATE);*/
 
 		//View circProgressBar = view.findViewById(R.drawable.circular_progress_bar);
 		//startAudio = (Button) circProgressBar.findViewById(R.id.rotating_play_button);
@@ -55,10 +66,9 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 
 		mediaFilter = new IntentFilter(android.media.AudioManager.ACTION_AUDIO_BECOMING_NOISY);
 		mediaFilter.setPriority(1000);
-		getActivity().getApplicationContext().registerReceiver(audioIntentReceiver, mediaFilter);
-
-
-
+		//mpService = new MediaPlayerService();
+		
+		// insert registerReceiver here
 		return view;
 	}
 
@@ -138,7 +148,9 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 			else{ 
 
 				if (mediaPlayer == null){
-					mediaPlayer = MediaPlayer.create(getActivity(), R.raw.sleeping_pill);                
+				
+					mediaPlayer = mpService.getMediaPlayer();   
+					//Log.d("sleeping pill", ""+ mediaPlayer.getDuration());
 					audioProgressBar.setProgress(0);
 					audioProgressBar.setMax(mediaPlayer.getDuration());
 					new Thread(this).start();
@@ -148,6 +160,22 @@ public class SleepingPillFragment extends Fragment implements Runnable, OnClickL
 			}
 		}
 	}
+
+/*	private ServiceConnection mpConnection = new ServiceConnection() {
+
+	    public void onServiceConnected(ComponentName className,
+	            IBinder service) {
+	        MyLocalBinder binder = (MyLocalBinder) service;
+	        mpService = binder.getService();
+	        isBound = true;
+	    }
+	    
+	    public void onServiceDisconnected(ComponentName arg0) {
+	        isBound = false;
+	    }
+	    
+	   };*/
+
 }
 
 
