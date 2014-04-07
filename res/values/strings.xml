@@ -64,6 +64,7 @@
     <string name="pomodoro_timer">Timer</string>
     <string name="pomodoro_timer_start">Start</string>
     <string name="pomodoro_timer_stop">Stopp</string>
+    <string name="pomodoro_timer_placeholder">25:00</string>
 
     
 </resources>

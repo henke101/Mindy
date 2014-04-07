@@ -55,7 +55,7 @@ public class MainActivity extends Activity {
 	private FragmentManager fragmentManager;
 
 	private MediaPlayer mMediaPlayer;
-	
+
 	private MindyDatabaseAdapter adapter;
 
 	@Override
@@ -184,12 +184,13 @@ public class MainActivity extends Activity {
 
 		return super.onOptionsItemSelected(item);
 	}
-	
-	public void onDestroy(){
+
+	@Override
+	public void onDestroy() {
 		super.onDestroy();
-		
+
 		adapter.close();
-		
+
 	}
 
 	/**
@@ -321,12 +322,12 @@ public class MainActivity extends Activity {
 		// Insert the fragment by replacing any existing fragment
 
 		FragmentTransaction ft = fragmentManager.beginTransaction();
-		ft.add(R.id.content_frame, fragment);
+		ft.replace(R.id.content_frame, fragment);
 		ft.addToBackStack(null);
 		ft.commit();
 	}
-	
-	public MindyDatabaseAdapter getMindyDb () {
+
+	public MindyDatabaseAdapter getMindyDb() {
 		return adapter;
 	}
 

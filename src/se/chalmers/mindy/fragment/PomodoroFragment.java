@@ -5,30 +5,24 @@ import se.chalmers.mindy.core.MainActivity;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class PomodoroFragment extends Fragment {
+public class PomodoroFragment extends Fragment implements OnClickListener {
 
 	private MainActivity mActivity;
-	private SharedPreferences sharedPrefs;
-	private Button playButton;
+	private Button mTimerButton;
 	private CountDownTimer pomodoroTimer;
-	private Animation an;
-	private ProgressBar pb;
+	private ProgressBar mProgressBar;
 	private TextView mLabel;
 
 	int count = 0;
@@ -39,7 +33,6 @@ public class PomodoroFragment extends Fragment {
 		super.onAttach(activity);
 
 		mActivity = (MainActivity) activity;
-		sharedPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
 
 	}
 
@@ -55,30 +48,10 @@ public class PomodoroFragment extends Fragment {
 
 		mLabel = (TextView) parent.findViewById(R.id.timer_label);
 
-		playButton = (Button) parent.findViewById(R.id.start);
-		pb = (ProgressBar) parent.findViewById(R.id.pomodoro_timer);
+		mProgressBar = (ProgressBar) parent.findViewById(R.id.pomodoro_timer);
 
-		an = new RotateAnimation(0.0f, 90.0f, 250f, 273f);
-		an.setFillAfter(true);
-
-		playButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-				buttonMode = (buttonMode + 1) % 2;
-
-				if (buttonMode == 1) {
-					pb.startAnimation(an);
-					pomodoroTimer = getRunningTimer(25);
-					playButton.setText(R.string.pomodoro_timer_stop);
-				} else if (buttonMode == 0) {
-					playButton.setText(R.string.pomodoro_timer_start);
-					pomodoroTimer.cancel();
-					pb.clearAnimation();
-				}
-			}
-		});
+		mTimerButton = (Button) parent.findViewById(R.id.start);
+		mTimerButton.setOnClickListener(this);
 
 		return parent;
 	}
@@ -87,13 +60,13 @@ public class PomodoroFragment extends Fragment {
 	public void onResume() {
 		super.onResume();
 		mActivity.setActionBarBackgroundTransparency(255);
-		playButton.setText(buttonMode == 0 ? R.string.pomodoro_timer_start : R.string.pomodoro_timer_stop);
+		mTimerButton.setText(buttonMode == 0 ? R.string.pomodoro_timer_start : R.string.pomodoro_timer_stop);
 	}
 
 	private CountDownTimer getRunningTimer(final int minutes) {
 
-		pb.setMax(60 * minutes * 100);
-		pb.setProgress(60 * minutes * 100);
+		mProgressBar.setMax(60 * minutes * 100);
+		mProgressBar.setProgress(60 * minutes * 100);
 
 		return new CountDownTimer(60 * minutes * 1000, 10) {
 
@@ -106,9 +79,9 @@ public class PomodoroFragment extends Fragment {
 
 				int progress = (int) leftTimeInMilliseconds / 10;
 				if (count == 0) {
-					pb.setProgress(progress);
+					mProgressBar.setProgress(progress);
 				} else if (count == 1) {
-					pb.setProgress(pb.getMax() - progress);
+					mProgressBar.setProgress(mProgressBar.getMax() - progress);
 				}
 			}
 
@@ -127,10 +100,24 @@ public class PomodoroFragment extends Fragment {
 					pomodoroTimer = getRunningTimer(25);
 				}
 
-				pb.setProgress(0);
-				playButton.setText("Start");
+				mProgressBar.setProgress(0);
+				mTimerButton.setText("Start");
 			}
 		}.start();
+
+	}
+
+	@Override
+	public void onClick(View v) {
+		buttonMode = (buttonMode + 1) % 2;
+
+		if (buttonMode == 1) {
+			pomodoroTimer = getRunningTimer(25);
+			mTimerButton.setText(R.string.pomodoro_timer_stop);
+		} else if (buttonMode == 0) {
+			mTimerButton.setText(R.string.pomodoro_timer_start);
+			pomodoroTimer.cancel();
+		}
 
 	}
 }

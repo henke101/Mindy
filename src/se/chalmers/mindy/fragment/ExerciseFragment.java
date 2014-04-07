@@ -6,8 +6,6 @@ import se.chalmers.mindy.core.ExerciseItem;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.Tools;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -15,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -46,6 +45,13 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 	}
 
 	@Override
+	public void onPause() {
+		super.onPause();
+
+		Log.d("Here", "in onpause");
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		ListView listView = getListView();
@@ -69,20 +75,13 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				if (position == 1) {
-					Fragment fragmentSleepingPill = new SleepingPillFragment();
-					// Insert the fragment by replacing any existing fragment
-					FragmentManager fragmentManager = getFragmentManager();
-					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSleepingPill).commit();
-					System.out.println("Sleeping pressed");
+					mActivity.setFragment(new SleepingPillFragment());
 				} else if (position == 2) {
-					PomodoroFragment pomodoroFragment = new PomodoroFragment();
-					mActivity.setFragment(pomodoroFragment);
+
+					mActivity.setFragment(new PomodoroFragment());
 				} else if (position == 3) {
-					ListFragment fragmentThreePos = new ThreePosFragment();
-					// Insert the fragment by replacing any existing fragment
-					FragmentManager fragmentManager = getFragmentManager();
-					fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentThreePos).commit();
-					System.out.println("Pos Pressed");
+
+					mActivity.setFragment(new ThreePosFragment());
 				}
 			}
 		});
