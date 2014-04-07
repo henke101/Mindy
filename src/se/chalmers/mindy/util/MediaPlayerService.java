@@ -1,16 +1,15 @@
 package se.chalmers.mindy.util;
 
-
-import se.chalmers.mindy.R;
 import android.app.Service;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
-public class MediaPlayerService extends Service{
+public class MediaPlayerService extends Service {
 
 	private MediaPlayer mediaPlayer;
 	private Intent intent;
@@ -29,14 +28,14 @@ public class MediaPlayerService extends Service{
 	}
 
 	public MediaPlayerService() {
-
 	}
-	public MediaPlayer getMediaPlayer(){
+
+	public MediaPlayer getMediaPlayer() {
 		return mediaPlayer;
 	}
 
 	@Override
-	public void onCreate(){
+	public void onCreate() {
 		Log.d("mpservice", "on create reached");
 
 	}
@@ -44,25 +43,42 @@ public class MediaPlayerService extends Service{
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		this.intent = intent;
-		Log.d("intent.audioID", ""+intent.getExtras().getInt("audioID"));
 		initializePlayer();
-		return Service.START_STICKY; 
-	}
-	@Override
-	public void onDestroy(){
-		if (mediaPlayer != null){
-		mediaPlayer.release();		
-		mediaPlayer = null;
-	}
-		
+		return Service.START_STICKY;
 	}
 
-	public void initializePlayer(){
-		Log.d("mpservice", ""+ this + "sound file " + R.raw.sleeping_pill);
-		mediaPlayer = MediaPlayer.create(MediaPlayerService.this, intent.getExtras().getInt("audioID"));                
-		Log.d("mpservice", "player created");
+	@Override
+	public void onDestroy() {
+		if (mediaPlayer != null) {
+			mediaPlayer.release();
+			mediaPlayer = null;
+		}
+
+	}
+
+	public void initializePlayer() {
+		mediaPlayer = MediaPlayer.create(MediaPlayerService.this, intent.getExtras().getInt("audioID"));
+		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		mediaPlayer.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK);
 
+	}
 
+	public void startPlayback() {
+		if (!mediaPlayer.isPlaying()) {
+			mediaPlayer.start();
+		}
+	}
+
+	public void pausePlayback() {
+		if (mediaPlayer.isPlaying()) {
+			mediaPlayer.pause();
+		}
+	}
+
+	public void stopPlayback() {
+		if (mediaPlayer.isPlaying()) {
+			mediaPlayer.stop();
+			mediaPlayer.prepareAsync();
+		}
 	}
 }

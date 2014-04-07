@@ -70,21 +70,7 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 		// Dummy items
 		dummyItems = new ArrayList<IndexListItem>();
 		dummyItems.add(new ThreePositiveIndexItem(mActivity, new ExerciseFragment()));
-		dummyItems.add(new SoundIndexListItem(mActivity, "1 Sömnpiller",
-				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile,
-				new AudioExerciseFragment()));
-		dummyItems.add(new SoundIndexListItem(mActivity, "2 Sömnpiller",
-				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile,
-				new AudioExerciseFragment()));
-		dummyItems.add(new SoundIndexListItem(mActivity, "3 Sömnpiller",
-				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile,
-				new AudioExerciseFragment()));
-		dummyItems.add(new SoundIndexListItem(mActivity, "4 Sömnpiller",
-				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile,
-				new AudioExerciseFragment()));
-		dummyItems.add(new SoundIndexListItem(mActivity, "5 Sömnpiller",
-				"Perfekt för dig som har svårt att sova på kvällarna, prova övningen liggandes i sängen när du gått och lagt dig", R.raw.sample_soundfile,
-				new AudioExerciseFragment()));
+		dummyItems.add(new SoundIndexListItem(mActivity, R.string.sleeping_pill, R.string.lorem_ipsum, R.raw.sleeping_pill, new AudioExerciseFragment()));
 
 		IndexAdapter adapter = new IndexAdapter(mActivity, dummyItems);
 
