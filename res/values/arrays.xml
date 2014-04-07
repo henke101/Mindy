@@ -12,10 +12,11 @@
 
 <string-array 
     name="exercise_names">
-    <item>Studiedagbok</item>
-    <item>3 positiva saker</item>
     <item>Sömnpiller</item>
+    <item>Pomodorotimer</item>
+    <item>Tre positiva saker</item>
     <item>Kroppsscanning</item>
+    <item>Studiedagbok</item>
     
 </string-array>
 
@@ -25,6 +26,12 @@
     <item>En logg för att komma ihåg 3 positiva saker som varje dag har hänt dig.</item>
     <item>En lugnande ljudfil för att förbättra din sömn.</item>
     <item>En ljudfil som hjälper dig att slappna av.</item>
+    <item>Perfekt för dig som har svårt att sova på kvällarna. Prova övningen liggandes sängen när du gått och lagt dig.</item>
+    <item>Timer för att plugga fokuserat</item>
+    <item>Boosta ditt allmäntillstånd genom att lägga några få minuter på denna övning varje kväll. </item>
+    <item>Guidad meditation att använda dagligen för återhämtning. </item>
+    <item>En dagbok över vad du har lärt dig.</item>
     
 </string-array>
+
 </resources>

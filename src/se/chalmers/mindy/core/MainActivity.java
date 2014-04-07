@@ -9,8 +9,8 @@ import se.chalmers.mindy.fragment.DiaryListFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
-import se.chalmers.mindy.util.Tools;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
+import se.chalmers.mindy.util.Tools;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -67,12 +68,14 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		BitmapDrawable glowingLogo = new BitmapDrawable(getResources(), Tools.setLogoGlow(getResources(),
-				R.drawable.ic_test2_launcher));
+
+		Resources res = getResources();
+
+		BitmapDrawable glowingLogo = new BitmapDrawable(res, Tools.setLogoGlow(res, R.drawable.ic_test2_launcher));
 		getActionBar().setLogo(glowingLogo);
 
-		mActionBarBackgroundDrawable = getResources().getDrawable(R.drawable.action_bar_background);
+		mActionBarBackgroundDrawable = res.getDrawable(R.drawable.action_bar_background);
+		mActionBarBackgroundDrawable.setColorFilter(res.getColor(R.color.action_bar_background), PorterDuff.Mode.MULTIPLY);
 		mActionBarBackgroundDrawable.setAlpha(0);
 
 		ActionBar ab = getActionBar();
@@ -86,7 +89,7 @@ public class MainActivity extends Activity {
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
 		// Get the section name array for Navigation Drawer
-		sectionNames = getResources().getStringArray(R.array.section_names);
+		sectionNames = res.getStringArray(R.array.section_names);
 
 		// TODO TEMP
 		adapter = new MindyDatabaseAdapter(this);
@@ -100,6 +103,7 @@ public class MainActivity extends Activity {
 			title.setTypeface(typeface);
 			title.setTextSize(22.0f);
 			title.setPadding(5, 1, 0, 0);
+			title.setTextColor(res.getColor(R.color.action_bar_title));
 		}
 
 		// Set the adapter for the list view

@@ -39,5 +39,10 @@
     <color name="text_shadow_color_light">#FFAAAAAA</color>
     
     <color name="divider_background">#FFDDDDDD</color>
+    <color name="divider_background_dark">#FFBBBBBB</color>
     <color name="text_color">#1C111E</color>
+    
+    
+    <color name="action_bar_background">#859</color>
+    <color name="action_bar_title">#EEE</color>
 </resources>

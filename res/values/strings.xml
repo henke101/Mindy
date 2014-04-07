@@ -25,6 +25,13 @@
     <string name="button_add_new">Lägg till ny</string>
     <string name="button_abort">Avbryt</string>
     <string name="button_ok">Klar</string>
+     
+    <string name="desc_mindfulness">Mindfulness handlar kort om att vara medveten om dina tankar och känslor. Genom att öva på att fokusera på dina andetag t ex,  hamnar du i ett sorts lugn som behövs för återhämtning i alltfler studenters stressiga vardag. Dessutom är andetaget med dig hela tiden och ger en bra indikation på hur du mår för stunden. Genom att träna upp att komma tillbaka till andetaget varje gång en annan tanke möter dig blir din förmåga att fokusera bättre och då kommer du troligtvis prestera bättre i både föreläsningssalen och i pluggbänken. </string>
+    <string name="desc_sleeping_pill">Detta är en övning du kan lyssna på precis innan du ska sova. Det är en bra introduktion till mindfulness eftersom att den har potential till att förbättra sömnen och om du inte somnar så har du ett ypperligt tillfälle att öva mindfulness.</string>
+    <string name="desc_pomodoro">Timer för att plugga fokuserat.</string>
+    <string name="desc_three_pos">Denna övning bygger på att du varje kväll fyller i tre saker som gjort dig glad under dagen. På kort tid kommer du troligtvis känna dig allmänt gladare och bli uppmärksam på de små goda detaljerna i vardagen.</string>
+    <string name="desc_scanning">Denna övning kan du använda dig av dagligen som exempelvis en paus efter en lång tids studerande. Den guidar dig igenom kroppens delar och eftersom den är lite längre får du chans att testa tålamodet. Om du är väldigt stressad kan denna övning påfresta tålamodet. Men efter en tids användande kan den fungera som återhämtning.</string>
+    <string name="desc_diary">En dagbok över vad du har lärt dig.</string>
 
     <string name="index_play">Spela</string>
     <string name="index_pause">Paus</string>

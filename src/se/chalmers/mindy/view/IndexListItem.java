@@ -20,6 +20,11 @@ public abstract class IndexListItem extends AbsListItem {
 		super(context, name, description);
 	}
 
+	public IndexListItem(Context context, int nameResId, int descriptionResId) {
+		this(context, context.getResources().getString(nameResId), context.getResources().getString(descriptionResId));
+
+	}
+
 	/**
 	 * Method used to get the subviews. These might be of any View type, the subclass is responsible 
 	 * for any functionality they have.
