@@ -14,6 +14,8 @@
         android:resizeable="true"
         android:smallScreens="true" />
 
+	<uses-permission android:name="android.permission.VIBRATE"/>
+	
     <application
         android:allowBackup="false"
         android:icon="@drawable/ic_test2_launcher"
@@ -33,6 +35,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        
     </application>
-
+    
 </manifest>
