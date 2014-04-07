@@ -84,7 +84,7 @@ public class DiaryEditFragment extends Fragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		saveState();
+		//saveState();
 		outState.putSerializable(MindyDatabaseAdapter.KEY_ROWID, mRowId);
 	}
 
@@ -92,15 +92,15 @@ public class DiaryEditFragment extends Fragment {
 	public void onPause() {
 		super.onPause();
 		Log.i("inside: ","onPause");
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
+		//FragmentManager fragmentManager = getFragmentManager();
+		//fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 		Log.i("inside: ","onResume");
-		populateFields();
+		//populateFields();
 	}
 	
 	@Override 
