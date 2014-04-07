@@ -53,7 +53,6 @@ public class DiaryEditFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 				saveState();
-				//Toast.makeText(getActivity(), "Sparat", Toast.LENGTH_SHORT).show();
 				FragmentManager fragmentManager = getFragmentManager();
 				fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
 			}
@@ -93,7 +92,8 @@ public class DiaryEditFragment extends Fragment {
 	public void onPause() {
 		super.onPause();
 		Log.i("inside: ","onPause");
-		saveState();
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
 	}
 
 	@Override
