@@ -40,9 +40,9 @@ public class SoundIndexListItem extends IndexListItem {
 		this.fragment = fragment;
 
 		Bundle bundle = new Bundle();
-		bundle.putInt("audioID", audioContentResId);
-		bundle.putInt("titleID", nameResId);
-		bundle.putInt("infoID", descriptionResId);
+		bundle.putInt(Constants.MEDIA_AUDIO_ID, audioContentResId);
+		bundle.putInt(Constants.MEDIA_TITLE_ID, nameResId);
+		bundle.putInt(Constants.MEDIA_INFO_ID, descriptionResId);
 		this.fragment.setArguments(bundle);
 	}
 
@@ -64,7 +64,7 @@ public class SoundIndexListItem extends IndexListItem {
 			public void onClick(View v) {
 
 				Intent intent = new Intent(new Intent(context.getApplicationContext(), MediaPlayerService.class));
-				intent.putExtra("audioID", audioContentResId);
+				intent.putExtra(Constants.MEDIA_AUDIO_ID, audioContentResId);
 				context.bindService(intent, mpConnection, Context.BIND_AUTO_CREATE);
 				context.startService(intent);
 
@@ -130,8 +130,13 @@ public class SoundIndexListItem extends IndexListItem {
 			@Override
 			public void onClick(View v) {
 				if (context instanceof MainActivity) {
+					Bundle extras = fragment.getArguments();
+					extras.putInt(Constants.MEDIA_PROGRESS, mMediaPlayerService.getPlaybackPosition());
 
+					fragment.setArguments(extras);
+					mMediaPlayerService.pausePlayback();
 					((MainActivity) context).setFragment(fragment);
+
 				}
 			}
 		};

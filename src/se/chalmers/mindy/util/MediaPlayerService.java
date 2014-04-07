@@ -1,5 +1,6 @@
 package se.chalmers.mindy.util;
 
+import se.chalmers.mindy.view.Constants;
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -47,7 +48,7 @@ public class MediaPlayerService extends Service {
 	}
 
 	public void initializePlayer() {
-		mediaPlayer = MediaPlayer.create(MediaPlayerService.this, intent.getExtras().getInt("audioID"));
+		mediaPlayer = MediaPlayer.create(MediaPlayerService.this, intent.getExtras().getInt(Constants.MEDIA_AUDIO_ID));
 		mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		mediaPlayer.setWakeMode(this, PowerManager.PARTIAL_WAKE_LOCK);
 
@@ -70,5 +71,13 @@ public class MediaPlayerService extends Service {
 			mediaPlayer.stop();
 			mediaPlayer.prepareAsync();
 		}
+	}
+
+	public void setPlaybackPosition(int position) {
+		mediaPlayer.seekTo(position);
+	}
+
+	public int getPlaybackPosition() {
+		return mediaPlayer.getCurrentPosition();
 	}
 }
