@@ -59,7 +59,7 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
 
 		ImageView imageView = (ImageView) mListHeader.findViewById(R.id.header_background);
-		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.ice, imageView);
+		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.fluff, imageView);
 
 		listView.addHeaderView(mListHeader);
 

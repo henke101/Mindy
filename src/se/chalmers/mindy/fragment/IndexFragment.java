@@ -58,7 +58,7 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 		final View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
 
 		ImageView imageView = (ImageView) headerView.findViewById(R.id.header_background);
-		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.fluff, imageView);
+		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.ice, imageView);
 
 		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
 		titleView.setText(R.string.title_fragment_index);
