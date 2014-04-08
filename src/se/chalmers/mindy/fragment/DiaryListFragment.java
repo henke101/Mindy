@@ -60,6 +60,7 @@ public class DiaryListFragment extends ListFragment{
 		fillData();
 
 		Button createNote = (Button) v.findViewById(R.id.create_note_button);
+		createNote.setTypeface(robotoLight);
 		createNote.setOnClickListener(new OnClickListener(){
 
 			@Override
