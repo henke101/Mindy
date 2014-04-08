@@ -70,7 +70,7 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 		// Dummy items
 		dummyItems = new ArrayList<IndexListItem>();
 		dummyItems.add(new ThreePositiveIndexItem(mActivity, new ExerciseFragment()));
-		dummyItems.add(new SoundIndexListItem(mActivity, R.string.sleeping_pill, R.string.lorem_ipsum, R.raw.sleeping_pill, new AudioExerciseFragment()));
+		dummyItems.add(new SoundIndexListItem(mActivity, R.string.sleeping_pill, R.string.short_desc_sleeping_pill, R.raw.sleeping_pill, new AudioExerciseFragment()));
 
 		IndexAdapter adapter = new IndexAdapter(mActivity, dummyItems);
 
