@@ -25,7 +25,7 @@
         <activity
             android:name="se.chalmers.mindy.core.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay"   
+            android:theme="@style/Theme.TranslucentActionBar.ActionBar.Overlay.Evaluation"   
             android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait">
 
