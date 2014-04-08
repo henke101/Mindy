@@ -17,7 +17,8 @@
             android:gravity="center_horizontal"
             android:text="@string/eval_intro"
             android:textSize="15sp" />
-          <View
+
+        <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_marginTop="15dp"
@@ -42,8 +43,8 @@
             <RadioButton
                 android:id="@+id/answers_1_option_1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
+                android:layout_height="wrap_content"/>
+                
             <RadioButton
                 android:id="@+id/answers_1_option_2"
                 android:layout_width="wrap_content"
@@ -286,8 +287,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" >
 
-           
-
             <TextView
                 android:id="@+id/eval_question_4_label_2"
                 android:layout_width="wrap_content"
@@ -312,7 +311,6 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/eval_question_4_answer_1"
                 android:textSize="12sp" />
-
         </RelativeLayout>
 
         <View
@@ -326,8 +324,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@string/eval_submit"
-            android:layout_margin="15dp" />
+            android:layout_margin="15dp"
+            android:text="@string/eval_submit" />
     </LinearLayout>
 
 </ScrollView>

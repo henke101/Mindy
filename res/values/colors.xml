@@ -45,4 +45,6 @@
     
     <color name="action_bar_background">#859</color>
     <color name="action_bar_title">#EEE</color>
+    
+    <color name="evaluation_form_theme_color">#c26dec</color>
 </resources>
