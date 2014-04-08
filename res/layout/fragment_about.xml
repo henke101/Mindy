@@ -52,7 +52,7 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center"
-	        android:paddingBottom="30dp"
+	        android:paddingBottom="20dp"
 	        android:paddingTop="20dp"
 	        android:paddingRight="20dp"
 	 		android:paddingLeft="20dp" 
@@ -60,6 +60,19 @@
 	        android:textSize="15sp"
 	        android:textColor="@color/text_color" />
 	
+	    <TextView
+	        android:id="@+id/about_link"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:autoLink="web"
+	        android:text="@string/about_link"
+	        android:textSize="12sp"
+	        android:textColor="@color/text_color"
+	 		android:paddingRight="40dp"
+	 		android:paddingLeft="40dp"
+	 		android:paddingBottom="10dp" />
+	    
 	    <TextView
 	        android:id="@+id/about_developers"
 	        android:layout_width="match_parent"
