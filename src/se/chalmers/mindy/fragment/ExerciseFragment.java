@@ -111,7 +111,7 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 					bundle.putInt("infoID", R.string.long_desc_body_focus);
 					fragmentBodyFocus.setArguments(bundle);
 
-					
+					mActivity.setFragment(fragmentBodyFocus);
 				}
 			}
 		});

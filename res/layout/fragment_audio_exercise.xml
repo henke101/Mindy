@@ -33,6 +33,19 @@
             android:background="@drawable/play_button"/>
 
     </RelativeLayout>
+    
+    <TextView
+        android:id="@+id/albin_audio_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/info_audio"
+        android:gravity="center"
+        android:padding="20dp"
+                android:text="@string/albin"
+        android:textColor="@color/text_color"
+        android:autoLink="all" />
+    
+    
     <TextView
         android:id="@+id/info_audio"
         android:layout_width="wrap_content"
@@ -41,8 +54,7 @@
         android:gravity="center"
         android:padding="20dp"
         android:text="@string/long_desc_sleeping_pill"
-        android:textColor="@color/text_color"
-        android:autoLink="all" />
+        android:textColor="@color/text_color" />
         
 
 	<TextView
