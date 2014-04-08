@@ -3,6 +3,7 @@ package se.chalmers.mindy.fragment;
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -38,10 +39,14 @@ public class DiaryEditFragment extends Fragment {
 		mTitleText = (EditText) v.findViewById(R.id.diary_title);
 		mBodyText = (EditText) v.findViewById(R.id.diary_body);
 		
-		
+		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
+				
 		Button confirmButton = (Button) v.findViewById(R.id.diary_confirm);
 		Button cancelButton = (Button) v.findViewById(R.id.new_note_cancel);
 		Button deleteButton = (Button) v.findViewById(R.id.delete_note);
+		cancelButton.setTypeface(robotoLight);
+		confirmButton.setTypeface(robotoLight);
+		deleteButton.setTypeface(robotoLight);
 		
 		Bundle bundle = getArguments();
 		if (bundle != null){

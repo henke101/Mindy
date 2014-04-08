@@ -49,12 +49,14 @@
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/new_note_cancel"
             android:text="@string/diary_delete_note"
-            android:visibility="invisible"/>
+            android:visibility="invisible"
+            android:textColor="@color/text_color"/>
         <Button
             android:id="@+id/new_note_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/diary_confirm"
+            android:textColor="@color/text_color"
             android:text="@string/cancel" />
 
         <Button
@@ -63,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
+            android:textColor="@color/text_color"
             android:text="@string/diary_confirm" />
     </RelativeLayout>
 
