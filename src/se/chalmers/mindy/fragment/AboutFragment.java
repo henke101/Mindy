@@ -43,5 +43,4 @@ public class AboutFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		activity.setActionBarBackgroundTransparency(255);
 	}
-
 }

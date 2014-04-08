@@ -4,9 +4,7 @@ import se.chalmers.mindy.R;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import android.database.Cursor;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.util.Log;
@@ -32,7 +30,9 @@ public class DiaryEditFragment extends Fragment {
 			Bundle savedInstanceState) {
 
 		View v = inflater.inflate(R.layout.diary_edit, container, false);
-
+		
+		container.removeAllViews();
+		
 		mDbHelper = new MindyDatabaseAdapter(getActivity());
 		mDbHelper = mDbHelper.open();
 		
@@ -66,6 +66,7 @@ public class DiaryEditFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 				saveState();
+				//Toast.makeText(getActivity(), "Sparat", Toast.LENGTH_SHORT).show();;
 				FragmentManager fragmentManager = getFragmentManager();
 				fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
 			}
@@ -89,31 +90,25 @@ public class DiaryEditFragment extends Fragment {
 					note.getColumnIndexOrThrow(MindyDatabaseAdapter.KEY_TITLE)));
 			mBodyText.setText(note.getString(
 					note.getColumnIndexOrThrow(MindyDatabaseAdapter.KEY_BODY)));
-			Log.i("inside: ","populateFields !null");
 			//note.close();
 		}
-		Log.i("inside: ","populateFields");
 	}
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		//saveState();
+		saveState();
 		outState.putSerializable(MindyDatabaseAdapter.KEY_ROWID, mRowId);
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		Log.i("inside: ","onPause");
-		//FragmentManager fragmentManager = getFragmentManager();
-		//fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.i("inside: ","onResume");
-		//populateFields();
+		populateFields();
 	}
 	
 	@Override 
@@ -125,7 +120,6 @@ public class DiaryEditFragment extends Fragment {
 	private void saveState() {
 		String title = mTitleText.getText().toString();
 		String body = mBodyText.getText().toString();
-		Log.i("inside: ","saveState");
 		
 		if (mRowId == null) {
 			long id = mDbHelper.createNote(title, body);

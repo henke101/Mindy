@@ -36,8 +36,8 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 	private View mListHeader;
 
 
-//	ExerciseItem[] exItemList = {new ExerciseItem(R.string.sleeping_pill, R.string.short_desc_sleeping, new Color()), new ExerciseItem(R.string.pomodoro_name, R.string.short_desc_pomodoro, new Color()), new ExerciseItem(R.string.three_pos_name, R.string.short_desc_three_pos,new Color())};	
-	
+	//	ExerciseItem[] exItemList = {new ExerciseItem(R.string.sleeping_pill, R.string.short_desc_sleeping, new Color()), new ExerciseItem(R.string.pomodoro_name, R.string.short_desc_pomodoro, new Color()), new ExerciseItem(R.string.three_pos_name, R.string.short_desc_three_pos,new Color())};	
+
 
 	@Override
 	public void onAttach(final Activity activity) {
@@ -73,7 +73,10 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 		ImageView imageView = (ImageView) mListHeader.findViewById(R.id.header_background);
 		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.fluff, imageView);
 
-		listView.addHeaderView(mListHeader);
+		if (listView.getAdapter()==null) {
+			//adds the header here so the adapter doesn't get called more than once
+			listView.addHeaderView(mListHeader);
+		}
 
 		exerciseName = getResources().getStringArray(R.array.exercise_names);
 		exerciseDescription = getResources().getStringArray(R.array.exercise_descriptions);
@@ -115,7 +118,6 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 		setListAdapter(adapter);
 
 	}
-
 	@Override
 	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 		if (visibleItemCount > firstVisibleItem) {

@@ -230,35 +230,35 @@ public class MainActivity extends Activity {
 			fragmentExercise = new ExerciseFragment();
 
 			// Insert the fragment by replacing any existing fragment
-			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentExercise).commit();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentExercise).addToBackStack(null).commit();
 		}
 
 		/*
 		 * Need to implement a SettingsFragment
 		 */
+//		if (position == 2) {
+//			// Create a new fragment and specify the planet to show based on
+//			// position
+//			fragmentSettings = new PrefsFragment();
+//
+//			// Insert the fragment by replacing any existing fragment
+//			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
+//		}
 		if (position == 2) {
-			// Create a new fragment and specify the planet to show based on
-			// position
-			fragmentSettings = new PrefsFragment();
-
-			// Insert the fragment by replacing any existing fragment
-			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
-		}
-		if (position == 3) {
 			// Create a new fragment and specify the planet to show based on
 			// position
 			fragmentAbout = new AboutFragment();
 
 			// Insert the fragment by replacing any existing fragment
-			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).commit();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).addToBackStack(null).commit();
 		}
-		if (position == 4) {
+		if (position == 3) {
 			// Diary
 			// Create a new fragment and specify the planet to show based on
 			// position
 			ListFragment fragmentDiary = new DiaryListFragment();
 			// Insert the fragment by replacing any existing fragment
-			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).commit();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).addToBackStack(null).commit();
 		}
 		// Highlight the selected item, update the title, and close the drawer
 		mDrawerList.setItemChecked(position, true);

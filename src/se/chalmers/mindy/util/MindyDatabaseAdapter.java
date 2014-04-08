@@ -204,7 +204,6 @@ public class MindyDatabaseAdapter {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_TITLE, title);
 		initialValues.put(KEY_BODY, body);
-		Log.i("inside: ","createNote");
 		return mDb.insert(TABLE_DIARY, null, initialValues);
 	}
 
@@ -214,7 +213,6 @@ public class MindyDatabaseAdapter {
 	}
 
 	public Cursor fetchAllNotes() {
-		Log.i("inside: ","fetchAllNotes");
 		Cursor mCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID, KEY_TITLE,
 				KEY_BODY }, null, null, null, null, null);
 		if (mCursor != null) {

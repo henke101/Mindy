@@ -4,14 +4,10 @@ import se.chalmers.mindy.R;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import android.R.color;
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.ListFragment;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,11 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -74,6 +66,7 @@ public class DiaryListFragment extends ListFragment{
 	public void onDestroy(){
 		super.onDestroy();
 		mDbHelper.close();
+		setListAdapter(null);
 	}
 
 	@Override
@@ -115,7 +108,7 @@ public class DiaryListFragment extends ListFragment{
 
 	private void createNote() {
 		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryEditFragment()).commit();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryEditFragment()).addToBackStack(null).commit();
 	}
 
 	@Override
@@ -126,7 +119,7 @@ public class DiaryListFragment extends ListFragment{
 		Bundle bundle = new Bundle();
 		bundle.putLong("rowID", id );
 		fragment.setArguments(bundle);
-		fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).commit();
+		fragmentManager.beginTransaction().replace(R.id.content_frame,fragment).addToBackStack(null).commit();
 		Log.i("Hello!", "Clicked! YAY!");
 		}
 

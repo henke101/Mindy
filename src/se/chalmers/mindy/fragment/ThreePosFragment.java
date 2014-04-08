@@ -71,13 +71,14 @@ public class ThreePosFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		ListView listView = getListView();
 
+		ListView listView = getListView();
 		LayoutInflater inflater = mActivity.getLayoutInflater();
-		
+
 		// = mActivity.getLayoutInflater().inflate(R.layout., null);
 
 		View headerView = inflater.inflate(R.layout.list_header, null);
+
 		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
 		titleView.setText(getResources().getStringArray(R.array.exercise_names)[2]);
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
@@ -100,14 +101,14 @@ public class ThreePosFragment extends ListFragment {
 		inputOne = (EditText) addItemHeader.findViewById(R.id.positive_one_input);
 		inputTwo = (EditText) addItemHeader.findViewById(R.id.positive_two_input);
 		inputThree  = (EditText) addItemHeader.findViewById(R.id.positive_three_input);
-		
+
 
 		/**
 		 * Setting the fonts for the inputs
 		 */
 		Typeface robotoConLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
 		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_light.ttf");
-		
+
 		positiveTextLabel.setTypeface(robotoLight);
 		inputOne.setTypeface(robotoConLight);
 		inputTwo.setTypeface(robotoConLight);
@@ -116,12 +117,12 @@ public class ThreePosFragment extends ListFragment {
 		okButton.setTypeface(robotoConLight);
 
 		threePosItemList = mActivity.getMindyDb().fetchAllPositives();
-		
+
+		listView.addHeaderView(addItemHeader);
+
 		Collections.reverse(threePosItemList);
 		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
 		setListAdapter(adapter);
-
-		listView.addHeaderView(addItemHeader);
 
 		addButton.setOnClickListener(new View.OnClickListener() {
 
@@ -130,7 +131,7 @@ public class ThreePosFragment extends ListFragment {
 				ExpandAnimation expandAnim = new ExpandAnimation(inputContainer, 500);
 				inputContainer.startAnimation(expandAnim);
 				InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
-					      Context.INPUT_METHOD_SERVICE);
+						Context.INPUT_METHOD_SERVICE);
 
 				if (addButton.getText().equals(getString(R.string.button_abort))) {
 					addButton.setText(R.string.button_add_new);
@@ -143,7 +144,7 @@ public class ThreePosFragment extends ListFragment {
 				}
 			}
 		});
-		
+
 		dateButtons.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			@Override
@@ -155,44 +156,44 @@ public class ThreePosFragment extends ListFragment {
 				else {
 					cDate = Calendar.getInstance();
 				}
-				
+
 			}
-			
+
 		});
 
 		OnEditorActionListener createListener = new OnEditorActionListener(){
-			
+
 			@Override
 			public boolean onEditorAction(final TextView textView, final int id, final KeyEvent keyEvent) {
 				if (id == R.id.create || id == EditorInfo.IME_ACTION_DONE) {
 
 					createNewCard();
-					
+
 					ExpandAnimation expandAnim = new ExpandAnimation(inputContainer, 500);
 					inputContainer.startAnimation(expandAnim);
-							
+
 					return true;
 				}
 				return false;
-			
+
 			}
 		};
 
 		inputThree.setOnEditorActionListener(createListener);
 
 		okButton.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 
 				createNewCard();
-				
+
 				ExpandAnimation expandAnim = new ExpandAnimation(inputContainer, 500);
 				inputContainer.startAnimation(expandAnim);
-	
+
 			}
 		});
-		
+
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -201,38 +202,38 @@ public class ThreePosFragment extends ListFragment {
 				Log.d("List item clicked", "Item id: " + id);
 			}
 		});
-		
+
 	}
-	 private void createNewCard() {
-			if (cDate == null) {
-				cDate = Calendar.getInstance();
-			}
-			stringInputOne = inputOne.getText().toString();
-			stringInputTwo =inputTwo.getText().toString();
-			stringInputThree = inputThree.getText().toString();
-			
-			ThreePosItem newPosItem = new ThreePosItem(cDate, stringInputOne, stringInputTwo, stringInputThree);
-			mActivity.getMindyDb().insertNewThreePositive(newPosItem);
-			threePosItemList = mActivity.getMindyDb().fetchAllPositives();
-			
-			InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
-				      Context.INPUT_METHOD_SERVICE);
-			imm.hideSoftInputFromWindow(inputThree.getWindowToken(), 0);
-			
-			inputOne.setText(null);
-			inputTwo.setText(null);
-			inputThree.setText(null);
-			
-			inputOne.setHint(R.string.add_positive_one);
-			inputTwo.setHint(R.string.add_positive_two);
-			inputThree.setHint(R.string.add_positive_three);
-			
-			addButton.setText(R.string.button_add_new);
-			
-			dateButtons.check(R.id.today_button);
-			
-			Collections.reverse(threePosItemList);
-			ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
-			setListAdapter(adapter);
-	 }
+	private void createNewCard() {
+		if (cDate == null) {
+			cDate = Calendar.getInstance();
+		}
+		stringInputOne = inputOne.getText().toString();
+		stringInputTwo =inputTwo.getText().toString();
+		stringInputThree = inputThree.getText().toString();
+
+		ThreePosItem newPosItem = new ThreePosItem(cDate, stringInputOne, stringInputTwo, stringInputThree);
+		mActivity.getMindyDb().insertNewThreePositive(newPosItem);
+		threePosItemList = mActivity.getMindyDb().fetchAllPositives();
+
+		InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
+				Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(inputThree.getWindowToken(), 0);
+
+		inputOne.setText(null);
+		inputTwo.setText(null);
+		inputThree.setText(null);
+
+		inputOne.setHint(R.string.add_positive_one);
+		inputTwo.setHint(R.string.add_positive_two);
+		inputThree.setHint(R.string.add_positive_three);
+
+		addButton.setText(R.string.button_add_new);
+
+		dateButtons.check(R.id.today_button);
+
+		Collections.reverse(threePosItemList);
+		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
+		setListAdapter(adapter);
+	}
 }
