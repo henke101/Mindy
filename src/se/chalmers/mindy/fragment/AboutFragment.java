@@ -34,7 +34,7 @@ public class AboutFragment extends Fragment {
 
 		tViewAbout.setTypeface(robotoThin);
 		tViewAboutVersion.setTypeface(robotoCondensedLight);
-		tViewAboutText.setTypeface(robotoCondensedLight);
+		tViewAboutText.setTypeface(robotoLight);
 		tViewAboutDevelopers.setTypeface(robotoCondensedLight);
 		return view;
 	}
