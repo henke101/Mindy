@@ -2,9 +2,6 @@ package se.chalmers.mindy.core;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
-
 import se.chalmers.mindy.R;
 import android.app.Activity;
 import android.content.Context;

@@ -34,6 +34,7 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 	private ProgressBar audioProgressBar;
 	private TextView info;
 	private TextView title;
+	private TextView albin;
 	private Button playPauseButton;
 	private MediaPlayerService mpService;
 	private int audioID;
@@ -71,6 +72,7 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 
 		info = (TextView) view.findViewById(R.id.info_audio);
 		title = (TextView) view.findViewById(R.id.title_audio);
+		albin = (TextView) view.findViewById(R.id.albin_audio_);
 
 		// info.setTypeface(robotoConLight);
 		// title.setTypeface(robotoConLight);
@@ -79,6 +81,8 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 		info.setText(infoID);
 		title.setTypeface(robotoLight);
 		title.setText(titleID);
+		albin.setTypeface(robotoLight);
+		albin.setText(R.string.albin);
 
 		audioProgressBar = (ProgressBar) view.findViewById(R.id.audio_progress_bar);
 		audioProgressBar.setClickable(true);
