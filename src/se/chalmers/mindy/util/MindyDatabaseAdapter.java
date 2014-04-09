@@ -18,7 +18,7 @@ public class MindyDatabaseAdapter {
 
 	// Database properties
 	private static final String DATABASE_NAME = "mindy_db";
-	private static final int DATABASE_VERSION = 11;
+	private static final int DATABASE_VERSION = 12;
 
 	private static final String TABLE_EVALUATION_QUESTIONS = "TestQuestions";
 	private static final String TABLE_EVALUATION_RESULTS = "TestResults";
@@ -212,8 +212,7 @@ public class MindyDatabaseAdapter {
 	public ArrayList<DiaryItem> fetchAllNotes() {
 		ArrayList<DiaryItem> items = new ArrayList<DiaryItem>();
 
-		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, null, null, null, null,
-				KEY_DIARY_DATE + " DESC");
+		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, null, null, null, null, null);
 
 		if (entryCursor.moveToFirst()) {
 			Calendar cal = Calendar.getInstance();
