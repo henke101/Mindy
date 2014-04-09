@@ -33,7 +33,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -52,7 +51,7 @@ public class ThreePosFragment extends ListFragment implements OnScrollListener {
 	EditText inputTwo;
 	EditText inputThree;
 	Button addButton;
-	RadioGroup dateButtons;
+	RadioGroup dateRadioGroup;
 	LinearLayout inputContainer;
 	private View mListHeader;
 
@@ -100,8 +99,10 @@ public class ThreePosFragment extends ListFragment implements OnScrollListener {
 		TextView positiveTextLabel = (TextView) addItemHeader.findViewById(R.id.three_positive_text);
 
 		inputContainer = (LinearLayout) addItemHeader.findViewById(R.id.input_container);
-		dateButtons = (RadioGroup) addItemHeader.findViewById(R.id.date_buttons);
+
+		dateRadioGroup = (RadioGroup) addItemHeader.findViewById(R.id.date_buttons);
 		addButton = (Button) addItemHeader.findViewById(R.id.add_threepos_button);
+
 		inputOne = (EditText) addItemHeader.findViewById(R.id.positive_one_input);
 		inputTwo = (EditText) addItemHeader.findViewById(R.id.positive_two_input);
 		inputThree = (EditText) addItemHeader.findViewById(R.id.positive_three_input);
@@ -145,21 +146,7 @@ public class ThreePosFragment extends ListFragment implements OnScrollListener {
 				}
 			}
 		});
-
-		dateButtons.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if (checkedId == R.id.yesterday_button) {
-					cDate = Calendar.getInstance();
-					cDate.add(Calendar.DATE, -1);
-				} else {
-					cDate = Calendar.getInstance();
-				}
-
-			}
-
-		});
+		dateRadioGroup.check(R.id.today_button);
 
 		OnEditorActionListener createListener = new OnEditorActionListener() {
 
@@ -207,6 +194,9 @@ public class ThreePosFragment extends ListFragment implements OnScrollListener {
 
 	private void createNewCard() {
 		cDate = Calendar.getInstance();
+		if (dateRadioGroup.getCheckedRadioButtonId() == R.id.yesterday_button) {
+			cDate.add(Calendar.DATE, -1);
+		}
 
 		stringInputOne = inputOne.getText().toString();
 		stringInputTwo = inputTwo.getText().toString();
@@ -229,7 +219,7 @@ public class ThreePosFragment extends ListFragment implements OnScrollListener {
 
 		addButton.setText(R.string.button_add_new);
 
-		dateButtons.check(R.id.today_button);
+		dateRadioGroup.check(R.id.today_button);
 
 		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
 		setListAdapter(adapter);
