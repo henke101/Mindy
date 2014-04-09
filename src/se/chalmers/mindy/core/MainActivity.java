@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
-import se.chalmers.mindy.fragment.EvaluationFragment;
 import se.chalmers.mindy.fragment.DiaryListFragment;
+import se.chalmers.mindy.fragment.EvaluationFragment;
 import se.chalmers.mindy.fragment.ExerciseFragment;
 import se.chalmers.mindy.fragment.IndexFragment;
 import se.chalmers.mindy.fragment.PrefsFragment;
@@ -13,7 +13,6 @@ import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import se.chalmers.mindy.util.Tools;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -62,7 +61,6 @@ public class MainActivity extends Activity {
 	private MediaPlayer mMediaPlayer;
 
 	private MindyDatabaseAdapter adapter;
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -156,7 +154,6 @@ public class MainActivity extends Activity {
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-
 		SharedPreferences sharedPref = getPreferences(MODE_PRIVATE);
 
 		if (!sharedPref.contains("started")) {
@@ -198,7 +195,6 @@ public class MainActivity extends Activity {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-
 		adapter.close();
 
 	}
@@ -211,6 +207,8 @@ public class MainActivity extends Activity {
 	 * Will be done dynamically, add the rest of the fragments
 	 * */
 	private void selectItem(int position) {
+		// Pop the whole fragment backstack
+		fragmentManager.popBackStack(null, 0);
 
 		if (position == 0) {
 			// Create a new fragment and specify the planet to show based on
@@ -230,35 +228,31 @@ public class MainActivity extends Activity {
 			fragmentExercise = new ExerciseFragment();
 
 			// Insert the fragment by replacing any existing fragment
-			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentExercise).addToBackStack(null).commit();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentExercise).commit();
 		}
 
 		/*
 		 * Need to implement a SettingsFragment
 		 */
-//		if (position == 2) {
-//			// Create a new fragment and specify the planet to show based on
-//			// position
-//			fragmentSettings = new PrefsFragment();
-//
-//			// Insert the fragment by replacing any existing fragment
-//			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
-//		}
+		// if (position == 2) {
+		// // Create a new fragment and specify the planet to show based on
+		// // position
+		// fragmentSettings = new PrefsFragment();
+		//
+		// // Insert the fragment by replacing any existing fragment
+		// fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
+		// }
 		if (position == 2) {
-			// Create a new fragment and specify the planet to show based on
-			// position
 			fragmentAbout = new AboutFragment();
 
 			// Insert the fragment by replacing any existing fragment
-			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).addToBackStack(null).commit();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).commit();
 		}
 		if (position == 3) {
 			// Diary
-			// Create a new fragment and specify the planet to show based on
-			// position
 			ListFragment fragmentDiary = new DiaryListFragment();
 			// Insert the fragment by replacing any existing fragment
-			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).addToBackStack(null).commit();
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).commit();
 		}
 		// Highlight the selected item, update the title, and close the drawer
 		mDrawerList.setItemChecked(position, true);

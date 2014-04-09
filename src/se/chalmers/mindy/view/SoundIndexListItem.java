@@ -131,10 +131,13 @@ public class SoundIndexListItem extends IndexListItem {
 			public void onClick(View v) {
 				if (context instanceof MainActivity) {
 					Bundle extras = fragment.getArguments();
-					extras.putInt(Constants.MEDIA_PROGRESS, mMediaPlayerService.getPlaybackPosition());
+
+					if (mMediaPlayerService != null) {
+						extras.putInt(Constants.MEDIA_PROGRESS, mMediaPlayerService.getPlaybackPosition());
+						mMediaPlayerService.pausePlayback();
+					}
 
 					fragment.setArguments(extras);
-					mMediaPlayerService.pausePlayback();
 					((MainActivity) context).setFragment(fragment);
 
 				}

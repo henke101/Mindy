@@ -81,7 +81,7 @@ public class ThreePosFragment extends ListFragment {
 		View headerView = inflater.inflate(R.layout.list_header, null);
 
 		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
-		titleView.setText(getResources().getStringArray(R.array.exercise_names)[2]);
+		titleView.setText(R.string.three_pos);
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
 		titleView.setTextSize(30);
 
@@ -110,9 +110,9 @@ public class ThreePosFragment extends ListFragment {
 		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_light.ttf");
 
 		positiveTextLabel.setTypeface(robotoLight);
-		inputOne.setTypeface(robotoConLight);
-		inputTwo.setTypeface(robotoConLight);
-		inputThree.setTypeface(robotoConLight);
+		inputOne.setTypeface(robotoLight);
+		inputTwo.setTypeface(robotoLight);
+		inputThree.setTypeface(robotoLight);
 		addButton.setTypeface(robotoConLight);
 		okButton.setTypeface(robotoConLight);
 

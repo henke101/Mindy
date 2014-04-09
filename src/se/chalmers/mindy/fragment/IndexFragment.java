@@ -13,7 +13,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,6 +42,15 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 		sharedPrefs = PreferenceManager.getDefaultSharedPreferences(activity);
 		editor = sharedPrefs.edit();
 
+		mListHeader = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
+
+		ImageView imageView = (ImageView) mListHeader.findViewById(R.id.header_background);
+		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.ice, imageView);
+
+		TextView titleView = (TextView) mListHeader.findViewById(R.id.header_title);
+		titleView.setText(R.string.title_fragment_index);
+		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
+
 	}
 
 	@Override
@@ -56,23 +64,14 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 		mListView.setBackgroundColor(mActivity.getResources().getColor(R.color.bg_color_grey));
 		mListView.setHeaderDividersEnabled(true);
 
-		final View headerView = mActivity.getLayoutInflater().inflate(R.layout.list_header, null);
-
-		ImageView imageView = (ImageView) headerView.findViewById(R.id.header_background);
-		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.ice, imageView);
-
-		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
-		titleView.setText(R.string.title_fragment_index);
-		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
-
-		mListHeader = headerView;
-		mListView.addHeaderView(headerView);
+		mListView.addHeaderView(mListHeader);
 
 		// Dummy items
 		dummyItems = new ArrayList<IndexListItem>();
 
-		dummyItems.add(new ThreePositiveIndexItem(mActivity, new ExerciseFragment()));
-		dummyItems.add(new SoundIndexListItem(mActivity, R.string.sleeping_pill, R.string.short_desc_sleeping_pill, R.raw.sleeping_pill, new AudioExerciseFragment()));
+		dummyItems.add(new ThreePositiveIndexItem(mActivity, new ThreePosFragment()));
+		dummyItems.add(new SoundIndexListItem(mActivity, R.string.sleeping_pill, R.string.short_desc_sleeping_pill, R.raw.sleeping_pill,
+				new AudioExerciseFragment()));
 
 		IndexAdapter adapter = new IndexAdapter(mActivity, dummyItems);
 

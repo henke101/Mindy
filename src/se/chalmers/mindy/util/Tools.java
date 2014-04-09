@@ -5,15 +5,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
+import android.graphics.BlurMaskFilter.Blur;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.BlurMaskFilter.Blur;
 import android.os.AsyncTask;
 import android.support.v8.renderscript.Allocation;
 import android.support.v8.renderscript.Element;
@@ -168,34 +169,32 @@ public class Tools {
 
 		return inSampleSize;
 	}
-	
-	public static Bitmap setLogoGlow(Resources res,int resourceID){
-	    int margin = 12;
-	    int halfMargin = margin / 2;
 
-	    int glowRadius = 12;
+	public static Bitmap setLogoGlow(Resources res, int resourceID) {
+		int margin = 12;
+		int halfMargin = margin / 2;
 
-	    // Source image
-	    Bitmap src = BitmapFactory.decodeResource(res,
-	            resourceID);
+		int glowRadius = 12;
 
-	    Bitmap alpha = src.extractAlpha();
+		// Source image
+		Bitmap src = BitmapFactory.decodeResource(res, resourceID);
 
-	    // Output bitmap (source + glow)
-	    Bitmap bmp = Bitmap.createBitmap(src.getWidth() + margin,
-	            src.getHeight() + margin, Bitmap.Config.ARGB_8888);
+		Bitmap alpha = src.extractAlpha();
 
-	    Canvas canvas = new Canvas(bmp);
-	    Paint paint = new Paint();
-	    paint.setColor(Color.WHITE);
+		// Output bitmap (source + glow)
+		Bitmap bmp = Bitmap.createBitmap(src.getWidth() + margin, src.getHeight() + margin, Bitmap.Config.ARGB_8888);
 
-	    // Paint glow
-	    paint.setMaskFilter(new BlurMaskFilter(glowRadius, Blur.OUTER));
-	    canvas.drawBitmap(alpha, halfMargin, halfMargin, paint);
+		Canvas canvas = new Canvas(bmp);
+		Paint paint = new Paint();
+		paint.setColor(Color.WHITE);
 
-	    // Paint source image
-	    canvas.drawBitmap(src, halfMargin, halfMargin, null);
-	    
-	    return bmp;
+		// Paint glow
+		paint.setMaskFilter(new BlurMaskFilter(glowRadius, Blur.OUTER));
+		canvas.drawBitmap(alpha, halfMargin, halfMargin, paint);
+
+		// Paint source image
+		canvas.drawBitmap(src, halfMargin, halfMargin, null);
+
+		return bmp;
 	}
 }

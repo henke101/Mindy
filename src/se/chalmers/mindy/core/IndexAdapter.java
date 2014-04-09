@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -85,7 +84,8 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 		lastPosition = position;
 
 		// Set touch listener to detect swipes
-		row.setOnTouchListener(getSwipeListenerInstance(context, (ListView) parent));
+		// TODO temporarily disabled because it is of no use
+		// row.setOnTouchListener(getSwipeListenerInstance(context, (ListView) parent));
 
 		return row;
 	}
