@@ -2,7 +2,6 @@ package se.chalmers.mindy.fragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
@@ -24,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -36,7 +37,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-public class ThreePosFragment extends ListFragment {
+public class ThreePosFragment extends ListFragment implements OnScrollListener {
 
 	MainActivity mActivity;
 	SharedPreferences sharedPrefs;
@@ -53,6 +54,7 @@ public class ThreePosFragment extends ListFragment {
 	Button addButton;
 	RadioGroup dateButtons;
 	LinearLayout inputContainer;
+	private View mListHeader;
 
 	public ThreePosFragment() {
 
@@ -75,20 +77,21 @@ public class ThreePosFragment extends ListFragment {
 		LayoutInflater inflater = mActivity.getLayoutInflater();
 		listView.setBackgroundColor(getResources().getColor(R.color.bg_color_grey));
 		listView.setDividerHeight(0);
+		listView.setOnScrollListener(this);
 
 		// = mActivity.getLayoutInflater().inflate(R.layout., null);
 
-		View headerView = inflater.inflate(R.layout.list_header, null);
+		mListHeader = inflater.inflate(R.layout.list_header, null);
 
-		TextView titleView = (TextView) headerView.findViewById(R.id.header_title);
+		TextView titleView = (TextView) mListHeader.findViewById(R.id.header_title);
 		titleView.setText(R.string.three_pos);
 		titleView.setTypeface(Typeface.createFromAsset(mActivity.getAssets(), "fonts/roboto_thin.ttf"));
 		titleView.setTextSize(30);
 
-		ImageView imageView = (ImageView) headerView.findViewById(R.id.header_background);
+		ImageView imageView = (ImageView) mListHeader.findViewById(R.id.header_background);
 		Tools.setTwoStepBitmapBackground(mActivity, R.drawable.fluff, imageView);
 
-		listView.addHeaderView(headerView);
+		listView.addHeaderView(mListHeader);
 
 		// Initialize and add text input header.
 		View addItemHeader = inflater.inflate(R.layout.three_pos_input_header, null);
@@ -120,7 +123,6 @@ public class ThreePosFragment extends ListFragment {
 
 		listView.addHeaderView(addItemHeader);
 
-		Collections.reverse(threePosItemList);
 		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
 		setListAdapter(adapter);
 
@@ -204,9 +206,8 @@ public class ThreePosFragment extends ListFragment {
 	}
 
 	private void createNewCard() {
-		if (cDate == null) {
-			cDate = Calendar.getInstance();
-		}
+		cDate = Calendar.getInstance();
+
 		stringInputOne = inputOne.getText().toString();
 		stringInputTwo = inputTwo.getText().toString();
 		stringInputThree = inputThree.getText().toString();
@@ -230,8 +231,19 @@ public class ThreePosFragment extends ListFragment {
 
 		dateButtons.check(R.id.today_button);
 
-		Collections.reverse(threePosItemList);
 		ThreePosAdapter adapter = new ThreePosAdapter(mActivity.getLayoutInflater().getContext(), R.layout.three_positive_item, threePosItemList);
 		setListAdapter(adapter);
+	}
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+		if (visibleItemCount > firstVisibleItem) {
+			mActivity.setActionBarTransparencyFromListViewPosition(view, mListHeader.getHeight());
+		}
+	}
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// Do nothing
 	}
 }
