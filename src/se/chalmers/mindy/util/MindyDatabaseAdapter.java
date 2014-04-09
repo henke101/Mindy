@@ -209,6 +209,21 @@ public class MindyDatabaseAdapter {
 		return mDb.delete(TABLE_DIARY, KEY_ROWID + "=" + rowId, null) > 0;
 	}
 
+	public ArrayList<Integer> fetchAllNoteIds() {
+		ArrayList<Integer> items = new ArrayList<Integer>();
+
+		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID }, null, null, null, null, null);
+
+		if (entryCursor.moveToFirst()) {
+			while (!entryCursor.isAfterLast()) {
+				items.add(entryCursor.getInt(0));
+				entryCursor.moveToNext();
+			}
+		}
+
+		return items;
+	}
+
 	public ArrayList<DiaryItem> fetchAllNotes() {
 		ArrayList<DiaryItem> items = new ArrayList<DiaryItem>();
 

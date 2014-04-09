@@ -1,5 +1,7 @@
 package se.chalmers.mindy.fragment;
 
+import java.util.ArrayList;
+
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.DiaryAdapter;
 import se.chalmers.mindy.core.MainActivity;
@@ -29,6 +31,7 @@ public class DiaryListFragment extends ListFragment implements OnScrollListener 
 	private MainActivity mActivity;
 	private MindyDatabaseAdapter mDbHelper;
 	private View mListHeader;
+	private ArrayList<Integer> itemIds;
 
 	@Override
 	public void onAttach(final Activity activity) {
@@ -87,7 +90,7 @@ public class DiaryListFragment extends ListFragment implements OnScrollListener 
 	}
 
 	private void fillData() {
-
+		itemIds = mDbHelper.fetchAllNoteIds();
 		setListAdapter(new DiaryAdapter(mActivity, mDbHelper.fetchAllNotes()));
 	}
 
@@ -102,8 +105,7 @@ public class DiaryListFragment extends ListFragment implements OnScrollListener 
 
 		Bundle bundle = new Bundle();
 
-		// id + 1 because the list header uses index 0
-		bundle.putLong("rowID", id + 1);
+		bundle.putLong("rowID", itemIds.get((int) id));
 		fragment.setArguments(bundle);
 		mActivity.pushFragment(fragment);
 	}

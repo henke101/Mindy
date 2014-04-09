@@ -69,7 +69,7 @@ public class DiaryEditFragment extends Fragment {
 		Bundle bundle = getArguments();
 		if (bundle != null) {
 			mRowId = bundle.getLong("rowID");
-			// deleteButton.setVisibility(View.VISIBLE);
+			deleteButton.setVisibility(View.VISIBLE);
 		}
 
 		deleteButton.setOnClickListener(new View.OnClickListener() {
