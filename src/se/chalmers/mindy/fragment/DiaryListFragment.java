@@ -1,6 +1,7 @@
 package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import android.R.color;
 import android.app.Activity;
@@ -28,17 +29,25 @@ public class DiaryListFragment extends ListFragment{
 
 	private static final int INSERT_ID = Menu.FIRST;
 	//private static final int DELETE_ID = Menu.FIRST + 1;
-
+	
+	private MainActivity mActivity;
 	private MindyDatabaseAdapter mDbHelper;
 	private SimpleCursorAdapter mListAdapter;
 	
+	@Override
+	public void onAttach(final Activity activity) {
+		super.onAttach(activity);
+
+		mActivity = (MainActivity) activity;
+
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.diary_list, container, false);
+		View v = mActivity.getLayoutInflater().inflate(R.layout.diary_list, container, false);
 		setHasOptionsMenu(true);
 		
-		View rowView = inflater.inflate(R.layout.diary_row, null);
+		View rowView = mActivity.getLayoutInflater().inflate(R.layout.diary_row, null);
 		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
 		TextView noteRow = (TextView) rowView.findViewById(R.id.row);
 		
