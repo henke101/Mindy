@@ -17,7 +17,7 @@ public class MindyDatabaseAdapter {
 
 	// Database properties
 	private static final String DATABASE_NAME = "mindy_db";
-	private static final int DATABASE_VERSION = 7;
+	private static final int DATABASE_VERSION = 8;
 
 	private static final String TABLE_EVALUATION_QUESTIONS = "TestQuestions";
 	private static final String TABLE_EVALUATION_RESULTS = "TestResults";

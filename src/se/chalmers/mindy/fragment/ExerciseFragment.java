@@ -82,7 +82,7 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 		exerciseDescription = getResources().getStringArray(R.array.exercise_descriptions);
 		exItemList = new ExerciseItem[] { new ExerciseItem(exerciseName[0], exerciseDescription[0], new Color()),
 				new ExerciseItem(exerciseName[1], exerciseDescription[1], new Color()), new ExerciseItem(exerciseName[2], exerciseDescription[2], new Color()),
-				new ExerciseItem(exerciseName[3], exerciseDescription[3], new Color()) };
+				new ExerciseItem(exerciseName[3], exerciseDescription[3], new Color()),  new ExerciseItem(exerciseName[4], exerciseDescription[4], new Color())};
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -90,6 +90,15 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				if (position == 1) {
+					mActivity.setFragment(new DiaryListFragment());
+
+				} else if (position == 2) {
+					mActivity.setFragment(new ThreePosFragment());
+
+				} else if (position == 3) {
+					mActivity.setFragment(new PomodoroFragment());
+
+				} else if (position == 4) {
 					Fragment fragmentSleepingPill = new AudioExerciseFragment();
 					Bundle bundle = new Bundle();
 					bundle.putInt("audioID", R.raw.sleeping_pill);
@@ -100,20 +109,13 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 					// Insert the fragment by replacing any existing fragment
 					mActivity.setFragment(fragmentSleepingPill);
 
-				} else if (position == 2) {
-					mActivity.setFragment(new PomodoroFragment());
-
-				} else if (position == 3) {
-					mActivity.setFragment(new ThreePosFragment());
-
-				} else if (position == 4) {
+				} else if(position == 5){
 					Fragment fragmentBodyFocus = new AudioExerciseFragment();
 					Bundle bundle = new Bundle();
 					bundle.putInt("audioID", R.raw.body_focus);
 					bundle.putInt("titleID", R.string.body_focus);
 					bundle.putInt("infoID", R.string.long_desc_body_focus);
 					fragmentBodyFocus.setArguments(bundle);
-
 					mActivity.setFragment(fragmentBodyFocus);
 				}
 			}
