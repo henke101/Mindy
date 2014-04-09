@@ -3,7 +3,6 @@ package se.chalmers.mindy.fragment;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Locale;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
@@ -74,6 +73,8 @@ public class ThreePosFragment extends ListFragment {
 
 		ListView listView = getListView();
 		LayoutInflater inflater = mActivity.getLayoutInflater();
+		listView.setBackgroundColor(getResources().getColor(R.color.bg_color_grey));
+		listView.setDividerHeight(0);
 
 		// = mActivity.getLayoutInflater().inflate(R.layout., null);
 
@@ -97,16 +98,15 @@ public class ThreePosFragment extends ListFragment {
 
 		inputContainer = (LinearLayout) addItemHeader.findViewById(R.id.input_container);
 		dateButtons = (RadioGroup) addItemHeader.findViewById(R.id.date_buttons);
-		addButton = (Button) addItemHeader.findViewById(R.id.add_threepos_button);	
+		addButton = (Button) addItemHeader.findViewById(R.id.add_threepos_button);
 		inputOne = (EditText) addItemHeader.findViewById(R.id.positive_one_input);
 		inputTwo = (EditText) addItemHeader.findViewById(R.id.positive_two_input);
-		inputThree  = (EditText) addItemHeader.findViewById(R.id.positive_three_input);
-
+		inputThree = (EditText) addItemHeader.findViewById(R.id.positive_three_input);
 
 		/**
 		 * Setting the fonts for the inputs
 		 */
-		Typeface robotoConLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
+		Typeface robotoConLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_condensed_light.ttf");
 		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_light.ttf");
 
 		positiveTextLabel.setTypeface(robotoLight);
@@ -130,8 +130,7 @@ public class ThreePosFragment extends ListFragment {
 			public void onClick(View v) {
 				ExpandAnimation expandAnim = new ExpandAnimation(inputContainer, 500);
 				inputContainer.startAnimation(expandAnim);
-				InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
-						Context.INPUT_METHOD_SERVICE);
+				InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
 
 				if (addButton.getText().equals(getString(R.string.button_abort))) {
 					addButton.setText(R.string.button_add_new);
@@ -151,9 +150,8 @@ public class ThreePosFragment extends ListFragment {
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				if (checkedId == R.id.yesterday_button) {
 					cDate = Calendar.getInstance();
-					cDate.add(Calendar.DATE, -1);					
-				}
-				else {
+					cDate.add(Calendar.DATE, -1);
+				} else {
 					cDate = Calendar.getInstance();
 				}
 
@@ -161,7 +159,7 @@ public class ThreePosFragment extends ListFragment {
 
 		});
 
-		OnEditorActionListener createListener = new OnEditorActionListener(){
+		OnEditorActionListener createListener = new OnEditorActionListener() {
 
 			@Override
 			public boolean onEditorAction(final TextView textView, final int id, final KeyEvent keyEvent) {
@@ -204,20 +202,20 @@ public class ThreePosFragment extends ListFragment {
 		});
 
 	}
+
 	private void createNewCard() {
 		if (cDate == null) {
 			cDate = Calendar.getInstance();
 		}
 		stringInputOne = inputOne.getText().toString();
-		stringInputTwo =inputTwo.getText().toString();
+		stringInputTwo = inputTwo.getText().toString();
 		stringInputThree = inputThree.getText().toString();
 
 		ThreePosItem newPosItem = new ThreePosItem(cDate, stringInputOne, stringInputTwo, stringInputThree);
 		mActivity.getMindyDb().insertNewThreePositive(newPosItem);
 		threePosItemList = mActivity.getMindyDb().fetchAllPositives();
 
-		InputMethodManager imm = (InputMethodManager)mActivity.getSystemService(
-				Context.INPUT_METHOD_SERVICE);
+		InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(inputThree.getWindowToken(), 0);
 
 		inputOne.setText(null);

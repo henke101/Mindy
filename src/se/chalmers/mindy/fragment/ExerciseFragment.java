@@ -120,7 +120,7 @@ public class ExerciseFragment extends ListFragment implements OnScrollListener {
 		});
 
 		/** Setting the list adapter for the ListFragment */
-		ExerciseAdapter adapter = new ExerciseAdapter(mActivity.getLayoutInflater().getContext(), R.layout.card_item, exItemList);
+		ExerciseAdapter adapter = new ExerciseAdapter(mActivity.getLayoutInflater().getContext(), R.layout.exercise_card_item, exItemList);
 		setListAdapter(adapter);
 
 	}

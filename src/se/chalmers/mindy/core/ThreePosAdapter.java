@@ -2,11 +2,11 @@ package se.chalmers.mindy.core;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import se.chalmers.mindy.R;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +21,7 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 	ArrayList<ThreePosItem> data;
 	String stringDate;
 	SimpleDateFormat dfDate;
-	
+
 	public ThreePosAdapter(final Context context, final int layoutResourceId, final ArrayList<ThreePosItem> data) {
 		super(context, layoutResourceId, data);
 		this.layoutResourceId = layoutResourceId;
@@ -44,37 +44,31 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 		holder.positiveOneLabel = (TextView) row.findViewById(R.id.positive_one_label);
 		holder.positiveTwoLabel = (TextView) row.findViewById(R.id.positive_two_label);
 		holder.positiveThreeLabel = (TextView) row.findViewById(R.id.positive_three_label);
-	
-		
 
-	/**
-	 * Change fonts in date and input strings in each card
-	 */
+		/**
+		 * Change fonts in date and input strings in each card
+		 */
 
 		Typeface robotoConLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_condensed_light.ttf");
 
-//		holder.dateLabel.setText(data.get(position).getDate());
-//		holder.dateLabel.setTypeface(robotoConLight);
-		
+		// holder.dateLabel.setText(data.get(position).getDate());
+		// holder.dateLabel.setTypeface(robotoConLight);
 
 		Typeface robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_light.ttf");
-		
+
 		dfDate = new SimpleDateFormat("yyyy-MM-dd");
 		stringDate = dfDate.format(data.get(position).getDate().getTime());
 		holder.dateLabel.setText(stringDate);
 		holder.dateLabel.setTypeface(robotoLight);
 
+		holder.positiveOneLabel.setText("1. " + data.get(position).getPositiveOne());
+		holder.positiveOneLabel.setTypeface(robotoLight);
 
-		holder.positiveOneLabel.setText(data.get(position).getPositiveOne());
-		holder.positiveOneLabel.setTypeface(robotoConLight);
+		holder.positiveTwoLabel.setText("2. " + data.get(position).getPositiveTwo());
+		holder.positiveTwoLabel.setTypeface(robotoLight);
 
-		holder.positiveTwoLabel.setText(data.get(position).getPositiveTwo());
-		holder.positiveTwoLabel.setTypeface(robotoConLight);
-
-		holder.positiveThreeLabel.setText(data.get(position).getPositiveThree());
-		holder.positiveThreeLabel.setTypeface(robotoConLight);
-
-		Log.d("Positive three ", "skriver ut : " + data.get(position).getPositiveThree());
+		holder.positiveThreeLabel.setText("3. " + data.get(position).getPositiveThree());
+		holder.positiveThreeLabel.setTypeface(robotoLight);
 
 		return row;
 	}
