@@ -242,17 +242,18 @@ public class MainActivity extends Activity {
 		// // Insert the fragment by replacing any existing fragment
 		// fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentSettings).commit();
 		// }
-		if (position == 2) {
-			fragmentAbout = new AboutFragment();
 
-			// Insert the fragment by replacing any existing fragment
-			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).commit();
-		}
-		if (position == 3) {
+		if (position == 2) {
 			// Diary
 			ListFragment fragmentDiary = new DiaryListFragment();
 			// Insert the fragment by replacing any existing fragment
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentDiary).commit();
+		}
+		if (position == 3) {
+			fragmentAbout = new AboutFragment();
+
+			// Insert the fragment by replacing any existing fragment
+			fragmentManager.beginTransaction().replace(R.id.content_frame, fragmentAbout).commit();
 		}
 		// Highlight the selected item, update the title, and close the drawer
 		mDrawerList.setItemChecked(position, true);
