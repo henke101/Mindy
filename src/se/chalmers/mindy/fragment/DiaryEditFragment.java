@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DiaryEditFragment extends Fragment {
 
@@ -82,9 +83,13 @@ public class DiaryEditFragment extends Fragment {
 		confirmButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				saveState();
-				FragmentManager fragmentManager = getFragmentManager();
-				fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
+				if (mTitleText.getText().length() > 0 && mBodyText.getText().length() > 0) {
+					saveState();
+					FragmentManager fragmentManager = getFragmentManager();
+					fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
+				} else {
+					Toast.makeText(mActivity, R.string.diary_empty_fields, Toast.LENGTH_LONG).show();
+				}
 			}
 		});
 		cancelButton.setOnClickListener(new View.OnClickListener() {
