@@ -17,6 +17,7 @@ public class ExerciseAdapter extends ArrayAdapter<ExerciseItem> {
 	ExerciseItem data[] = null;
 	private Typeface robotoThin;
 	private Typeface robotoLight;
+	private LayoutInflater mLayoutInflater;
 
 	public ExerciseAdapter(final Context context, final int layoutResourceId, final ExerciseItem[] data) {
 		super(context, layoutResourceId, data);
@@ -25,30 +26,26 @@ public class ExerciseAdapter extends ArrayAdapter<ExerciseItem> {
 		this.data = data;
 		robotoThin = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_thin.ttf");
 		robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_light.ttf");
+		mLayoutInflater = ((Activity) context).getLayoutInflater();
 	}
 
 	@Override
 	public View getView(final int position, final View convertView, final ViewGroup parent) {
 		View row = convertView;
-		ExerciseItemHolder holder = null;
+		ExerciseItemHolder holder = new ExerciseItemHolder();
 
 		if (row == null) {
-			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			row = inflater.inflate(layoutResourceId, parent, false);
-
-			holder = new ExerciseItemHolder();
-
-			holder.exercise = (TextView) row.findViewById(R.id.exercise_label);
-			holder.exercise.setText(data[position].getName());
-			holder.exercise.setTypeface(robotoThin);
-
-			holder.description = (TextView) row.findViewById(R.id.description_label);
-			holder.description.setText(data[position].getDescription());
-			holder.description.setTypeface(robotoLight);
-
+			row = mLayoutInflater.inflate(layoutResourceId, parent, false);
 		}
 
-		holder = (ExerciseItemHolder) row.getTag();
+		holder.exercise = (TextView) row.findViewById(R.id.exercise_label);
+		holder.exercise.setTypeface(robotoThin);
+
+		holder.description = (TextView) row.findViewById(R.id.description_label);
+		holder.description.setTypeface(robotoLight);
+
+		holder.exercise.setText(data[position].getName());
+		holder.description.setText(data[position].getDescription());
 
 		return row;
 	}

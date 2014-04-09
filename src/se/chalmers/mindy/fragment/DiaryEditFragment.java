@@ -1,19 +1,22 @@
 package se.chalmers.mindy.fragment;
 
+import java.util.Calendar;
+
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
-import android.database.Cursor;
-import android.graphics.Typeface;
-import android.os.Bundle;
+import se.chalmers.mindy.view.DiaryItem;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.util.Log;
+import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 public class DiaryEditFragment extends Fragment {
 
@@ -21,43 +24,57 @@ public class DiaryEditFragment extends Fragment {
 	private EditText mBodyText;
 	private Long mRowId;
 	private MindyDatabaseAdapter mDbHelper;
+	private MainActivity mActivity;
 
-	public DiaryEditFragment(){
+	@Override
+	public void onAttach(final Activity activity) {
+		super.onAttach(activity);
+
+		mActivity = (MainActivity) activity;
+		mActivity.setActionBarBackgroundTransparency(255);
 
 	}
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
 
-		View v = inflater.inflate(R.layout.diary_edit, container, false);
-		
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+		View v = inflater.inflate(R.layout.fragment_diary_edit, container, false);
+
+		Typeface robotoThin = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_thin.ttf");
+		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_light.ttf");
+		Typeface robotoCondensedLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_condensed_light.ttf");
 		container.removeAllViews();
-		
+
 		mDbHelper = new MindyDatabaseAdapter(getActivity());
 		mDbHelper = mDbHelper.open();
-		
+
 		mTitleText = (EditText) v.findViewById(R.id.diary_title);
+		mTitleText.setTypeface(robotoLight);
 		mBodyText = (EditText) v.findViewById(R.id.diary_body);
-		
-		Typeface robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
-				
-		Button confirmButton = (Button) v.findViewById(R.id.diary_confirm);
-		Button cancelButton = (Button) v.findViewById(R.id.new_note_cancel);
-		Button deleteButton = (Button) v.findViewById(R.id.delete_note);
-		cancelButton.setTypeface(robotoLight);
-		confirmButton.setTypeface(robotoLight);
-		deleteButton.setTypeface(robotoLight);
-		
+		mBodyText.setTypeface(robotoLight);
+
+		Button confirmButton = (Button) v.findViewById(R.id.diary_confirm_button);
+		confirmButton.setTypeface(robotoCondensedLight);
+		Button cancelButton = (Button) v.findViewById(R.id.diary_cancel_button);
+		cancelButton.setTypeface(robotoCondensedLight);
+		Button deleteButton = (Button) v.findViewById(R.id.diary_delete_button);
+		deleteButton.setTypeface(robotoCondensedLight);
+
+		TextView titleLabel = (TextView) v.findViewById(R.id.diary_title_label);
+		titleLabel.setTypeface(robotoThin);
+		TextView bodyLabel = (TextView) v.findViewById(R.id.diary_body_label);
+		bodyLabel.setTypeface(robotoThin);
+
 		Bundle bundle = getArguments();
-		if (bundle != null){
-		mRowId = bundle.getLong("rowID");
-		deleteButton.setVisibility(View.VISIBLE);
+		if (bundle != null) {
+			mRowId = bundle.getLong("rowID");
+			// deleteButton.setVisibility(View.VISIBLE);
 		}
 
 		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				mDbHelper.deleteNote(mRowId);
+				boolean success = mDbHelper.deleteNote(mRowId);
 				FragmentManager fragmentManager = getFragmentManager();
 				fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
 			}
@@ -66,7 +83,6 @@ public class DiaryEditFragment extends Fragment {
 			@Override
 			public void onClick(View view) {
 				saveState();
-				//Toast.makeText(getActivity(), "Sparat", Toast.LENGTH_SHORT).show();;
 				FragmentManager fragmentManager = getFragmentManager();
 				fragmentManager.beginTransaction().replace(R.id.content_frame, new DiaryListFragment()).commit();
 			}
@@ -85,14 +101,12 @@ public class DiaryEditFragment extends Fragment {
 
 	private void populateFields() {
 		if (mRowId != null) {
-			Cursor note = mDbHelper.fetchNote(mRowId);
-			mTitleText.setText(note.getString(
-					note.getColumnIndexOrThrow(MindyDatabaseAdapter.KEY_TITLE)));
-			mBodyText.setText(note.getString(
-					note.getColumnIndexOrThrow(MindyDatabaseAdapter.KEY_BODY)));
-			//note.close();
+			DiaryItem note = mDbHelper.fetchNote(mRowId);
+			mTitleText.setText(note.getTitle());
+			mBodyText.setText(note.getBody());
 		}
 	}
+
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
@@ -110,24 +124,23 @@ public class DiaryEditFragment extends Fragment {
 		super.onResume();
 		populateFields();
 	}
-	
-	@Override 
-	public void onDestroy(){
+
+	@Override
+	public void onDestroy() {
 		super.onDestroy();
 		mDbHelper.close();
 	}
-	
+
 	private void saveState() {
-		String title = mTitleText.getText().toString();
-		String body = mBodyText.getText().toString();
-		
+		DiaryItem item = new DiaryItem(mTitleText.getText().toString(), mBodyText.getText().toString(), Calendar.getInstance());
+
 		if (mRowId == null) {
-			long id = mDbHelper.createNote(title, body);
+			long id = mDbHelper.createNote(item);
 			if (id > 0) {
 				mRowId = id;
 			}
 		} else {
-			mDbHelper.updateNote(mRowId, title, body);
+			mDbHelper.updateNote(mRowId, item);
 		}
 	}
 }

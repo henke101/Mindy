@@ -51,9 +51,11 @@ public class ThreePositiveIndexItem extends IndexListItem {
 		Calendar positiveTime = Calendar.getInstance();
 		positiveTime.setTimeInMillis(threePos.getDate() == null ? Calendar.getInstance().getTimeInMillis() : threePos.getDate().getTimeInMillis());
 
-		if (positiveTime != null
-				&& (currentTime.get(Calendar.DAY_OF_YEAR) - positiveTime.get(Calendar.DAY_OF_YEAR) > 0 || currentTime.get(Calendar.YEAR) > positiveTime
-						.get(Calendar.YEAR))) {
+		int currentDay = currentTime.get(Calendar.DAY_OF_YEAR);
+		int positiveDay = positiveTime.get(Calendar.DAY_OF_YEAR);
+		int currentYear = currentTime.get(Calendar.YEAR);
+		int positiveYear = positiveTime.get(Calendar.YEAR);
+		if (positiveTime != null && (currentDay - positiveDay != 1 || currentYear > positiveYear)) {
 			setDescription(context.getString(R.string.index_threepos_description_secondary));
 		}
 
@@ -97,7 +99,7 @@ public class ThreePositiveIndexItem extends IndexListItem {
 			@Override
 			public void onClick(View v) {
 				if (context instanceof MainActivity) {
-					((MainActivity) context).setFragment(fragment);
+					((MainActivity) context).pushFragment(fragment);
 				}
 			}
 		};

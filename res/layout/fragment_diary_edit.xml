@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="48dp"
+    android:orientation="vertical"
+    android:background="@color/bg_color_grey"
+    android:paddingTop="20dp"
+    android:paddingBottom="5dp"  >
+
+     <TextView
+        android:id="@+id/diary_title_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:shadowColor="@color/text_shadow_color_light"
+        android:shadowDx="1.0"
+        android:shadowDy="1.0"
+        android:shadowRadius="2.0"
+        android:textSize="23sp"
+        android:text="@string/diary_title" />
+
+     <EditText
+        android:id="@+id/diary_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/diary_title_label"
+        android:layout_alignParentLeft="true"
+        android:hint="@string/diary_title_hint"
+        android:imeOptions="actionNext" 
+        android:singleLine="true" />
+
+    <TextView
+        android:id="@+id/diary_body_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/diary_title"
+        android:layout_alignParentLeft="true"
+        android:shadowColor="@color/text_shadow_color_light"
+        android:shadowDx="1.0"
+        android:shadowDy="1.0"
+        android:shadowRadius="2.0"
+        android:textSize="23sp"
+        android:text="@string/diary_body" />
+
+    <EditText
+        android:id="@+id/diary_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="top"
+        android:layout_below="@+id/diary_body_label"
+        android:layout_alignParentLeft="true"
+        android:layout_above="@+id/diary_button_container"
+        android:scrollbars="vertical"
+        android:hint="@string/diary_body_hint"
+        android:imeOptions="actionDone"  />
+
+    <LinearLayout
+        android:id="@+id/diary_button_container"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        style="?android:attr/buttonBarStyle"
+         >
+        
+        <Button
+            android:id="@+id/diary_cancel_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.333333"
+            android:textColor="@drawable/selector_button_text"
+            android:text="@string/cancel"
+            style="?android:attr/buttonBarButtonStyle" />
+         <Button
+            android:id="@+id/diary_delete_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.333333"
+            android:text="@string/diary_delete_note"
+            android:textColor="@drawable/selector_button_text"
+            style="?android:attr/buttonBarButtonStyle"
+            android:visibility="gone"/>
+        <Button
+            android:id="@+id/diary_confirm_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.333333"
+            android:textColor="@drawable/selector_button_text"
+            android:text="@string/diary_confirm"
+            style="?android:attr/buttonBarButtonStyle" />
+
+    </LinearLayout>
+
+</RelativeLayout>

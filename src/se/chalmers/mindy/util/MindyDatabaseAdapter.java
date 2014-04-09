@@ -5,6 +5,7 @@ import java.util.Calendar;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.ThreePosItem;
+import se.chalmers.mindy.view.DiaryItem;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,7 +18,7 @@ public class MindyDatabaseAdapter {
 
 	// Database properties
 	private static final String DATABASE_NAME = "mindy_db";
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 10;
 
 	private static final String TABLE_EVALUATION_QUESTIONS = "TestQuestions";
 	private static final String TABLE_EVALUATION_RESULTS = "TestResults";
@@ -53,8 +54,9 @@ public class MindyDatabaseAdapter {
 	private static final String KEY_THREE_POSITIVE_THIRD = "_third";
 
 	// Diary table
-	public static final String KEY_TITLE = "_title";
-	public static final String KEY_BODY = "_body";
+	public static final String KEY_DIARY_TITLE = "_title";
+	public static final String KEY_DIARY_BODY = "_body";
+	public static final String KEY_DIARY_DATE = "_date";
 
 	private static final String CREATE_TABLE_THREE_POSITIVE = "create table " + TABLE_THREE_POSITIVE + " (" + KEY_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_THREE_POSITIVE_DATE + " INTEGER NOT NULL, " + KEY_THREE_POSITIVE_FIRST + " TEXT, "
@@ -68,16 +70,16 @@ public class MindyDatabaseAdapter {
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ANSWER + " TEXT NOT NULL, " + KEY_DATE_ANSWERED + " INTEGER NOT NULL, " + KEY_QUESTION_ID
 			+ " INTEGER, " + " FOREIGN KEY (" + KEY_QUESTION_ID + ") REFERENCES " + TABLE_EVALUATION_QUESTIONS + " (" + KEY_ROWID + "));";
 
-	private static final String CREATE_TABLE_DIARY = "create table " + TABLE_DIARY + " (" + KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_TITLE
-			+ " TITLE NOT NULL, " + KEY_BODY + " TEXT NOT NULL);";
+	private static final String CREATE_TABLE_DIARY = "create table " + TABLE_DIARY + " (" + KEY_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ KEY_DIARY_TITLE + " TITLE NOT NULL, " + KEY_DIARY_BODY + " TEXT NOT NULL, " + KEY_DIARY_DATE + " INTEGER NOT NULL);";
 
 	private static final String TAG = "MindyDatabaseAdapter";
 	private DatabaseHelper mDbHelper;
 	private SQLiteDatabase mDb;
-	private final Context mCtx;
+	private final Context mContext;
 
 	public MindyDatabaseAdapter(final Context ctx) {
-		mCtx = ctx;
+		mContext = ctx;
 	}
 
 	/**
@@ -88,7 +90,7 @@ public class MindyDatabaseAdapter {
 	 */
 	public MindyDatabaseAdapter open() throws SQLException {
 		if (!isOpen()) {
-			mDbHelper = new DatabaseHelper(mCtx);
+			mDbHelper = new DatabaseHelper(mContext);
 			mDb = mDbHelper.getWritableDatabase();
 		}
 		return this;
@@ -130,8 +132,6 @@ public class MindyDatabaseAdapter {
 			while (!threePosCursor.isAfterLast()) {
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTimeInMillis(threePosCursor.getLong(4));
-				Log.d("Cal: " + threePosCursor.getString(1), "Calendar");
-				Log.d("Cal: " + threePosCursor.getLong(4), "Calendar");
 
 				items.add(new ThreePosItem(calendar, threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3)));
 				threePosCursor.moveToNext();
@@ -160,8 +160,8 @@ public class MindyDatabaseAdapter {
 		} else {
 			// Table is empty
 
-			return new ThreePosItem(mCtx.getString(R.string.index_threepos_default_first), mCtx.getString(R.string.index_threepos_default_second),
-					mCtx.getString(R.string.index_threepos_default_third));
+			return new ThreePosItem(mContext.getString(R.string.index_threepos_default_first), mContext.getString(R.string.index_threepos_default_second),
+					mContext.getString(R.string.index_threepos_default_third));
 		}
 	}
 
@@ -195,16 +195,12 @@ public class MindyDatabaseAdapter {
 		}
 	}
 
-	/**
-	 * for the diary list
-	 * @param title of the note
-	 * @param body text of the note
-	 * @return
-	 */
-	public long createNote(String title, String body) {
+	public long createNote(DiaryItem note) {
+
 		ContentValues initialValues = new ContentValues();
-		initialValues.put(KEY_TITLE, title);
-		initialValues.put(KEY_BODY, body);
+		initialValues.put(KEY_DIARY_TITLE, note.getTitle());
+		initialValues.put(KEY_DIARY_BODY, note.getBody());
+		initialValues.put(KEY_DIARY_DATE, note.getDate().getTimeInMillis());
 		return mDb.insert(TABLE_DIARY, null, initialValues);
 	}
 
@@ -213,31 +209,50 @@ public class MindyDatabaseAdapter {
 		return mDb.delete(TABLE_DIARY, KEY_ROWID + "=" + rowId, null) > 0;
 	}
 
-	public Cursor fetchAllNotes() {
-		Cursor mCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID, KEY_TITLE, KEY_BODY }, null, null, null, null, null);
-		if (mCursor != null) {
-			mCursor.moveToFirst();
+	public ArrayList<DiaryItem> fetchAllNotes() {
+		ArrayList<DiaryItem> items = new ArrayList<DiaryItem>();
+
+		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, null, null, null, null,
+				KEY_DIARY_DATE + " DESC");
+
+		if (entryCursor.moveToFirst()) {
+			Calendar cal = Calendar.getInstance();
+			while (!entryCursor.isAfterLast()) {
+				cal.setTimeInMillis(entryCursor.getLong(3));
+
+				items.add(new DiaryItem(entryCursor.getString(1), entryCursor.getString(2), cal));
+
+				entryCursor.moveToNext();
+			}
+		} else {
+			items.add(new DiaryItem(mContext.getString(R.string.diary_no_entries), mContext.getString(R.string.diary_no_entries_desc), null));
 		}
-		// mCursor.close();
-		return mCursor;
+
+		return items;
 	}
 
-	public Cursor fetchNote(long rowId) throws SQLException {
+	public DiaryItem fetchNote(long rowId) {
 
-		Cursor mCursor =
+		Cursor entryCursor = mDb.query(true, TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, KEY_ROWID + "=" + rowId,
+				null, null, null, null, null);
 
-		mDb.query(true, TABLE_DIARY, new String[] { KEY_ROWID, KEY_TITLE, KEY_BODY }, KEY_ROWID + "=" + rowId, null, null, null, null, null);
-		if (mCursor != null) {
-			mCursor.moveToFirst();
+		DiaryItem item;
+		if (entryCursor.moveToFirst()) {
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(entryCursor.getLong(3));
+
+			item = new DiaryItem(entryCursor.getString(1), entryCursor.getString(2), cal);
+		} else {
+			item = new DiaryItem("", "", Calendar.getInstance());
 		}
-		// mCursor.close();
-		return mCursor;
+
+		return item;
 	}
 
-	public boolean updateNote(long rowId, String title, String body) {
+	public boolean updateNote(long rowId, DiaryItem note) {
 		ContentValues args = new ContentValues();
-		args.put(KEY_TITLE, title);
-		args.put(KEY_BODY, body);
+		args.put(KEY_DIARY_TITLE, note.getTitle());
+		args.put(KEY_DIARY_BODY, note.getBody());
 
 		return mDb.update(TABLE_DIARY, args, KEY_ROWID + "=" + rowId, null) > 0;
 	}

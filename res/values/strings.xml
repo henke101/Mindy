@@ -69,7 +69,11 @@
     <string name="diary_menu_delete">Ta bort</string>
     <string name="diary_menu_insert">Lägg till</string>
     <string name="diary_title">Rubrik</string>
-    <string name="diary_body"></string>
+    <string name="diary_title_hint">Skriv en rubrik</string>
+    <string name="diary_body">Inlägg</string>
+    <string name="diary_body_hint">Vad har du lärt dig?</string>
+    <string name="diary_no_entries">Inga inlägg ännu</string>
+    <string name="diary_no_entries_desc">Vad har du lärt dig idag? Studiedagboken hjälper dig minnas vad du lärt dig genom att låta dig återkoppla vid ett senare tillfälle. \n\nSkapa ett nytt inlägg ovan för att börja använda studiedagboken.</string>
     <string name="albin">Uppläst av Albin Hagberg Medin, http://www.modernmindfulness.com</string>
     
     <!-- Frågeformulär -->

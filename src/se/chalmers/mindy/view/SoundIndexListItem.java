@@ -138,7 +138,7 @@ public class SoundIndexListItem extends IndexListItem {
 					}
 
 					fragment.setArguments(extras);
-					((MainActivity) context).setFragment(fragment);
+					((MainActivity) context).pushFragment(fragment);
 
 				}
 			}

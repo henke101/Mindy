@@ -94,13 +94,13 @@ public class ExerciseFragment extends Fragment implements OnScrollListener {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
 				if (position == 1) {
-					mActivity.setFragment(new DiaryListFragment());
+					mActivity.pushFragment(new DiaryListFragment());
 
 				} else if (position == 2) {
-					mActivity.setFragment(new ThreePosFragment());
+					mActivity.pushFragment(new ThreePosFragment());
 
 				} else if (position == 3) {
-					mActivity.setFragment(new PomodoroFragment());
+					mActivity.pushFragment(new PomodoroFragment());
 
 				} else if (position == 4) {
 					Fragment fragmentSleepingPill = new AudioExerciseFragment();
@@ -111,7 +111,7 @@ public class ExerciseFragment extends Fragment implements OnScrollListener {
 					fragmentSleepingPill.setArguments(bundle);
 
 					// Insert the fragment by replacing any existing fragment
-					mActivity.setFragment(fragmentSleepingPill);
+					mActivity.pushFragment(fragmentSleepingPill);
 
 				} else if (position == 5) {
 					Fragment fragmentBodyFocus = new AudioExerciseFragment();
@@ -120,7 +120,7 @@ public class ExerciseFragment extends Fragment implements OnScrollListener {
 					bundle.putInt("titleID", R.string.body_focus);
 					bundle.putInt("infoID", R.string.long_desc_body_focus);
 					fragmentBodyFocus.setArguments(bundle);
-					mActivity.setFragment(fragmentBodyFocus);
+					mActivity.pushFragment(fragmentBodyFocus);
 				}
 			}
 		});

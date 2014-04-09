@@ -330,11 +330,11 @@ public class MainActivity extends Activity {
 		mActionBarAlpha = alpha;
 	}
 
-	public void setFragment(Fragment fragment) {
+	public void pushFragment(Fragment fragment) {
 		// Insert the fragment by replacing any existing fragment
-
 		FragmentTransaction ft = fragmentManager.beginTransaction();
 		ft.replace(R.id.content_frame, fragment);
+		// Add fragment to back stack, in order to be able to use the back button
 		ft.addToBackStack(null);
 		ft.commit();
 	}
