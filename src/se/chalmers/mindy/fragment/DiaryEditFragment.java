@@ -23,7 +23,7 @@ public class DiaryEditFragment extends Fragment {
 
 	private EditText mTitleText;
 	private EditText mBodyText;
-	private Long mRowId;
+	private int mRowId = -1;
 	private MindyDatabaseAdapter mDbHelper;
 	private MainActivity mActivity;
 
@@ -68,7 +68,7 @@ public class DiaryEditFragment extends Fragment {
 
 		Bundle bundle = getArguments();
 		if (bundle != null) {
-			mRowId = bundle.getLong("rowID");
+			mRowId = bundle.getInt("rowID");
 			deleteButton.setVisibility(View.VISIBLE);
 		}
 
@@ -105,7 +105,7 @@ public class DiaryEditFragment extends Fragment {
 	}
 
 	private void populateFields() {
-		if (mRowId != null) {
+		if (mRowId != -1) {
 			DiaryItem note = mDbHelper.fetchNote(mRowId);
 			mTitleText.setText(note.getTitle());
 			mBodyText.setText(note.getBody());
@@ -115,8 +115,6 @@ public class DiaryEditFragment extends Fragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		saveState();
-		outState.putSerializable(MindyDatabaseAdapter.KEY_ROWID, mRowId);
 	}
 
 	@Override
@@ -139,10 +137,10 @@ public class DiaryEditFragment extends Fragment {
 	private void saveState() {
 		DiaryItem item = new DiaryItem(mActivity, mTitleText.getText().toString(), mBodyText.getText().toString(), Calendar.getInstance());
 
-		if (mRowId == null) {
+		if (mRowId == -1) {
 			long id = mDbHelper.createNote(item);
 			if (id > 0) {
-				mRowId = id;
+				mRowId = (int) id;
 			}
 		} else {
 			mDbHelper.updateNote(mRowId, item);

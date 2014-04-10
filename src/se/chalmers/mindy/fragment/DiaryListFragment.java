@@ -104,7 +104,7 @@ public class DiaryListFragment extends ListFragment implements OnScrollListener 
 
 		if (!mListAdapter.isListEmpty()) {
 			Bundle bundle = new Bundle();
-			bundle.putLong("rowID", mListAdapter.getItemId((int) id));
+			bundle.putInt("rowID", mListAdapter.getIdAt((int) id));
 			fragment.setArguments(bundle);
 		}
 		mActivity.pushFragment(fragment);

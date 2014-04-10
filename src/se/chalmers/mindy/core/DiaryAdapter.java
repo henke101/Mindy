@@ -12,7 +12,6 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,13 +67,14 @@ public class DiaryAdapter extends AbsListAdapter<DiaryItem> {
 			}
 		}
 
-		row.setOnTouchListener(getSwipeListenerInstance(context, (ListView) parent));
+		// Currently does not work properly
+		// row.setOnTouchListener(getSwipeListenerInstance(context, (ListView) parent));
 
 		return row;
 	}
 
 	public boolean isListEmpty() {
-		return ids.size() > 0;
+		return ids.size() <= 0;
 	}
 
 	public int getIdAt(int position) {
@@ -87,10 +87,10 @@ public class DiaryAdapter extends AbsListAdapter<DiaryItem> {
 		// Remove the item at position from data list
 		DiaryItem item = data.get(headerCompensatedPosition);
 
-		if (!isEmpty()) {
-
+		if (!isListEmpty()) {
 			mDbAdapter.deleteNote(mDbAdapter.fetchAllNoteIds().get(headerCompensatedPosition));
 			data = mDbAdapter.fetchAllNotes();
+			ids = mDbAdapter.fetchAllNoteIds();
 
 			Toast.makeText(context, R.string.diary_entry_deleted, Toast.LENGTH_SHORT).show();
 
