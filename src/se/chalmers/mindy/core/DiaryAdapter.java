@@ -92,14 +92,15 @@ public class DiaryAdapter extends AbsListAdapter<DiaryItem> {
 			mDbAdapter.deleteNote(mDbAdapter.fetchAllNoteIds().get(headerCompensatedPosition));
 			data = mDbAdapter.fetchAllNotes();
 
-			// Redraw list
-			notifyDataSetChanged();
-
 			Toast.makeText(context, R.string.diary_entry_deleted, Toast.LENGTH_SHORT).show();
 
 		} else {
 			Toast.makeText(context, R.string.diary_could_not_delete, Toast.LENGTH_SHORT).show();
 		}
+
+		// Redraw list
+		notifyDataSetChanged();
+
 		return item;
 	}
 
