@@ -2,21 +2,25 @@ package se.chalmers.mindy.view;
 
 import java.util.Calendar;
 
-public class DiaryItem {
+import android.content.Context;
+
+public class DiaryItem extends AbsListItem {
 	private String title, body;
 	private Calendar date;
 
-	public DiaryItem(String title, String body, Calendar date) {
-		super();
+	public DiaryItem(Context context, String title, String body, Calendar date) {
+		super(context, title, body);
 		this.title = title;
 		this.body = body;
-		this.setDate(date);
+		setDate(date);
 	}
 
+	@Override
 	public String getTitle() {
 		return title;
 	}
 
+	@Override
 	public void setTitle(String title) {
 		this.title = title;
 	}

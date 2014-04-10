@@ -234,12 +234,12 @@ public class MindyDatabaseAdapter {
 			while (!entryCursor.isAfterLast()) {
 				cal.setTimeInMillis(entryCursor.getLong(3));
 
-				items.add(new DiaryItem(entryCursor.getString(1), entryCursor.getString(2), cal));
+				items.add(new DiaryItem(mContext, entryCursor.getString(1), entryCursor.getString(2), cal));
 
 				entryCursor.moveToNext();
 			}
 		} else {
-			items.add(new DiaryItem(mContext.getString(R.string.diary_no_entries), mContext.getString(R.string.diary_no_entries_desc), null));
+			items.add(new DiaryItem(mContext, mContext.getString(R.string.diary_no_entries), mContext.getString(R.string.diary_no_entries_desc), null));
 		}
 
 		return items;
@@ -255,9 +255,9 @@ public class MindyDatabaseAdapter {
 			Calendar cal = Calendar.getInstance();
 			cal.setTimeInMillis(entryCursor.getLong(3));
 
-			item = new DiaryItem(entryCursor.getString(1), entryCursor.getString(2), cal);
+			item = new DiaryItem(mContext, entryCursor.getString(1), entryCursor.getString(2), cal);
 		} else {
-			item = new DiaryItem("", "", Calendar.getInstance());
+			item = new DiaryItem(mContext, "", "", Calendar.getInstance());
 		}
 
 		return item;

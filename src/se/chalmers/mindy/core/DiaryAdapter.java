@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import se.chalmers.mindy.view.DiaryItem;
 import android.app.Activity;
 import android.content.Context;
@@ -11,26 +12,32 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class DiaryAdapter extends ArrayAdapter<DiaryItem> {
+public class DiaryAdapter extends AbsListAdapter<DiaryItem> {
 
 	Context context;
 	ArrayList<DiaryItem> data = null;
+	ArrayList<Integer> ids = null;
 	private Typeface robotoThin;
 	private Typeface robotoLight;
 	private LayoutInflater mLayoutInflater;
 	private SimpleDateFormat mDateFormat;
+	private MindyDatabaseAdapter mDbAdapter;
 
-	public DiaryAdapter(final Context context, final ArrayList<DiaryItem> data) {
-		super(context, R.layout.diary_list_item, data);
+	public DiaryAdapter(final Context context, MindyDatabaseAdapter dbAdapter) {
+		super(context, R.layout.diary_list_item, dbAdapter.fetchAllNotes());
 		this.context = context;
-		this.data = data;
 		robotoThin = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_thin.ttf");
 		robotoLight = Typeface.createFromAsset(context.getAssets(), "fonts/roboto_light.ttf");
 		mLayoutInflater = ((Activity) context).getLayoutInflater();
 		mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		mDbAdapter = dbAdapter;
+		ids = mDbAdapter.fetchAllNoteIds();
+		data = mDbAdapter.fetchAllNotes();
 	}
 
 	@Override
@@ -61,7 +68,39 @@ public class DiaryAdapter extends ArrayAdapter<DiaryItem> {
 			}
 		}
 
+		row.setOnTouchListener(getSwipeListenerInstance(context, (ListView) parent));
+
 		return row;
+	}
+
+	public boolean isListEmpty() {
+		return ids.size() > 0;
+	}
+
+	public int getIdAt(int position) {
+		return ids.get(position);
+	}
+
+	@Override
+	public DiaryItem remove(int position) {
+		int headerCompensatedPosition = position - 1;
+		// Remove the item at position from data list
+		DiaryItem item = data.get(headerCompensatedPosition);
+
+		if (!isEmpty()) {
+
+			mDbAdapter.deleteNote(mDbAdapter.fetchAllNoteIds().get(headerCompensatedPosition));
+			data = mDbAdapter.fetchAllNotes();
+
+			// Redraw list
+			notifyDataSetChanged();
+
+			Toast.makeText(context, R.string.diary_entry_deleted, Toast.LENGTH_SHORT).show();
+
+		} else {
+			Toast.makeText(context, R.string.diary_could_not_delete, Toast.LENGTH_SHORT).show();
+		}
+		return item;
 	}
 
 	static class DiaryItemHolder {

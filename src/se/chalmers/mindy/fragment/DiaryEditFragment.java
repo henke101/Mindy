@@ -137,7 +137,7 @@ public class DiaryEditFragment extends Fragment {
 	}
 
 	private void saveState() {
-		DiaryItem item = new DiaryItem(mTitleText.getText().toString(), mBodyText.getText().toString(), Calendar.getInstance());
+		DiaryItem item = new DiaryItem(mActivity, mTitleText.getText().toString(), mBodyText.getText().toString(), Calendar.getInstance());
 
 		if (mRowId == null) {
 			long id = mDbHelper.createNote(item);
