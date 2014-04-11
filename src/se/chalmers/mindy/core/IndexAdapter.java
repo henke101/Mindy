@@ -70,7 +70,7 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 		holder.title = (TextView) row.findViewById(R.id.item_title);
 		holder.title.setText(item.getTitle());
 		holder.title.setTypeface(robotoThin);
-		holder.title.setOnClickListener(item.getTitleOnClickListener());
+		row.setOnClickListener(item.getTitleOnClickListener());
 
 		holder.description = (TextView) row.findViewById(R.id.item_description);
 		holder.description.setText(item.getDescription());

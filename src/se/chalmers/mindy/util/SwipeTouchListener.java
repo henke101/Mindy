@@ -8,7 +8,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -60,7 +59,6 @@ public class SwipeTouchListener implements View.OnTouchListener {
 		}
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			Log.d("Derp", "Down");
 			if (mItemPressed) {
 				// Multi-item swipes not handled
 				return false;
@@ -79,6 +77,8 @@ public class SwipeTouchListener implements View.OnTouchListener {
 
 			// Get the X position for the view when it was pressed
 			mDownX = event.getX();
+
+			// return false;
 			break;
 		case MotionEvent.ACTION_CANCEL:
 			// Swipe was cancelled, restore everything and recycle the velocity tracker
@@ -117,7 +117,6 @@ public class SwipeTouchListener implements View.OnTouchListener {
 		}
 			break;
 		case MotionEvent.ACTION_UP: {
-			Log.d("Derp", "Up");
 
 			// If the user meant to press the item, let the system handle click instead of handling swipe here
 			// User let go - figure out whether to animate the view out, or back into place

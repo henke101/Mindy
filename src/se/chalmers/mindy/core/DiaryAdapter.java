@@ -4,18 +4,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.fragment.DiaryEditFragment;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import se.chalmers.mindy.view.DiaryItem;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DiaryAdapter extends AbsListAdapter<DiaryItem> {
+public class DiaryAdapter extends AbsListAdapter<DiaryItem> implements OnClickListener {
 
 	Context context;
 	ArrayList<DiaryItem> data = null;
@@ -50,6 +53,8 @@ public class DiaryAdapter extends AbsListAdapter<DiaryItem> {
 
 		holder.titleLabel = (TextView) row.findViewById(R.id.title_label);
 		holder.titleLabel.setTypeface(robotoThin);
+		holder.titleLabel.setTag(position);
+		holder.titleLabel.setOnClickListener(this);
 
 		holder.bodyLabel = (TextView) row.findViewById(R.id.body_label);
 		holder.bodyLabel.setTypeface(robotoLight);
@@ -107,5 +112,20 @@ public class DiaryAdapter extends AbsListAdapter<DiaryItem> {
 	static class DiaryItemHolder {
 
 		TextView titleLabel, bodyLabel, dateLabel;
+	}
+
+	@Override
+	public void onClick(View v) {
+		DiaryEditFragment fragment = new DiaryEditFragment();
+
+		if (!isListEmpty()) {
+			Integer index = (Integer) v.getTag();
+
+			Bundle bundle = new Bundle();
+			bundle.putInt("rowID", getIdAt(index));
+			fragment.setArguments(bundle);
+		}
+		((MainActivity) context).pushFragment(fragment);
+
 	}
 }
