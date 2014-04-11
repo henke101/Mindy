@@ -133,7 +133,8 @@ public class MindyDatabaseAdapter {
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-				items.add(new ThreePosItem(calendar, threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3)));
+				items.add(new ThreePosItem(calendar, "1. " + threePosCursor.getString(1), "2. " + threePosCursor.getString(2), "3. "
+						+ threePosCursor.getString(3)));
 				threePosCursor.moveToNext();
 			}
 		}
@@ -152,7 +153,8 @@ public class MindyDatabaseAdapter {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-			ThreePosItem result = new ThreePosItem(calendar, threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3));
+			ThreePosItem result = new ThreePosItem(calendar, "1. " + threePosCursor.getString(1), "2. " + threePosCursor.getString(2), "3. "
+					+ threePosCursor.getString(3));
 
 			threePosCursor.close();
 			return result;
@@ -212,7 +214,7 @@ public class MindyDatabaseAdapter {
 	public ArrayList<Integer> fetchAllNoteIds() {
 		ArrayList<Integer> items = new ArrayList<Integer>();
 
-		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID }, null, null, null, null, null);
+		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID }, null, null, null, null, KEY_DIARY_DATE + " DESC");
 
 		if (entryCursor.moveToFirst()) {
 			while (!entryCursor.isAfterLast()) {
@@ -227,7 +229,8 @@ public class MindyDatabaseAdapter {
 	public ArrayList<DiaryItem> fetchAllNotes() {
 		ArrayList<DiaryItem> items = new ArrayList<DiaryItem>();
 
-		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, null, null, null, null, null);
+		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, null, null, null, null,
+				KEY_DIARY_DATE + " DESC");
 
 		if (entryCursor.moveToFirst()) {
 			Calendar cal = Calendar.getInstance();
@@ -247,8 +250,18 @@ public class MindyDatabaseAdapter {
 
 	public DiaryItem fetchNote(long rowId) {
 
-		Cursor entryCursor = mDb.query(true, TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, KEY_ROWID + "=" + rowId,
-				null, null, null, null, null);
+		return fetchNoteWhere(KEY_ROWID + "=" + rowId);
+	}
+
+	public DiaryItem fetchLatestNote() {
+
+		return fetchNoteWhere(KEY_DIARY_DATE + " in (SELECT MAX(" + KEY_DIARY_DATE + ") AS " + KEY_DIARY_DATE + " FROM " + TABLE_DIARY + ")");
+
+	}
+
+	public DiaryItem fetchNoteWhere(String where) {
+		Cursor entryCursor = mDb.query(true, TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, where, null, null, null,
+				null, null);
 
 		DiaryItem item;
 		if (entryCursor.moveToFirst()) {

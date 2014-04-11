@@ -6,7 +6,6 @@ import java.util.List;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
-import se.chalmers.mindy.core.ThreePosItem;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import android.app.Fragment;
 import android.content.Context;
@@ -19,7 +18,7 @@ public class DiaryIndexItem extends IndexListItem {
 	private Fragment fragment;
 
 	public DiaryIndexItem(Context context, Fragment fragment) {
-		this(context, context.getString(R.string.index_threepos_title), context.getString(R.string.index_threepos_description), fragment);
+		this(context, context.getString(R.string.diary), context.getString(R.string.index_diary_description), fragment);
 	}
 
 	public DiaryIndexItem(Context context, String name, Fragment fragment) {
@@ -44,41 +43,31 @@ public class DiaryIndexItem extends IndexListItem {
 
 		MindyDatabaseAdapter dbAdapter = new MindyDatabaseAdapter(context);
 		dbAdapter.open();
-		ThreePosItem threePos = dbAdapter.fetchLatestPositive();
+		DiaryItem item = dbAdapter.fetchLatestNote();
 		dbAdapter.close();
 
 		Calendar currentTime = Calendar.getInstance();
-		Calendar positiveTime = Calendar.getInstance();
-		positiveTime.setTimeInMillis(threePos.getDate() == null ? Calendar.getInstance().getTimeInMillis() : threePos.getDate().getTimeInMillis());
+		Calendar diaryTime = Calendar.getInstance();
+		diaryTime.setTimeInMillis(item.getDate() == null ? Calendar.getInstance().getTimeInMillis() : item.getDate().getTimeInMillis());
 
 		int currentDay = currentTime.get(Calendar.DAY_OF_YEAR);
-		int positiveDay = positiveTime.get(Calendar.DAY_OF_YEAR);
+		int positiveDay = diaryTime.get(Calendar.DAY_OF_YEAR);
 		int currentYear = currentTime.get(Calendar.YEAR);
-		int positiveYear = positiveTime.get(Calendar.YEAR);
-		if (positiveTime != null && (currentDay - positiveDay != 1 || currentYear > positiveYear)) {
-			setDescription(context.getString(R.string.index_threepos_description_secondary));
+		int positiveYear = diaryTime.get(Calendar.YEAR);
+		if (diaryTime != null && (currentDay - positiveDay != 1 || currentYear > positiveYear)) {
+			setDescription(context.getString(R.string.index_diary_description_secondary));
 		}
-
-		if (threePos.getPositiveOne() != null && threePos.getPositiveOne().length() > 0) {
-			TextView firstLabel = new TextView(context);
-			firstLabel.setText("1. " + threePos.getPositiveOne());
-			formatTextView(firstLabel, 50, 40, 50, 10);
-			container.addView(firstLabel);
+		TextView descriptionLabel = new TextView(context);
+		formatTextView(descriptionLabel, 50, 40, 50, 40);
+		String description = item.getDescription();
+		if (description != null && description.length() > 0) {
+			descriptionLabel.setText(description);
+		} else {
+			setTitle(context.getString(R.string.diary));
+			setDescription(context.getString(R.string.diary_no_entries));
+			descriptionLabel.setText(context.getString(R.string.diary_no_entries_desc));
 		}
-
-		if (threePos.getPositiveTwo() != null && threePos.getPositiveTwo().length() > 0) {
-			TextView secondLabel = new TextView(context);
-			secondLabel.setText("2. " + threePos.getPositiveTwo());
-			formatTextView(secondLabel, 50, 15, 50, 10);
-			container.addView(secondLabel);
-		}
-
-		if (threePos.getPositiveThree() != null && threePos.getPositiveThree().length() > 0) {
-			TextView thirdLabel = new TextView(context);
-			thirdLabel.setText("3. " + threePos.getPositiveThree());
-			formatTextView(thirdLabel, 50, 15, 50, 40);
-			container.addView(thirdLabel);
-		}
+		container.addView(descriptionLabel);
 
 		subviews.add(container);
 

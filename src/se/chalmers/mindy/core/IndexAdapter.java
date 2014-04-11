@@ -73,7 +73,12 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 		row.setOnClickListener(item.getTitleOnClickListener());
 
 		holder.description = (TextView) row.findViewById(R.id.item_description);
-		holder.description.setText(item.getDescription());
+		if (item.getDescription() == null) {
+			holder.description.setVisibility(View.GONE);
+		} else {
+			holder.description.setVisibility(View.VISIBLE);
+			holder.description.setText(item.getDescription());
+		}
 		holder.description.setTypeface(robotoLight);
 
 		// If this view came from outside the screen, animate its entry

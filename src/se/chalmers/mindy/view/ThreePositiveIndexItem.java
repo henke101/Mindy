@@ -61,21 +61,21 @@ public class ThreePositiveIndexItem extends IndexListItem {
 
 		if (threePos.getPositiveOne() != null && threePos.getPositiveOne().length() > 0) {
 			TextView firstLabel = new TextView(context);
-			firstLabel.setText("1. " + threePos.getPositiveOne());
+			firstLabel.setText(threePos.getPositiveOne());
 			formatTextView(firstLabel, 50, 40, 50, 10);
 			container.addView(firstLabel);
 		}
 
 		if (threePos.getPositiveTwo() != null && threePos.getPositiveTwo().length() > 0) {
 			TextView secondLabel = new TextView(context);
-			secondLabel.setText("2. " + threePos.getPositiveTwo());
+			secondLabel.setText(threePos.getPositiveTwo());
 			formatTextView(secondLabel, 50, 15, 50, 10);
 			container.addView(secondLabel);
 		}
 
 		if (threePos.getPositiveThree() != null && threePos.getPositiveThree().length() > 0) {
 			TextView thirdLabel = new TextView(context);
-			thirdLabel.setText("3. " + threePos.getPositiveThree());
+			thirdLabel.setText(threePos.getPositiveThree());
 			formatTextView(thirdLabel, 50, 15, 50, 40);
 			container.addView(thirdLabel);
 		}

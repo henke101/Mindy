@@ -121,6 +121,9 @@ public class ThreePosFragment extends ListFragment implements OnScrollListener {
 		okButton.setTypeface(robotoConLight);
 
 		threePosItemList = mActivity.getMindyDb().fetchAllPositives();
+		if (threePosItemList.size() > 3) {
+			positiveTextLabel.setVisibility(View.GONE);
+		}
 
 		listView.addHeaderView(addItemHeader);
 

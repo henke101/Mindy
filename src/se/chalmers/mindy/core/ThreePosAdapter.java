@@ -61,13 +61,13 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 		holder.dateLabel.setText(stringDate);
 		holder.dateLabel.setTypeface(robotoLight);
 
-		holder.positiveOneLabel.setText("1. " + data.get(position).getPositiveOne());
+		holder.positiveOneLabel.setText(data.get(position).getPositiveOne());
 		holder.positiveOneLabel.setTypeface(robotoLight);
 
-		holder.positiveTwoLabel.setText("2. " + data.get(position).getPositiveTwo());
+		holder.positiveTwoLabel.setText(data.get(position).getPositiveTwo());
 		holder.positiveTwoLabel.setTypeface(robotoLight);
 
-		holder.positiveThreeLabel.setText("3. " + data.get(position).getPositiveThree());
+		holder.positiveThreeLabel.setText(data.get(position).getPositiveThree());
 		holder.positiveThreeLabel.setTypeface(robotoLight);
 
 		return row;
