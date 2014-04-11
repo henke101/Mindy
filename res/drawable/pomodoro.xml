@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<item android:id="@android:id/progress">
+    <shape
+             android:innerRadiusRatio="3"
+             android:shape="ring"
+             android:thicknessRatio="12">
+  <gradient
+             android:startColor="@color/action_bar_background"
+             android:endColor="@color/action_bar_background"
+             android:centerColor="#7744AA"
+             android:type="sweep" />   
+</shape>
+</item>
+</layer-list>

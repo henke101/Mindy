@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!--  Could be used as a background color -->
+      <color name="bg_color">#E6E3D8</color>
+      <color name="bg_color_grey">#E0E0E0</color>
+      <color name="bg_color_grey_semitrans">#77E0E0E0</color>
+      
+      <!-- Just white -->
+     <color name="white">#FFFFFF</color>
+    
+    <!-- This is still here for now because
+     there might be references to it -->
+    <color name="dark_purple">#6E384B</color>
+    
+    <!-- Color scheme 1, Arctic sunset -->
+    <color name="dark_purple_1">#6E384B</color>
+    <color name="light_pink_1">#DB86A3</color>
+    <color name="white_1">#E6E3CD</color>
+    <color name="light_blue_1">#82A0A8</color>
+    <color name="dark_blue_1">#4F727A</color>
+    
+    <!-- Color scheme 2, Purple-red -->
+    <color name="medium_purple_2">#592D4D</color>
+    <color name="light_purple_2">#734D69</color>
+    <color name="dark_purple_2">#260D20</color>
+    <color name="light_grey_2">#BFB2A3</color>
+    <color name="dark_grey_2">#A6978A</color>
+    
+      <!-- Color scheme 3, Theme2 -->
+    <color name="dark_sand_3">#E4CCBF</color>
+    <color name="light_sand_3">#F7DFCD</color>
+    <color name="light_purple_3">#9E6F7E</color>
+    <color name="medium_purple_3">#2D2139</color>
+    <color name="dark_purple_3">#1C111E</color>
+    
+    <color name="text_color_light">#FF666666</color>
+    <color name="text_color_dark">#FF444444</color>
+    <color name="text_shadow_color">#FF444444</color>
+    <color name="text_shadow_color_light">#FFAAAAAA</color>
+    
+    <color name="divider_background">#FFDDDDDD</color>
+    <color name="divider_background_dark">#FFBBBBBB</color>
+    <color name="text_color">#1C111E</color>
+    
+    
+    <color name="action_bar_background">#859</color>
+    <color name="action_bar_title">#EEE</color>
+    
+    <color name="evaluation_form_theme_color">#8334ab</color>
+</resources>

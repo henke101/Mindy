@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array 
+    name="section_names">
+    <item>Hem</item>
+   <!-- <item>Inställningar</item> --> 
+    <item>Aktiviteter</item>
+    <item>Studiedagbok</item>
+    <item>Om</item>
+    
+</string-array>
+
+<string-array 
+    name="exercise_names">
+    <item>@string/diary</item>
+    <item>@string/three_pos</item>
+    <item>@string/pomodoro</item>
+    <item>@string/sleeping_pill</item>
+    <item>@string/body_focus</item>
+    
+    
+</string-array>
+
+<string-array 
+    name="exercise_descriptions">
+    <item>@string/short_desc_diary</item>
+    <item>@string/short_desc_three_pos</item>
+    <item>@string/short_desc_pomodoro</item>
+    <item>@string/short_desc_sleeping_pill</item>
+    <item>@string/short_desc_body_focus</item>
+    
+    
+</string-array>
+
+</resources>

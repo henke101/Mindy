@@ -1,0 +1,24 @@
+<resources>
+    <!-- the theme applied to the application or activity -->
+    <style name="MindyTheme"
+           parent="@android:style/Theme.Holo.Light">
+
+    </style>
+	
+	<style name="Theme.TranslucentActionBar" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/Widget.ActionBar</item>
+    </style>
+
+    <style name="Theme.TranslucentActionBar.ActionBar" />
+
+    <style name="Theme.TranslucentActionBar.ActionBar.Overlay">
+        <item name="android:actionBarStyle">@style/Widget.ActionBar.Transparent</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+    
+    <!-- Probably there's a better way to do this, I'll fix that later -->
+     <style name="Theme.TranslucentActionBar.ActionBar.Overlay.Evaluation">   
+        <item name="android:listChoiceIndicatorMultiple">@drawable/evaluation_form_theme_btn_check_holo_light</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/evaluation_form_theme_btn_radio_holo_light</item>
+    </style>
+</resources>
