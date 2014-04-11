@@ -5,6 +5,7 @@ import java.util.List;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
+import se.chalmers.mindy.util.Constants;
 import se.chalmers.mindy.util.MediaPlayerService;
 import se.chalmers.mindy.util.MediaPlayerService.MyLocalBinder;
 import se.chalmers.mindy.util.SoundHandler;

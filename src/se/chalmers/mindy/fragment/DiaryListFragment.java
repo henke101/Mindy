@@ -1,7 +1,7 @@
 package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
-import se.chalmers.mindy.core.DiaryAdapter;
+import se.chalmers.mindy.adapter.DiaryAdapter;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import se.chalmers.mindy.util.Tools;

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import se.chalmers.mindy.R;
-import se.chalmers.mindy.core.ThreePosItem;
 import se.chalmers.mindy.view.DiaryItem;
+import se.chalmers.mindy.view.ThreePosItem;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;

@@ -2,7 +2,7 @@ package se.chalmers.mindy.util;
 
 import java.util.HashMap;
 
-import se.chalmers.mindy.core.AbsListAdapter;
+import se.chalmers.mindy.adapter.AbsListAdapter;
 import se.chalmers.mindy.view.AbsListItem;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

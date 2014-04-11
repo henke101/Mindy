@@ -3,7 +3,7 @@ package se.chalmers.mindy.fragment;
 import java.util.ArrayList;
 
 import se.chalmers.mindy.R;
-import se.chalmers.mindy.core.IndexAdapter;
+import se.chalmers.mindy.adapter.IndexAdapter;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.Tools;
 import se.chalmers.mindy.view.DiaryIndexItem;

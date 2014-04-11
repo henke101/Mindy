@@ -2,10 +2,10 @@ package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
+import se.chalmers.mindy.util.Constants;
 import se.chalmers.mindy.util.MediaPlayerService;
 import se.chalmers.mindy.util.MediaPlayerService.MyLocalBinder;
 import se.chalmers.mindy.util.SoundHandler;
-import se.chalmers.mindy.view.Constants;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;

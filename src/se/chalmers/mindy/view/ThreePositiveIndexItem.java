@@ -6,7 +6,6 @@ import java.util.List;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
-import se.chalmers.mindy.core.ThreePosItem;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import android.app.Fragment;
 import android.content.Context;

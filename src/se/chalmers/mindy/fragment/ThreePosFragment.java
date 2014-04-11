@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.adapter.ThreePosAdapter;
 import se.chalmers.mindy.core.MainActivity;
-import se.chalmers.mindy.core.ThreePosAdapter;
-import se.chalmers.mindy.core.ThreePosItem;
-import se.chalmers.mindy.util.ExpandAnimation;
 import se.chalmers.mindy.util.Tools;
+import se.chalmers.mindy.view.ThreePosItem;
+import se.chalmers.mindy.view.anim.ExpandAnimation;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
