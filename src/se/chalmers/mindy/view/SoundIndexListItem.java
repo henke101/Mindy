@@ -7,6 +7,7 @@ import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.MediaPlayerService;
 import se.chalmers.mindy.util.MediaPlayerService.MyLocalBinder;
+import se.chalmers.mindy.util.SoundHandler;
 import android.app.Fragment;
 import android.content.ComponentName;
 import android.content.Context;
@@ -23,7 +24,7 @@ import android.widget.LinearLayout;
 /**
  * Class used for audio views in index page. Takes a resource id for the sound file and plays this sound file when the user presses Play
  * 
- * @author Viktor Åkerskog
+ * @author Viktor ÔøΩkerskog
  *
  */
 public class SoundIndexListItem extends IndexListItem {
@@ -31,6 +32,7 @@ public class SoundIndexListItem extends IndexListItem {
 	private int audioContentResId;
 	private Fragment fragment;
 	private MediaPlayerService mMediaPlayerService;
+	private Intent intent;
 
 	public SoundIndexListItem(Context context, int nameResId, int descriptionResId, int audioContentResId, Fragment fragment) {
 		super(context, context.getResources().getString(nameResId), context.getResources().getString(descriptionResId));
@@ -62,15 +64,22 @@ public class SoundIndexListItem extends IndexListItem {
 		playButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				if(!SoundHandler.getSoundIsPlaying()){
+					if(intent == null){
+						intent = new Intent(new Intent(context.getApplicationContext(), MediaPlayerService.class));
+						intent.putExtra(Constants.MEDIA_AUDIO_ID, audioContentResId);
+						context.bindService(intent, mpConnection, Context.BIND_AUTO_CREATE);
+						context.startService(intent);
+					} else {
+						mMediaPlayerService.startPlayback();
+					}
 
-				Intent intent = new Intent(new Intent(context.getApplicationContext(), MediaPlayerService.class));
-				intent.putExtra(Constants.MEDIA_AUDIO_ID, audioContentResId);
-				context.bindService(intent, mpConnection, Context.BIND_AUTO_CREATE);
-				context.startService(intent);
+					playButton.setVisibility(View.GONE);
+					pauseButton.setVisibility(View.VISIBLE);
+					stopButton.setVisibility(View.VISIBLE);
 
-				playButton.setVisibility(View.GONE);
-				pauseButton.setVisibility(View.VISIBLE);
-				stopButton.setVisibility(View.VISIBLE);
+					SoundHandler.setSoundIsPlaying(true);
+				}
 			}
 		});
 
@@ -83,10 +92,14 @@ public class SoundIndexListItem extends IndexListItem {
 		pauseButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mMediaPlayerService.pausePlayback();
+				if(SoundHandler.getSoundIsPlaying()){
+					mMediaPlayerService.pausePlayback();
 
-				pauseButton.setVisibility(View.GONE);
-				playButton.setVisibility(View.VISIBLE);
+					pauseButton.setVisibility(View.GONE);
+					playButton.setVisibility(View.VISIBLE);
+					
+					SoundHandler.setSoundIsPlaying(false);
+				}
 			}
 		});
 
@@ -99,11 +112,18 @@ public class SoundIndexListItem extends IndexListItem {
 		stopButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mMediaPlayerService.stopPlayback();
-
-				pauseButton.setVisibility(View.GONE);
-				stopButton.setVisibility(View.GONE);
-				playButton.setVisibility(View.VISIBLE);
+				if(SoundHandler.getSoundIsPlaying()){
+					mMediaPlayerService.stopPlayback();
+					mMediaPlayerService.stopService(intent);
+					intent = null;
+					context.unbindService(mpConnection);
+					
+					pauseButton.setVisibility(View.GONE);
+					stopButton.setVisibility(View.GONE);
+					playButton.setVisibility(View.VISIBLE);
+					
+					SoundHandler.setSoundIsPlaying(false);
+				}
 
 			}
 		});
