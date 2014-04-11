@@ -8,11 +8,11 @@
         <Button
             android:id="@+id/create_note_button"
             android:layout_width="match_parent"
-            android:layout_height="59dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/selector_button"
             android:text="@string/create_note_button_text"
             android:textColor="@drawable/selector_button_text"
-            android:textSize="22sp" />
+		/>
         <!-- Divider -->
 
         <View
