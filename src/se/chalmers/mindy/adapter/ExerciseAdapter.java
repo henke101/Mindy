@@ -8,6 +8,8 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ public class ExerciseAdapter extends ArrayAdapter<ExerciseItem> {
 	private Typeface robotoThin;
 	private Typeface robotoLight;
 	private LayoutInflater mLayoutInflater;
+	private int lastPosition;
 
 	public ExerciseAdapter(final Context context, final int layoutResourceId, final ExerciseItem[] data) {
 		super(context, layoutResourceId, data);
@@ -47,6 +50,13 @@ public class ExerciseAdapter extends ArrayAdapter<ExerciseItem> {
 
 		holder.exercise.setText(data[position].getName());
 		holder.description.setText(data[position].getDescription());
+
+		// If this view came from outside the screen, animate its entry
+		if (position > lastPosition) {
+			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.up_from_bottom);
+			row.startAnimation(animation);
+		}
+		lastPosition = position;
 
 		return row;
 	}

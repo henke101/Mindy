@@ -11,6 +11,8 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 	ArrayList<ThreePosItem> data;
 	String stringDate;
 	SimpleDateFormat dfDate;
+	private int lastPosition;
 
 	public ThreePosAdapter(final Context context, final int layoutResourceId, final ArrayList<ThreePosItem> data) {
 		super(context, layoutResourceId, data);
@@ -71,6 +74,12 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 		holder.positiveThreeLabel.setText(data.get(position).getPositiveThree());
 		holder.positiveThreeLabel.setTypeface(robotoLight);
 
+		// If this view came from outside the screen, animate its entry
+		if (position > lastPosition) {
+			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.up_from_bottom);
+			row.startAnimation(animation);
+		}
+		lastPosition = position;
 		return row;
 	}
 

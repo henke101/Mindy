@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ public class DiaryAdapter extends AbsListAdapter<DiaryItem> implements OnClickLi
 	private LayoutInflater mLayoutInflater;
 	private SimpleDateFormat mDateFormat;
 	private MindyDatabaseAdapter mDbAdapter;
+	private int lastPosition;
 
 	public DiaryAdapter(final Context context, MindyDatabaseAdapter dbAdapter) {
 		super(context, R.layout.diary_list_item, dbAdapter.fetchAllNotes());
@@ -75,6 +78,13 @@ public class DiaryAdapter extends AbsListAdapter<DiaryItem> implements OnClickLi
 
 		// Currently does not work properly
 		// row.setOnTouchListener(getSwipeListenerInstance(context, (ListView) parent));
+
+		// If this view came from outside the screen, animate its entry
+		if (position > lastPosition) {
+			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.up_from_bottom);
+			row.startAnimation(animation);
+		}
+		lastPosition = position;
 
 		return row;
 	}
