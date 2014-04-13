@@ -1,9 +1,7 @@
 package se.chalmers.mindy.fragment;
 
-import java.util.ArrayList;
-
 import se.chalmers.mindy.R;
-import se.chalmers.mindy.core.DiaryAdapter;
+import se.chalmers.mindy.adapter.DiaryAdapter;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.MindyDatabaseAdapter;
 import se.chalmers.mindy.util.Tools;
@@ -31,7 +29,7 @@ public class DiaryListFragment extends ListFragment implements OnScrollListener 
 	private MainActivity mActivity;
 	private MindyDatabaseAdapter mDbHelper;
 	private View mListHeader;
-	private ArrayList<Integer> itemIds;
+	private DiaryAdapter mListAdapter;
 
 	@Override
 	public void onAttach(final Activity activity) {
@@ -90,8 +88,9 @@ public class DiaryListFragment extends ListFragment implements OnScrollListener 
 	}
 
 	private void fillData() {
-		itemIds = mDbHelper.fetchAllNoteIds();
-		setListAdapter(new DiaryAdapter(mActivity, mDbHelper.fetchAllNotes()));
+		mListAdapter = new DiaryAdapter(mActivity, mDbHelper);
+		setListAdapter(mListAdapter);
+
 	}
 
 	private void createNote() {
@@ -103,10 +102,11 @@ public class DiaryListFragment extends ListFragment implements OnScrollListener 
 		super.onListItemClick(l, v, position, id);
 		DiaryEditFragment fragment = new DiaryEditFragment();
 
-		Bundle bundle = new Bundle();
-
-		bundle.putLong("rowID", itemIds.get((int) id));
-		fragment.setArguments(bundle);
+		if (!mListAdapter.isListEmpty()) {
+			Bundle bundle = new Bundle();
+			bundle.putInt("rowID", mListAdapter.getIdAt((int) id));
+			fragment.setArguments(bundle);
+		}
 		mActivity.pushFragment(fragment);
 	}
 

@@ -2,9 +2,10 @@ package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
+import se.chalmers.mindy.util.Constants;
 import se.chalmers.mindy.util.MediaPlayerService;
 import se.chalmers.mindy.util.MediaPlayerService.MyLocalBinder;
-import se.chalmers.mindy.view.Constants;
+import se.chalmers.mindy.util.SoundHandler;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.BroadcastReceiver;
@@ -28,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class AudioExerciseFragment extends Fragment implements Runnable, OnClickListener {
+	private boolean isPlaying;
 	private MediaPlayer mediaPlayer;
 	private View view;
 	private IntentFilter mediaFilter;
@@ -43,8 +45,10 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
-
+		
 		((MainActivity) activity).setActionBarBackgroundTransparency(255);
+		
+		isPlaying = false;
 	}
 
 	@Override
@@ -98,22 +102,28 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 		// mpService = new MediaPlayerService();
 
 		getActivity().getApplicationContext().registerReceiver(audioIntentReceiver, mediaFilter);
-
+		
+		isPlaying = false;
+		
 		return view;
 	}
 
 	private void startMPService() {
-		Intent intent = new Intent(new Intent(getActivity().getApplicationContext(), MediaPlayerService.class));
-		intent.putExtra("audioID", audioID);
-		getActivity().startService(intent);
-		getActivity().bindService(intent, mpConnection, Context.BIND_AUTO_CREATE);
+		if(!isPlaying){
+			isPlaying = true;
+			Intent intent = new Intent(new Intent(getActivity().getApplicationContext(), MediaPlayerService.class));
+			intent.putExtra("audioID", audioID);
+			getActivity().startService(intent);
+			getActivity().bindService(intent, mpConnection, Context.BIND_AUTO_CREATE);
+		}
 
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		if (mediaPlayer != null) {
+		if (mediaPlayer != null && isPlaying) {
+			isPlaying = false;
 			mediaPlayer.pause();
 			playPauseButton.setBackgroundResource(R.drawable.play_button);
 		}
@@ -121,6 +131,7 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 
 	@Override
 	public void onDestroy() {
+		isPlaying = false;
 		super.onDestroy();
 		getActivity().getApplicationContext().unregisterReceiver(audioIntentReceiver);
 	}
@@ -145,9 +156,14 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 			try {
 				Thread.sleep(1000);
 				currentPosition = mediaPlayer.getCurrentPosition();
+				isPlaying = true;
 			} catch (InterruptedException e) {
+				mediaPlayer.stop();
+				isPlaying = false;
 				return;
 			} catch (Exception e) {
+				mediaPlayer.stop();
+				isPlaying = false;
 				return;
 			}
 			audioProgressBar.setProgress(currentPosition);
@@ -156,6 +172,7 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 		getActivity().runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
+				isPlaying = false;
 				mediaPlayer = null;
 				playPauseButton.setBackgroundResource(R.drawable.play_button);
 			}
@@ -166,11 +183,12 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 	public void onClick(View v) {
 
 		if (v.equals(playPauseButton)) {
-			if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+			if (mediaPlayer != null && mediaPlayer.isPlaying() && isPlaying) {
 				mediaPlayer.pause();
+				isPlaying = false;
 				playPauseButton.setBackgroundResource(R.drawable.play_button);
 			} else {
-				if (mediaPlayer == null) {
+				if (mediaPlayer == null && !isPlaying) {
 					mediaPlayer = mpService.getMediaPlayer();
 					mpService.setPlaybackPosition(mPlaybackPosition);
 
@@ -179,7 +197,8 @@ public class AudioExerciseFragment extends Fragment implements Runnable, OnClick
 					new Thread(this).start();
 				}
 				playPauseButton.setBackgroundResource(R.drawable.pause_button);
-
+				
+				isPlaying = true;
 				mediaPlayer.start();
 			}
 		}

@@ -73,8 +73,12 @@
     <string name="diary_body">Inlägg</string>
     <string name="diary_body_hint">Vad har du lärt dig?</string>
     <string name="diary_no_entries">Inga inlägg ännu</string>
-    <string name="diary_no_entries_desc">Vad har du lärt dig idag? Studiedagboken hjälper dig minnas vad du lärt dig genom att låta dig återkoppla vid ett senare tillfälle. \n\nSkapa ett nytt inlägg ovan för att börja använda studiedagboken.</string>
+    <string name="diary_no_entries_desc">Vad har du lärt dig idag? Studiedagboken hjälper dig minnas vad du lärt dig genom att låta dig återkoppla vid ett senare tillfälle. \n\nSkapa ett nytt inlägg för att börja använda studiedagboken.</string>
     <string name="diary_empty_fields">Kunde inte spara inlägg. Inga tomma fält är tillåtna.</string>
+    <string name="diary_entry_deleted">Inlägg raderat</string>
+    <string name="diary_could_not_delete">Inlägget kunde inte raderas</string>
+    <string name="index_diary_description">Detta lärde du dig igår</string>
+    <string name="index_diary_description_secondary">Detta lärde du dig senast</string>
     <string name="albin">Uppläst av Albin Hagberg Medin, http://www.modernmindfulness.com</string>
     
     <!-- Frågeformulär -->

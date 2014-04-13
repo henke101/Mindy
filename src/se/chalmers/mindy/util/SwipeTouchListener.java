@@ -2,7 +2,7 @@ package se.chalmers.mindy.util;
 
 import java.util.HashMap;
 
-import se.chalmers.mindy.core.AbsListAdapter;
+import se.chalmers.mindy.adapter.AbsListAdapter;
 import se.chalmers.mindy.view.AbsListItem;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -20,7 +20,7 @@ import android.widget.ListView;
  * Class responsible for handling touch events to fade/move dragged items as they are swiped out.
  * AbsListAdapter class has a convenience method for getting an instance of this class.
  * 
- * @author Viktor ÔøΩkerskog
+ * @author Viktor Åkerskog
  *
  */
 public class SwipeTouchListener implements View.OnTouchListener {
@@ -77,6 +77,8 @@ public class SwipeTouchListener implements View.OnTouchListener {
 
 			// Get the X position for the view when it was pressed
 			mDownX = event.getX();
+
+			// return false;
 			break;
 		case MotionEvent.ACTION_CANCEL:
 			// Swipe was cancelled, restore everything and recycle the velocity tracker
@@ -115,6 +117,8 @@ public class SwipeTouchListener implements View.OnTouchListener {
 		}
 			break;
 		case MotionEvent.ACTION_UP: {
+
+			// If the user meant to press the item, let the system handle click instead of handling swipe here
 			// User let go - figure out whether to animate the view out, or back into place
 			if (mSwiping) {
 				float x = event.getX() + v.getTranslationX();

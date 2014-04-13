@@ -1,4 +1,4 @@
-package se.chalmers.mindy.core;
+package se.chalmers.mindy.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,10 +70,15 @@ public class IndexAdapter extends AbsListAdapter<IndexListItem> {
 		holder.title = (TextView) row.findViewById(R.id.item_title);
 		holder.title.setText(item.getTitle());
 		holder.title.setTypeface(robotoThin);
-		holder.title.setOnClickListener(item.getTitleOnClickListener());
+		row.setOnClickListener(item.getTitleOnClickListener());
 
 		holder.description = (TextView) row.findViewById(R.id.item_description);
-		holder.description.setText(item.getDescription());
+		if (item.getDescription() == null) {
+			holder.description.setVisibility(View.GONE);
+		} else {
+			holder.description.setVisibility(View.VISIBLE);
+			holder.description.setText(item.getDescription());
+		}
 		holder.description.setTypeface(robotoLight);
 
 		// If this view came from outside the screen, animate its entry

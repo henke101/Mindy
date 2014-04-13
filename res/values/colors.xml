@@ -4,6 +4,7 @@
     <!--  Could be used as a background color -->
       <color name="bg_color">#E6E3D8</color>
       <color name="bg_color_grey">#E0E0E0</color>
+      <color name="bg_color_grey_semitrans">#77E0E0E0</color>
       
       <!-- Just white -->
      <color name="white">#FFFFFF</color>

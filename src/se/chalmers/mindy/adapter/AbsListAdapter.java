@@ -1,4 +1,4 @@
-package se.chalmers.mindy.core;
+package se.chalmers.mindy.adapter;
 
 import java.util.ArrayList;
 

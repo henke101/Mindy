@@ -1,15 +1,18 @@
-package se.chalmers.mindy.core;
+package se.chalmers.mindy.adapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import se.chalmers.mindy.R;
+import se.chalmers.mindy.view.ThreePosItem;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 	ArrayList<ThreePosItem> data;
 	String stringDate;
 	SimpleDateFormat dfDate;
+	private int lastPosition;
 
 	public ThreePosAdapter(final Context context, final int layoutResourceId, final ArrayList<ThreePosItem> data) {
 		super(context, layoutResourceId, data);
@@ -61,15 +65,21 @@ public class ThreePosAdapter extends ArrayAdapter<ThreePosItem> {
 		holder.dateLabel.setText(stringDate);
 		holder.dateLabel.setTypeface(robotoLight);
 
-		holder.positiveOneLabel.setText("1. " + data.get(position).getPositiveOne());
+		holder.positiveOneLabel.setText(data.get(position).getPositiveOne());
 		holder.positiveOneLabel.setTypeface(robotoLight);
 
-		holder.positiveTwoLabel.setText("2. " + data.get(position).getPositiveTwo());
+		holder.positiveTwoLabel.setText(data.get(position).getPositiveTwo());
 		holder.positiveTwoLabel.setTypeface(robotoLight);
 
-		holder.positiveThreeLabel.setText("3. " + data.get(position).getPositiveThree());
+		holder.positiveThreeLabel.setText(data.get(position).getPositiveThree());
 		holder.positiveThreeLabel.setTypeface(robotoLight);
 
+		// If this view came from outside the screen, animate its entry
+		if (position > lastPosition) {
+			Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.up_from_bottom);
+			row.startAnimation(animation);
+		}
+		lastPosition = position;
 		return row;
 	}
 

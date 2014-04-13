@@ -1,7 +1,5 @@
 package se.chalmers.mindy.core;
 
-import java.io.IOException;
-
 import se.chalmers.mindy.R;
 import se.chalmers.mindy.fragment.AboutFragment;
 import se.chalmers.mindy.fragment.DiaryListFragment;
@@ -18,19 +16,16 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.SharedPreferences;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
@@ -287,41 +282,6 @@ public class MainActivity extends Activity {
 
 		setActionBarBackgroundTransparency(newAlpha);
 
-	}
-
-	public MediaPlayer getMediaPlayerInstance() {
-		if (mMediaPlayer == null) {
-			mMediaPlayer = new MediaPlayer();
-			mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		}
-
-		return mMediaPlayer;
-	}
-
-	/**
-	 * Sets or updates 
-	 * @param resid
-	 * @return
-	 */
-	public MediaPlayer setMediaPlayerResourceId(int resid) {
-		if (mMediaPlayer == null) {
-			throw new IllegalStateException("Media player has not been initialized yet. Run MainActivity.getMediaPlayerInstance() first.");
-		}
-		AssetFileDescriptor afd = getResources().openRawResourceFd(resid);
-
-		mMediaPlayer.reset();
-		try {
-			mMediaPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getDeclaredLength());
-		} catch (IllegalArgumentException e) {
-			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
-		} catch (IllegalStateException e) {
-			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
-		} catch (IOException e) {
-			Log.e("MainActivity.setMediaPlayerResource(): An error occured", e.getLocalizedMessage());
-		}
-		mMediaPlayer.prepareAsync();
-
-		return mMediaPlayer;
 	}
 
 	public void setActionBarBackgroundTransparency(int alpha) {

@@ -3,9 +3,10 @@ package se.chalmers.mindy.fragment;
 import java.util.ArrayList;
 
 import se.chalmers.mindy.R;
-import se.chalmers.mindy.core.IndexAdapter;
+import se.chalmers.mindy.adapter.IndexAdapter;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.Tools;
+import se.chalmers.mindy.view.DiaryIndexItem;
 import se.chalmers.mindy.view.IndexListItem;
 import se.chalmers.mindy.view.SoundIndexListItem;
 import se.chalmers.mindy.view.ThreePositiveIndexItem;
@@ -70,6 +71,7 @@ public class IndexFragment extends Fragment implements OnScrollListener {
 		dummyItems = new ArrayList<IndexListItem>();
 
 		dummyItems.add(new ThreePositiveIndexItem(mActivity, new ThreePosFragment()));
+		dummyItems.add(new DiaryIndexItem(mActivity, new DiaryListFragment()));
 		dummyItems.add(new SoundIndexListItem(mActivity, R.string.sleeping_pill, R.string.short_desc_sleeping_pill, R.raw.sleeping_pill,
 				new AudioExerciseFragment()));
 		dummyItems.add(new SoundIndexListItem(mActivity, R.string.body_focus, R.string.short_desc_body_focus, R.raw.body_focus2, new AudioExerciseFragment()));

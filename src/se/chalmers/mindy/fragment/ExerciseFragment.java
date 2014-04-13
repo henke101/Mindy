@@ -1,10 +1,10 @@
 package se.chalmers.mindy.fragment;
 
 import se.chalmers.mindy.R;
-import se.chalmers.mindy.core.ExerciseAdapter;
-import se.chalmers.mindy.core.ExerciseItem;
+import se.chalmers.mindy.adapter.ExerciseAdapter;
 import se.chalmers.mindy.core.MainActivity;
 import se.chalmers.mindy.util.Tools;
+import se.chalmers.mindy.view.ExerciseItem;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;

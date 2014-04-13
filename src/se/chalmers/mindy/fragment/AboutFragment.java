@@ -4,6 +4,8 @@ import se.chalmers.mindy.R;
 import se.chalmers.mindy.core.MainActivity;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,6 +38,14 @@ public class AboutFragment extends Fragment {
 		tViewAboutVersion.setTypeface(robotoCondensedLight);
 		tViewAboutText.setTypeface(robotoLight);
 		tViewAboutDevelopers.setTypeface(robotoCondensedLight);
+
+		PackageInfo pInfo;
+		try {
+			pInfo = activity.getPackageManager().getPackageInfo(activity.getPackageName(), 0);
+			String version = pInfo.versionName;
+			tViewAboutVersion.setText("v. " + version);
+		} catch (NameNotFoundException e) {
+		}
 		return view;
 	}
 

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import se.chalmers.mindy.R;
-import se.chalmers.mindy.core.ThreePosItem;
 import se.chalmers.mindy.view.DiaryItem;
+import se.chalmers.mindy.view.ThreePosItem;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -133,7 +133,8 @@ public class MindyDatabaseAdapter {
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-				items.add(new ThreePosItem(calendar, threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3)));
+				items.add(new ThreePosItem(calendar, "1. " + threePosCursor.getString(1), "2. " + threePosCursor.getString(2), "3. "
+						+ threePosCursor.getString(3)));
 				threePosCursor.moveToNext();
 			}
 		}
@@ -152,7 +153,8 @@ public class MindyDatabaseAdapter {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTimeInMillis(threePosCursor.getLong(4));
 
-			ThreePosItem result = new ThreePosItem(calendar, threePosCursor.getString(1), threePosCursor.getString(2), threePosCursor.getString(3));
+			ThreePosItem result = new ThreePosItem(calendar, "1. " + threePosCursor.getString(1), "2. " + threePosCursor.getString(2), "3. "
+					+ threePosCursor.getString(3));
 
 			threePosCursor.close();
 			return result;
@@ -212,7 +214,7 @@ public class MindyDatabaseAdapter {
 	public ArrayList<Integer> fetchAllNoteIds() {
 		ArrayList<Integer> items = new ArrayList<Integer>();
 
-		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID }, null, null, null, null, null);
+		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID }, null, null, null, null, KEY_DIARY_DATE + " DESC");
 
 		if (entryCursor.moveToFirst()) {
 			while (!entryCursor.isAfterLast()) {
@@ -227,19 +229,20 @@ public class MindyDatabaseAdapter {
 	public ArrayList<DiaryItem> fetchAllNotes() {
 		ArrayList<DiaryItem> items = new ArrayList<DiaryItem>();
 
-		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, null, null, null, null, null);
+		Cursor entryCursor = mDb.query(TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, null, null, null, null,
+				KEY_DIARY_DATE + " DESC");
 
 		if (entryCursor.moveToFirst()) {
 			Calendar cal = Calendar.getInstance();
 			while (!entryCursor.isAfterLast()) {
 				cal.setTimeInMillis(entryCursor.getLong(3));
 
-				items.add(new DiaryItem(entryCursor.getString(1), entryCursor.getString(2), cal));
+				items.add(new DiaryItem(mContext, entryCursor.getString(1), entryCursor.getString(2), cal));
 
 				entryCursor.moveToNext();
 			}
 		} else {
-			items.add(new DiaryItem(mContext.getString(R.string.diary_no_entries), mContext.getString(R.string.diary_no_entries_desc), null));
+			items.add(new DiaryItem(mContext, mContext.getString(R.string.diary_no_entries), mContext.getString(R.string.diary_no_entries_desc), null));
 		}
 
 		return items;
@@ -247,17 +250,27 @@ public class MindyDatabaseAdapter {
 
 	public DiaryItem fetchNote(long rowId) {
 
-		Cursor entryCursor = mDb.query(true, TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, KEY_ROWID + "=" + rowId,
-				null, null, null, null, null);
+		return fetchNoteWhere(KEY_ROWID + "=" + rowId);
+	}
+
+	public DiaryItem fetchLatestNote() {
+
+		return fetchNoteWhere(KEY_DIARY_DATE + " in (SELECT MAX(" + KEY_DIARY_DATE + ") AS " + KEY_DIARY_DATE + " FROM " + TABLE_DIARY + ")");
+
+	}
+
+	public DiaryItem fetchNoteWhere(String where) {
+		Cursor entryCursor = mDb.query(true, TABLE_DIARY, new String[] { KEY_ROWID, KEY_DIARY_TITLE, KEY_DIARY_BODY, KEY_DIARY_DATE }, where, null, null, null,
+				null, null);
 
 		DiaryItem item;
 		if (entryCursor.moveToFirst()) {
 			Calendar cal = Calendar.getInstance();
 			cal.setTimeInMillis(entryCursor.getLong(3));
 
-			item = new DiaryItem(entryCursor.getString(1), entryCursor.getString(2), cal);
+			item = new DiaryItem(mContext, entryCursor.getString(1), entryCursor.getString(2), cal);
 		} else {
-			item = new DiaryItem("", "", Calendar.getInstance());
+			item = new DiaryItem(mContext, "", "", Calendar.getInstance());
 		}
 
 		return item;

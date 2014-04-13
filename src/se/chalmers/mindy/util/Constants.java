@@ -1,4 +1,4 @@
-package se.chalmers.mindy.view;
+package se.chalmers.mindy.util;
 
 public class Constants {
 

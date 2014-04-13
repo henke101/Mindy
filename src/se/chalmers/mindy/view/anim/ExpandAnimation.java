@@ -1,4 +1,4 @@
-package se.chalmers.mindy.util;
+package se.chalmers.mindy.view.anim;
 
 import android.view.View;
 import android.view.animation.Animation;

@@ -1,6 +1,5 @@
 package se.chalmers.mindy.util;
 
-import se.chalmers.mindy.view.Constants;
 import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
