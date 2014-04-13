@@ -116,7 +116,7 @@ public class ExerciseFragment extends Fragment implements OnScrollListener {
 				} else if (position == 5) {
 					Fragment fragmentBodyFocus = new AudioExerciseFragment();
 					Bundle bundle = new Bundle();
-					bundle.putInt("audioID", R.raw.body_focus);
+					bundle.putInt("audioID", R.raw.body_focus2);
 					bundle.putInt("titleID", R.string.body_focus);
 					bundle.putInt("infoID", R.string.long_desc_body_focus);
 					fragmentBodyFocus.setArguments(bundle);
