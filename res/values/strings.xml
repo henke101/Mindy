@@ -79,7 +79,7 @@
     <string name="diary_could_not_delete">Inlägget kunde inte raderas</string>
     <string name="index_diary_description">Detta lärde du dig igår</string>
     <string name="index_diary_description_secondary">Detta lärde du dig senast</string>
-    <string name="albin">Uppläst av Albin Hagberg Medin, http://www.modernmindfulness.com</string>
+    <string name="albin">Uppläst av Albin Hagberg Medin, http://www.modernmindfulness.se</string>
     
     <!-- Frågeformulär -->
     <string name="eval_question_1_text">Tycker du att du har en studieteknik som ger dig de resultat du vill uppnå?</string>
