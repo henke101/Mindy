@@ -20,7 +20,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-public class EvaluationFragment extends Fragment implements OnCheckedChangeListener, OnClickListener{
+public class EvaluationFragment extends Fragment implements OnCheckedChangeListener, OnClickListener {
 
 	private TextView tViewIntroText;
 	private TextView tViewQuestionOne;
@@ -36,7 +36,7 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 	private TextView tViewLabelFourOne;
 	private TextView tViewLabelFourTwo;
 	private TextView tViewLabelFourThree;
-	//private TextView tViewLabelFourFour;
+	// private TextView tViewLabelFourFour;
 	private View view;
 	private Typeface robotoCondensedLight;
 	private Typeface robotoLight;
@@ -64,8 +64,8 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 	private NameValuePair<Integer> nvpStudyResults;
 	private NameValuePair<Integer> nvpTechniqueImpact;
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		view = inflater.inflate(R.layout.fragment_evaluation, null);
 		tViewIntroText = (TextView) view.findViewById(R.id.eval_intro_text);
 		tViewQuestionOne = (TextView) view.findViewById(R.id.eval_question_1);
@@ -81,7 +81,7 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 		tViewLabelFourOne = (TextView) view.findViewById(R.id.eval_question_4_label_1);
 		tViewLabelFourTwo = (TextView) view.findViewById(R.id.eval_question_4_label_2);
 		tViewLabelFourThree = (TextView) view.findViewById(R.id.eval_question_4_label_3);
-		//tViewLabelFourFour = (TextView) view.findViewById(R.id.eval_question_4_label_4);
+		// tViewLabelFourFour = (TextView) view.findViewById(R.id.eval_question_4_label_4);
 		techniqueOne = (RadioButton) view.findViewById(R.id.answers_1_option_1);
 		techniqueTwo = (RadioButton) view.findViewById(R.id.answers_1_option_2);
 		techniqueThree = (RadioButton) view.findViewById(R.id.answers_1_option_3);
@@ -113,8 +113,8 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 		submitButton.setEnabled(false);
 		submitButton.setOnClickListener(this);
 
-		robotoLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_light.ttf");
-		robotoCondensedLight = Typeface.createFromAsset(getActivity().getAssets(),"fonts/roboto_condensed_light.ttf");
+		robotoLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_light.ttf");
+		robotoCondensedLight = Typeface.createFromAsset(getActivity().getAssets(), "fonts/roboto_condensed_light.ttf");
 
 		tViewIntroText.setTypeface(robotoCondensedLight);
 		tViewQuestionOne.setTypeface(robotoCondensedLight);
@@ -131,9 +131,24 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 		tViewLabelFourTwo.setTypeface(robotoCondensedLight);
 		tViewLabelFourThree.setTypeface(robotoCondensedLight);
 		submitButton.setTypeface(robotoCondensedLight);
-		//tViewLabelFourFour.setTypeface(robotoCondensedLight);
+		// tViewLabelFourFour.setTypeface(robotoCondensedLight);
 
 		result = new EvaluationResult();
+
+		Button skipButton = (Button) view.findViewById(R.id.eval_skip_button);
+		skipButton.setTypeface(robotoCondensedLight);
+		skipButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				Fragment indexFragment = new IndexFragment();
+				// Insert the fragment by replacing any existing fragment
+				FragmentManager fragmentManager = getFragmentManager();
+				fragmentManager.beginTransaction().replace(R.id.content_frame, indexFragment).commit();
+
+			}
+		});
 
 		return view;
 	}
@@ -141,13 +156,13 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 	@Override
 	public void onClick(View v) {
 		Log.v(getTag(), "Reached listener");
-		int clicked =v.getId();
-		switch(clicked){
+		int clicked = v.getId();
+		switch (clicked) {
 		case R.id.eval_submit_button:
 			Log.v(getTag(), "Reached id");
-			//I posted the results in these categories for now, this might be redone later
-			//Some results might be both mindfulness and study technique for example
-			if (nvpTechniqueImpact != null){
+			// I posted the results in these categories for now, this might be redone later
+			// Some results might be both mindfulness and study technique for example
+			if (nvpTechniqueImpact != null) {
 				result.putMindulnessResult(nvpTechniqueImpact);
 			}
 			result.putMindulnessResult(nvpStudyResults);
@@ -164,8 +179,7 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.content_frame, indexFragment).commit();
 
-			Log.v(getTag(),"" + nvpStudyBalance.getName() + "\n" +
-					nvpStudyTechnique.getName() + "\n" + nvpStudyResults.getName());
+			Log.v(getTag(), "" + nvpStudyBalance.getName() + "\n" + nvpStudyTechnique.getName() + "\n" + nvpStudyResults.getName());
 
 			break;
 
@@ -175,7 +189,7 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-		switch(buttonView.getId()){
+		switch (buttonView.getId()) {
 		case R.id.answers_1_option_1:
 			nvpStudyTechnique = new NameValuePair<Integer>("study_technique", 0);
 			break;
@@ -216,37 +230,33 @@ public class EvaluationFragment extends Fragment implements OnCheckedChangeListe
 			nvpStudyResults = new NameValuePair<Integer>("study_results", 3);
 			break;
 		case R.id.answers_4_option_1:
-			if(isChecked){
+			if (isChecked) {
 				nvpTechniqueImpact = new NameValuePair<Integer>("sleep", 1);
-			}
-			else{
+			} else {
 
 				nvpTechniqueImpact = new NameValuePair<Integer>("sleep", 0);
 			}
 			break;
 		case R.id.answers_4_option_2:
-			if(isChecked){
+			if (isChecked) {
 				nvpTechniqueImpact = new NameValuePair<Integer>("confidence", 1);
-			}
-			else{
+			} else {
 
 				nvpTechniqueImpact = new NameValuePair<Integer>("confidence", 0);
 			}
 			break;
 		case R.id.answers_4_option_3:
-			if(isChecked){
+			if (isChecked) {
 				nvpTechniqueImpact = new NameValuePair<Integer>("insecurity", 1);
-			}
-			else{
+			} else {
 
 				nvpTechniqueImpact = new NameValuePair<Integer>("insecurity", 0);
 			}
 			break;
 		}
-		if (nvpStudyResults != null && nvpStudyTechnique != null && nvpStudyBalance != null){
+		if (nvpStudyResults != null && nvpStudyTechnique != null && nvpStudyBalance != null) {
 			submitButton.setEnabled(true);
 		}
-
 
 	}
 

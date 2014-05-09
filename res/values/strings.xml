@@ -97,6 +97,7 @@
     <string name="eval_question_4_answer_3">Osäkerhet i grupparbete</string>
     <string name="eval_question_4_answer_4">Tror inte på min förmåga</string>
     <string name="eval_submit">Fortsätt</string>
+    <string name="eval_skip">Hoppa över</string>
     <string name="eval_intro">Välkommen till Mindy! För att få en så bra och anpassad upplevelse som möjligt ber vi dig att besvara frågorna nedan så ärligt du kan. Svaren är självklart helt annonyma.</string>
 
     

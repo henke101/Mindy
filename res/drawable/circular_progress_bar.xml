@@ -28,14 +28,6 @@
             </shape>
         </rotate>
     </item>
-    <item>
-        <rotate
-            android:id="@+id/rotating_play_button"
-            android:drawable="@drawable/progress_particle"
-            android:fromDegrees="90"
-            android:pivotX="50%"
-            android:pivotY="50%"
-            android:toDegrees="450" />
-    </item>
+    
 
 </layer-list>

@@ -65,8 +65,8 @@ public class SoundIndexListItem extends IndexListItem {
 		playButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(!SoundHandler.getSoundIsPlaying()){
-					if(intent == null){
+				if (!SoundHandler.getSoundIsPlaying()) {
+					if (intent == null) {
 						intent = new Intent(new Intent(context.getApplicationContext(), MediaPlayerService.class));
 						intent.putExtra(Constants.MEDIA_AUDIO_ID, audioContentResId);
 						context.bindService(intent, mpConnection, Context.BIND_AUTO_CREATE);
@@ -77,7 +77,7 @@ public class SoundIndexListItem extends IndexListItem {
 
 					playButton.setVisibility(View.GONE);
 					pauseButton.setVisibility(View.VISIBLE);
-					stopButton.setVisibility(View.VISIBLE);
+					// stopButton.setVisibility(View.VISIBLE);
 
 					SoundHandler.setSoundIsPlaying(true);
 				}
@@ -93,12 +93,12 @@ public class SoundIndexListItem extends IndexListItem {
 		pauseButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(SoundHandler.getSoundIsPlaying()){
+				if (SoundHandler.getSoundIsPlaying()) {
 					mMediaPlayerService.pausePlayback();
 
 					pauseButton.setVisibility(View.GONE);
 					playButton.setVisibility(View.VISIBLE);
-					
+
 					SoundHandler.setSoundIsPlaying(false);
 				}
 			}
@@ -113,16 +113,16 @@ public class SoundIndexListItem extends IndexListItem {
 		stopButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if(SoundHandler.getSoundIsPlaying()){
+				if (SoundHandler.getSoundIsPlaying()) {
 					mMediaPlayerService.stopPlayback();
 					mMediaPlayerService.stopService(intent);
 					intent = null;
 					context.unbindService(mpConnection);
-					
+
 					pauseButton.setVisibility(View.GONE);
 					stopButton.setVisibility(View.GONE);
 					playButton.setVisibility(View.VISIBLE);
-					
+
 					SoundHandler.setSoundIsPlaying(false);
 				}
 

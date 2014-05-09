@@ -319,13 +319,35 @@
             android:layout_marginTop="15dp"
             android:background="#B8B894" />
 
-        <Button
-            android:id="@+id/eval_submit_button"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="15dp"
-            android:text="@string/eval_submit" />
+            android:orientation="horizontal"
+        	style="?android:attr/buttonBarStyle"
+            >
+	        <Button
+	            android:id="@+id/eval_skip_button"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
+	            android:layout_marginTop="10dp"
+	            android:layout_marginBottom="10dp"
+	            android:layout_weight="0.5"
+	            android:text="@string/eval_skip"
+            	android:textColor="@drawable/selector_button_text"
+            	style="?android:attr/buttonBarButtonStyle" />
+	        <Button
+	            android:id="@+id/eval_submit_button"
+	            android:layout_width="0dp"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
+	            android:layout_marginTop="10dp"
+	            android:layout_marginBottom="10dp"
+	            android:layout_weight="0.5"
+	            android:text="@string/eval_submit" 
+            	android:textColor="@drawable/selector_button_text"
+            	style="?android:attr/buttonBarButtonStyle" />
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>
